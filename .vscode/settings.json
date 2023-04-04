@@ -1,0 +1,5 @@
+{   
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "vsintellicode.sql.completionsEnabled": false,
+    "aiXcoder.showTrayIcon": true
+}

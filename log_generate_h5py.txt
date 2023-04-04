@@ -1,0 +1,53 @@
+nohup: ignoring input
+tensor([64])
+protein0 saved! time usage:9.80485224723816
+tensor([64])
+protein1 saved! time usage:5.4380433559417725
+tensor([64])
+protein2 saved! time usage:5.5747575759887695
+tensor([64])
+protein3 saved! time usage:6.267876625061035
+tensor([64])
+protein4 saved! time usage:7.2264485359191895
+tensor([64])
+protein5 saved! time usage:6.440452814102173
+tensor([64])
+protein6 saved! time usage:4.543832302093506
+tensor([64])
+protein7 saved! time usage:5.095630884170532
+tensor([64])
+protein8 saved! time usage:4.898766994476318
+tensor([64])
+protein9 saved! time usage:6.280746936798096
+tensor([64])
+protein10 saved! time usage:5.212161540985107
+tensor([64])
+protein11 saved! time usage:4.877470016479492
+tensor([64])
+protein12 saved! time usage:7.959244012832642
+tensor([64])
+protein13 saved! time usage:5.00557804107666
+tensor([64])
+protein14 saved! time usage:4.4510109424591064
+tensor([64])
+protein15 saved! time usage:5.210647106170654
+tensor([64])
+protein16 saved! time usage:5.42175555229187
+tensor([64])
+protein17 saved! time usage:8.276444673538208
+tensor([64])
+protein18 saved! time usage:7.111682176589966
+tensor([64])
+protein19 saved! time usage:5.7777769565582275
+tensor([64])
+Traceback (most recent call last):
+  File "/home/rotation3/complex-coor-pred/utils/AlignCoorConfusion/coor_align.py", line 153, in <module>
+    with h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "a") as train_file:
+  File "/home/rotation3/anaconda3/envs/torch2/lib/python3.10/site-packages/h5py/_hl/files.py", line 567, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/home/rotation3/anaconda3/envs/torch2/lib/python3.10/site-packages/h5py/_hl/files.py", line 243, in make_fid
+    fid = h5f.open(name, h5f.ACC_RDWR, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 106, in h5py.h5f.open
+BlockingIOError: [Errno 11] Unable to open file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable')
