@@ -41,7 +41,7 @@ class MyData(Dataset):
 
         L = embed.shape[0]
         
-        trunc_point = int(trunc_point+1e-3)
+        trunc_point = int(trunc_point)
         if self.train_mode and L > trunc_point:
             a = random.randint(0, L-trunc_point-1)
             b = a + trunc_point

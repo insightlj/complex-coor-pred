@@ -3,82 +3,73 @@
 
 import torch
 import numpy as np
-from torch import nn
 from config import device
 import h5py
 from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
-
-def getFapeLoss(diff, dclamp=10, ratio=0.1, lossformat='dclamp'):
-    ### true label nan has been masked
-    ### diff.shape=(N,3,L,L)
-    ### return fapeLoss,realFape
-
-    eps = 1e-8
-    L = diff.shape[-1]
-    diff = diff[:, :, :, None, :] - diff[:, :, :, :, None]  # (N,3,64,L,L)  # 计算出坐标之间的差值
-    diff = torch.sqrt(torch.sum(diff ** 2, dim=1) + eps) # diff实为fapeNLLL (N,64,L,L)
-
-    realFape = torch.mean(diff)  # FapeLoss和lddt的思想相似，均计算原子之间相对坐标的预测准确度
-
-    if lossformat == 'dclamp':
-        mask = torch.as_tensor(diff <= dclamp, dtype=torch.float32)  # (N,64,L,L)
-        mask = mask * (torch.ones([L, L]) - torch.eye(L)).to(diff.device)
-        fapeLoss = torch.sum(diff * mask) / (torch.sum(mask) + eps)
-    elif lossformat == 'ReluDclamp':
-        diff = ratio * nn.ReLU(inplace=True)(diff - dclamp) + dclamp - nn.ReLU(inplace=True)(
-            dclamp - diff)  # 考虑换成mask形式
-        mask = torch.ones_like(diff) * (torch.ones([L, L]) - torch.eye(L)).to(diff.device)
-        fapeLoss = torch.sum(diff * mask) / (torch.sum(mask) + eps)
-    elif lossformat == 'NoDclamp':
-        mask = torch.ones_like(diff) * (torch.ones([L, L]) - torch.eye(L)).to(diff.device)
-        fapeLoss = torch.sum(diff * mask) / (torch.sum(mask) + eps)
-    elif lossformat == 'probDclamp':
-        maskdclamp = torch.as_tensor(diff <= dclamp, dtype=torch.float32)  # (N,L,L,L)
-        maskdclamp = maskdclamp * (torch.ones([L, L]) - torch.eye(L)).to(diff.device)
-        maskprob = torch.as_tensor(torch.rand([L, L]) >= (1 - ratio),
-                                   dtype=torch.float32)  # uniform in [0,1), 按照概率ratio提取dclamp之外的残基对
-        maskprob = torch.triu(maskprob, diagonal=1)
-        maskprob = maskprob + maskprob.permute(1, 0)
-        maskprob = maskprob.to(diff.device)
-        mask = maskprob * (1 - maskdclamp) + maskdclamp
-        fapeLoss = torch.sum(diff * mask) / (torch.sum(mask) + eps)
-
-    del mask
-
-    return fapeLoss, realFape
-
+from utils.fapeloss import getFapeLoss
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
 from utils.init_parameters import weight_init
-train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
-test_file = h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py")
+from utils.set_seed import seed_torch
 
-train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
-test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
 
+class SeedSampler():
+    def __init__(self, data_source, seed):
+        self.data_source = data_source
+        self.seed = seed
+
+    def __iter__(self):
+        seed_torch(self.seed)
+        seed_random_ls = torch.randperm(len(self.data_source))
+        return iter(seed_random_ls)
+
+    def __len__(self):
+        return len(self.data_source)
+
+
+### define model
 coor_confuse = coorConfuse().to(device)
 coor_confuse.apply(weight_init)
 opt = torch.optim.Adam(coor_confuse.parameters(), lr=1e-3)
 
-
-### train model
-num_epochs = 10
+### load Data & SummaryWriter
+train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
 train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/train_epoch_record")
 train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/train_record")
+
+num_epochs = 10
 for epoch in range(num_epochs):
-    i = -1
+    # use seed to set specific order on train_dataloader&train_file(h5py)
+    seed = epoch  # 干脆把epoch当成seed好了
+    seed_torch(seed)
+    total_num = len(train_ds)
+    seed_random_ls = torch.randperm(total_num)   # for train_file(h5py)
+    mySampler = SeedSampler(train_ds, seed)  # for train_dataloader
+    train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False, sampler=mySampler)
+    train_dataloader = iter(train_dataloader)
+
+
+    i = -1   # 用于梯度累加，记录梯度回传达到5个的时间点
     global_step = -1
     total_fapeloss = 0
     total_loss = 0
-    for data in train_dataloader:
+    for index in seed_random_ls:
         i += 1
+        index = int(index)
+        print(index)
         global_step += 1
-        pred_coor = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["aligned_chains"], dtype=np.float32)).to(device)
-        pred_x2d = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["pred_x2d"], dtype=np.float32)).to(device)
-        lddt_score = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["lddt_score"], dtype=np.float32)).to(device)
-        indices = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["indices"], dtype=np.compat.long)).cpu()
+        pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["aligned_chains"], dtype=np.float32)).to(device)
+        pred_x2d = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_x2d"], dtype=np.float32)).to(device)
+        lddt_score = torch.from_numpy(np.array(train_file["protein"+str(index)]["lddt_score"], dtype=np.float32)).to(device)
+        indices = torch.from_numpy(np.array(train_file["protein"+str(index)]["indices"], dtype=np.compat.long)).cpu()
         indices = indices.squeeze()
+
+        data = next(train_dataloader)
+        _, _, full_label_coor, _ = data
+        if full_label_coor.shape[-2] != lddt_score.shape[-1]:
+            print(full_label_coor.shape, lddt_score.shape)
+            raise ValueError("随机数失败……")
 
         import time
         beg = time.time()
@@ -90,11 +81,11 @@ for epoch in range(num_epochs):
         # print("inference time: ", time.time()-beg)
 
         ### compute label & loss
-        rotationMatrix = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["rotation_matrix"],dtype=np.float32)).to(device)
+        rotationMatrix = torch.from_numpy(np.array(train_file["protein"+str(index)]["rotation_matrix"],dtype=np.float32)).to(device)
         rotationMatrix = torch.inverse(rotationMatrix)
         rotationMatrix = torch.concat((torch.eye(3, device=device)[None,:,:], rotationMatrix), dim=0)
 
-        translationVector = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["translation_matrix"],dtype=np.float32)).to(device)
+        translationVector = torch.from_numpy(np.array(train_file["protein"+str(index)]["translation_matrix"],dtype=np.float32)).to(device)
         translationVector = torch.concat((torch.zeros(1,3, device=device), translationVector), dim=0)
 
         L = confused_coor.shape[-2]
@@ -102,10 +93,9 @@ for epoch in range(num_epochs):
 
         pred_coor = torch.einsum("bchw, cwq -> bchq", pred_coor_tmp, rotationMatrix)
 
-        _, _, full_label_coor, _ = data
 
         ### 还要把预测出来的pred_coor保存下来。。。害，算了算了，做一次label，后面就都可以用了
-        pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["pred_coor"], dtype=np.float32))
+        pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_coor"], dtype=np.float32))
         label_coor = full_label_coor[:,indices,:,:]
         
         pre_pred_coor = pre_pred_coor[:,indices,:,:]
@@ -133,13 +123,11 @@ for epoch in range(num_epochs):
         optim_loss = loss / 5
         optim_loss.backward()
         train_record.add_scalar("fapeloss", avg_fapeloss,global_step)
-        # train_record.add_scalar("advance", advance.item(),global_step)
         train_record.add_scalar("loss", avg_loss,global_step)
         
         if global_step%100 == 0:
             print("global_step %d" % global_step)
             print("fapeloss", avg_fapeloss)
-            # print("advance", advance.item())
             print("loss", avg_loss)
 
         if i == 5:
@@ -148,8 +136,6 @@ for epoch in range(num_epochs):
             i = -1
 
     train_epoch_record.add_scalar("fapeloss", avg_fapeloss,epoch+1)
-    # train_epoch_record.add_scalar("advance", advance.item(),epoch+1)
     train_epoch_record.add_scalar("loss", avg_loss,epoch+1)
 
 train_file.close()
-test_file.close()

@@ -1,3 +1,6 @@
+### 在这个版本中，还没有将坐标Align到一起，就使用了Attention，意义不大
+
+
 import torch
 from torch import nn
 from model.ResNet import resnet_block
