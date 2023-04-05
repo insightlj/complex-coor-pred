@@ -242,12 +242,12 @@ if __name__ == "__main__":
     from config import NUM_BLOCKS,device,eps
     # load data
     model_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch34.pt"
-    test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
+    train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
     net_pt = torch.load(model_pt_name, map_location=device)
 
     with torch.no_grad():
         i = -1
-        for data in test_dataloader:
+        for data in train_dataloader:
             beg = time.time()
             i += 1
             embed, atten, coor_label, L = data
@@ -260,7 +260,7 @@ if __name__ == "__main__":
             pred_coor = pred_coor_4_blocks[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
             print(pred_coor.shape)  
 
-            with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "a") as f:
+            with h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "a") as f:
                 if "pred_coor" in f["protein" + str(i)].keys():
                     del f["protein" + str(i)]["pred_coor"] 
                 f["protein" + str(i)]["pred_coor"] = pred_coor.cpu()

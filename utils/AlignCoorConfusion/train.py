@@ -51,10 +51,10 @@ from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
 from utils.init_parameters import weight_init
-# train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
+train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
 test_file = h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py")
 
-# train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
+train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
 
 coor_confuse = coorConfuse().to(device)
@@ -71,13 +71,13 @@ for epoch in range(num_epochs):
     global_step = -1
     total_fapeloss = 0
     total_loss = 0
-    for data in test_dataloader:
+    for data in train_dataloader:
         i += 1
         global_step += 1
-        pred_coor = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["aligned_chains"], dtype=np.float32)).to(device)
-        pred_x2d = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["pred_x2d"], dtype=np.float32)).to(device)
-        lddt_score = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["lddt_score"], dtype=np.float32)).to(device)
-        indices = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["indices"], dtype=np.compat.long)).cpu()
+        pred_coor = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["aligned_chains"], dtype=np.float32)).to(device)
+        pred_x2d = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["pred_x2d"], dtype=np.float32)).to(device)
+        lddt_score = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["lddt_score"], dtype=np.float32)).to(device)
+        indices = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["indices"], dtype=np.compat.long)).cpu()
         indices = indices.squeeze()
 
         import time
@@ -90,11 +90,11 @@ for epoch in range(num_epochs):
         # print("inference time: ", time.time()-beg)
 
         ### compute label & loss
-        rotationMatrix = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["rotation_matrix"],dtype=np.float32)).to(device)
+        rotationMatrix = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["rotation_matrix"],dtype=np.float32)).to(device)
         rotationMatrix = torch.inverse(rotationMatrix)
         rotationMatrix = torch.concat((torch.eye(3, device=device)[None,:,:], rotationMatrix), dim=0)
 
-        translationVector = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["translation_matrix"],dtype=np.float32)).to(device)
+        translationVector = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["translation_matrix"],dtype=np.float32)).to(device)
         translationVector = torch.concat((torch.zeros(1,3, device=device), translationVector), dim=0)
 
         L = confused_coor.shape[-2]
@@ -105,7 +105,7 @@ for epoch in range(num_epochs):
         _, _, full_label_coor, _ = data
 
         ### 还要把预测出来的pred_coor保存下来。。。害，算了算了，做一次label，后面就都可以用了
-        pre_pred_coor = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["pred_coor"], dtype=np.float32))
+        pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(global_step)]["pred_coor"], dtype=np.float32))
         label_coor = full_label_coor[:,indices,:,:]
         
         pre_pred_coor = pre_pred_coor[:,indices,:,:]
@@ -150,3 +150,6 @@ for epoch in range(num_epochs):
     train_epoch_record.add_scalar("fapeloss", avg_fapeloss,epoch+1)
     # train_epoch_record.add_scalar("advance", advance.item(),epoch+1)
     train_epoch_record.add_scalar("loss", avg_loss,epoch+1)
+
+train_file.close()
+test_file.close()
