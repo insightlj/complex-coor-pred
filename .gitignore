@@ -3,6 +3,7 @@
 model/checkpoint/
 events.*
 utils/plddt_checkpoints
+utils/AlignCoorConfusion/checkpoints
 
 logs/
 nohup/

@@ -1,6 +1,9 @@
 # function: 测试coor_confuse模型的性能
 # Author: Jun Li
 
+import sys
+sys.path.append("/home/rotation3/complex-coor-pred/")
+
 import torch
 import numpy as np
 from torch import nn
@@ -11,7 +14,6 @@ from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
-from utils.init_parameters import weight_init
 from utils.fapeloss import getFapeLoss
 from utils.cal_lddt_single import cal_lddt
 
@@ -19,20 +21,26 @@ train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
 
 coor_confuse = coorConfuse().to(device)
-coor_confuse = torch.load(model_pt_name)
+NAME = "official-1"
+model_pt_name = "/home/rotation3/complex-coor-pred/utils/AlignCoorConfusion/checkpoints/" + NAME + "/epoch0.pt"
+# model_pt_name = "/home/rotation3/complex-coor-pred/utils/AlignCoorConfusion/checkpoints/demo-1/epoch0.pt"
+coor_confuse.load_state_dict(torch.load(model_pt_name))
+
+from utils.init_parameters import weight_init
+coor_confuse.apply(weight_init)
 coor_confuse.eval()
 
 ### test model
-test_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/test_epoch_record")
-test_record = SummaryWriter("./utils/AlignCoorConfusion/logs/test_record")
-lddt_record = SummaryWriter("./utils/AlignCoorConfusion/log/lddt")
+test_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/test_epoch_record")
+test_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/test_record")
+lddt_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/lddt")
 
-with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as test_file:
-    with torch.no_grad():
+with torch.no_grad():
+    with h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "r") as test_file:
         global_step = -1
         total_fapeloss = 0
         total_loss = 0
-        for data in test_dataloader:
+        for data in train_dataloader:
             global_step += 1
             pred_coor = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["aligned_chains"], dtype=np.float32)).to(device)
             pred_x2d = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["pred_x2d"], dtype=np.float32)).to(device)
@@ -40,8 +48,6 @@ with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as t
             indices = torch.from_numpy(np.array(test_file["protein"+str(global_step)]["indices"], dtype=np.compat.long)).cpu()
             indices = indices.squeeze()
 
-            import time
-            beg = time.time()
             pred_coor_c_attn = pred_coor.unsqueeze(0)
             pred_coor_r_attn = pred_coor.unsqueeze(0)
 
@@ -90,13 +96,11 @@ with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as t
             avg_loss = total_loss / (global_step + 1)
 
             test_record.add_scalar("fapeloss", avg_fapeloss,global_step)
-            # train_record.add_scalar("advance", advance.item(),global_step)
             test_record.add_scalar("loss", avg_loss,global_step)
             
-            if global_step%100 == 0:
+            if global_step in range(100) or global_step%100 == 0:
                 print("global_step %d" % global_step)
                 print("fapeloss", avg_fapeloss)
-                # print("advance", advance.item())
                 print("loss", avg_loss)
             
 
@@ -107,22 +111,20 @@ with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as t
             pre_lddt_max = pre_top4_lddt_score.max()
 
             # 4_lddt
-            print(single_label.shape)
-            print(pred_coor.shape)
-            single_label = label_coor[0,:,:]
+            single_label = label_coor[0,:,:]  # 在所有的label中选择第一条序列作为label(经过测试，任意两条之间的lddt值均为1，所以选哪一条序列都无所谓)
             top4_lddt_score = []
             for chain in pred_coor:
-                top4_lddt_score.append(cal_lddt(single_label, chain))
-            lddt_mean = top4_lddt_score.mean()
-            lddt_max = top4_lddt_score.max()
+                lddt = cal_lddt(single_label, chain)
+                top4_lddt_score.append(lddt)
+            lddt_mean = torch.mean(torch.tensor(top4_lddt_score))
+            lddt_max = torch.max(torch.tensor(top4_lddt_score))
 
             lddt_record.add_scalars("lddt_mean",
                                     {"pre_lddt_mean":pre_lddt_mean,
                                     "lddt_mean":lddt_mean},
                                     global_step)
             lddt_record.add_scalars("lddt_max",
-                                    {"pre_lddt_mean":pre_lddt_max,
-                                    "lddt_mean":lddt_max},
+                                    {"pre_lddt_max":pre_lddt_max,
+                                    "lddt_max":lddt_max},
                                     global_step)
-
             

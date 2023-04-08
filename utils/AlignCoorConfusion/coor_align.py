@@ -1,6 +1,9 @@
 # funtion: 将2-64条序列Align到第一条序列上. 这个过程没有参数, 使用的是scipy.optimize提供的BFGS和Powell
 # Author: Jun Li
 
+import sys
+sys.path.append("/home/rotation3/complex-coor-pred/")
+
 import numpy as np
 from scipy import optimize as opt
 
@@ -103,12 +106,12 @@ if __name__ == '__main__':
     get_pLDDT = torch.load("/home/rotation3/complex-coor-pred/utils/plddt_checkpoints/Full_train/epoch7_mark.pt")
     
     # load data
-    model_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch34.pt"
+    model_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch16.pt"
     train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
     test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
     net_pt = torch.load(model_pt_name, map_location=device)
 
-    with h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "a") as train_file:
+    with h5py.File("utils/AlignCoorConfusion/h5py_data/epoch16_train_dataset.h5py", "a") as train_file:
         with torch.no_grad():
             i = -1
             for data in train_dataloader:
@@ -129,22 +132,19 @@ if __name__ == '__main__':
 
                 # select top 64 highest lddt chains
                 # return new pred_coor & lddt_score
-                # indices = select_chains(lddt_score).cpu()
-                
-                # pred_coor = pred_coor[0,indices,:]
-                indices = train_file["protein" + str(i)]["indices"]
+                indices = select_chains(lddt_score).cpu()
+                pred_coor = pred_coor[0,indices,:]
                 lddt_score = lddt_score[0,indices,:].cpu()
 
-                # __保存lddt_score和pred_x2d中，暂时不需要，注释掉__
                 # !!!!COOR ALIGN!!!! 
                 # 将pred转化为numpy, 从而进行align, 得到align_chains
-                # pred = ((pred_coor.squeeze())).cpu().numpy()
-                # rotation_matrix_ls = []
-                # translation_matrix_ls = []
-                # chain_array = align_chain(pred)
-                # aligned_chains = torch.from_numpy(chain_array)
-                # rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
-                # translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
+                pred = ((pred_coor.squeeze())).cpu().numpy()
+                rotation_matrix_ls = []
+                translation_matrix_ls = []
+                chain_array = align_chain(pred)
+                aligned_chains = torch.from_numpy(chain_array)
+                rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
+                translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
                 
                 # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains
                 # lddt_gate = lddtGate(lddt_score)
@@ -153,121 +153,69 @@ if __name__ == '__main__':
                 # gated_aligned_chains = torch.masked_fill(aligned_chains, ~lddt_gate, value=0)
 
                 
-                # protein = train_file.create_group("protein" + str(i))
-                # protein["aligned_chains"] = aligned_chains
-                # protein["rotation_matrix"] = rotation_matrix
-                # protein["translation_matrix"] = translation_matrix
+                protein = train_file.create_group("protein" + str(i))
+                protein["aligned_chains"] = aligned_chains
+                protein["rotation_matrix"] = rotation_matrix
+                protein["translation_matrix"] = translation_matrix
+                protein["indices"] = indices
+                protein["lddt_score"] = lddt_score
+                protein["pred_x2d"] = pred_x2d.cpu()
+                protein["pred_coor"] = pred_coor.cpu()
                 # if "indices" in train_file["protein" + str(i)].keys():
                 #     del train_file["protein" + str(i)]["indices"]
-                if "lddt_score" in train_file["protein" + str(i)].keys():
-                    del train_file["protein" + str(i)]["lddt_score"]
-                if "pred_x2d" in train_file["protein" + str(i)].keys():
-                    del train_file["protein" + str(i)]["pred_x2d"]
-                # train_file["protein" + str(i)]["indices"] = indices
-                train_file["protein" + str(i)]["lddt_score"] = lddt_score
-                train_file["protein" + str(i)]["pred_x2d"] = pred_x2d.cpu()
-                if i < 500:
-                    print(lddt_score.shape)
-                # if "aligned_chains" in train_file["protein" + str(i)].keys():
-                #     del train_file["protein" + str(i)]["aligned_chains"] 
-                # train_file["protein" + str(i)]["aligned_chains"] = aligned_chains.cpu()
                 print("protein{} saved! time usage:{}".format(i, time.time()-beg))
 
     ### ____test_dataset save____
-    # with torch.no_grad():
-    #     i = -1
-    #     for data in test_dataloader:
-    #         beg = time.time()
-    #         i += 1
-    #         embed, atten, coor_label, L = data
-    #         embed = embed.to(device)
-    #         atten = atten.to(device)
-    #         coor_label = coor_label.to(device)
-    #         L = L.to(device)
-    #         pred_coor_4_blocks, pred_x2d = net_pt(embed, atten)
-    #         pred_coor = pred_coor_4_blocks[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
-
-    #         # compute lddt
-    #         plddt_score = get_pLDDT(pred_coor, pred_x2d)   # 在测试的时候使用pLDDT, 因为测试就是为了完全模仿真实情况
-    #         # truelddt_score = get_trueLDDT(pred_coor, coor_label)   # 在训练的时候使用trueLDDT(或许可以两个混着用？相当于数据增强，毕竟之前的pLDDT中，应该保存了LDDT之外的信息。但是我做筛选，使用的就是LDDT，其他是不用的。所以还是越准确越好)
-    #         lddt_score = torch.clone(plddt_score)
-
-    #         # select top 64 highest lddt chains
-    #         # return new pred_coor & lddt_score
-    #         indices = select_chains(lddt_score).cpu()
-            
-    #         pred_coor = pred_coor[0,indices,:]
-    #         lddt_score = lddt_score[0,indices,:].cpu()
-
-            
-    #         # !!!!COOR ALIGN!!!! 
-    #         # 将pred转化为numpy, 从而进行align, 得到align_chains
-    #         pred = ((pred_coor.squeeze())).cpu().numpy()
-    #         print(pred.shape)   # (L,L,3)
-    #         rotation_matrix_ls = []
-    #         translation_matrix_ls = []
-    #         chain_array = align_chain(pred)
-    #         aligned_chains = torch.from_numpy(chain_array)
-    #         rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
-    #         translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
-            
-    #         # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains
-    #         # lddt_gate = lddtGate(lddt_score)
-    #         # lddt_gate = lddt_gate.bool().squeeze().cpu()
-    #         # lddt_gate = torch.tile(lddt_gate[:,:,None], (1,1,3))
-    #         # gated_aligned_chains = torch.masked_fill(aligned_chains, ~lddt_gate, value=0)
-            
-
-    #         # with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "a") as test_file:
-    #         #     # protein = test_file.create_group("protein" + str(i))
-    #         #     # protein["aligned_chains"] = aligned_chains     # LL3
-    #         #     # protein["rotation_matrix"] = rotation_matrix    # L33
-    #         #     # protein["translation_matrix"] = translation_matrix  # L3
-                
-    #         #     if "indices" in test_file["protein" + str(i)].keys():
-    #         #         del test_file["protein" + str(i)]["indices"]
-    #         #     if "lddt_score" in test_file["protein" + str(i)].keys():
-    #         #         del test_file["protein" + str(i)]["lddt_score"]
-    #         #     if "pred_x2d" in test_file["protein" + str(i)].keys():
-    #         #         del test_file["protein" + str(i)]["pred_x2d"]
-    #         #     test_file["protein" + str(i)]["indices"] = indices
-    #         #     test_file["protein" + str(i)]["lddt_score"] = lddt_score
-    #         #     test_file["protein" + str(i)]["pred_x2d"] = pred_x2d.cpu()
-            
-    #         print("protein{} saved! time usage:{}".format(i, time.time()-beg)) 
-
-
-
-if __name__ == "__main_ _":
-    import h5py
-    import torch
-    import h5py
-    import time
-    from main import train_ds, test_ds
-    from torch.utils.data import DataLoader
-    from config import NUM_BLOCKS,device,eps
-    # load data
-    model_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch34.pt"
-    train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
-    net_pt = torch.load(model_pt_name, map_location=device)
-
     with torch.no_grad():
         i = -1
-        for data in train_dataloader:
+        for data in test_dataloader:
             beg = time.time()
             i += 1
             embed, atten, coor_label, L = data
-            print(L)
             embed = embed.to(device)
             atten = atten.to(device)
             coor_label = coor_label.to(device)
             L = L.to(device)
             pred_coor_4_blocks, pred_x2d = net_pt(embed, atten)
             pred_coor = pred_coor_4_blocks[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
-            print(pred_coor.shape)  
 
-            with h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "a") as f:
-                if "pred_coor" in f["protein" + str(i)].keys():
-                    del f["protein" + str(i)]["pred_coor"] 
-                f["protein" + str(i)]["pred_coor"] = pred_coor.cpu()
-            print("protein{} saved! time usage:{}".format(i, time.time()-beg))
+            # compute lddt
+            plddt_score = get_pLDDT(pred_coor, pred_x2d)   # 在测试的时候使用pLDDT, 因为测试就是为了完全模仿真实情况
+            # truelddt_score = get_trueLDDT(pred_coor, coor_label)   # 在训练的时候使用trueLDDT(或许可以两个混着用？相当于数据增强，毕竟之前的pLDDT中，应该保存了LDDT之外的信息。但是我做筛选，使用的就是LDDT，其他是不用的。所以还是越准确越好)
+            lddt_score = plddt_score
+
+            # select top 64 highest lddt chains
+            # return new pred_coor & lddt_score
+            indices = select_chains(lddt_score).cpu()
+            pred_coor = pred_coor[0,indices,:]
+            lddt_score = lddt_score[0,indices,:].cpu()
+
+            
+            # !!!!COOR ALIGN!!!! 
+            # 将pred转化为numpy, 从而进行align, 得到align_chains
+            pred = ((pred_coor.squeeze())).cpu().numpy()
+            print(pred.shape)   # (L,L,3)
+            rotation_matrix_ls = []
+            translation_matrix_ls = []
+            chain_array = align_chain(pred)
+            aligned_chains = torch.from_numpy(chain_array)
+            rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
+            translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
+            
+            # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains
+            # lddt_gate = lddtGate(lddt_score)
+            # lddt_gate = lddt_gate.bool().squeeze().cpu()
+            # lddt_gate = torch.tile(lddt_gate[:,:,None], (1,1,3))
+            # gated_aligned_chains = torch.masked_fill(aligned_chains, ~lddt_gate, value=0)
+            
+
+            with h5py.File("utils/AlignCoorConfusion/h5py_data/epoch16_test_dataset.h5py", "a") as test_file:
+                protein = test_file.create_group("protein" + str(i))
+                protein["aligned_chains"] = aligned_chains     # LL3
+                protein["rotation_matrix"] = rotation_matrix    # L33
+                protein["translation_matrix"] = translation_matrix  # L3
+                protein["indices"] = indices
+                protein["lddt_score"] = lddt_score
+                protein["pred_x2d"] = pred_x2d.cpu()
+                protein["pred_coor"] = pred_coor.cpu()
+            print("protein{} saved! time usage:{}".format(i, time.time()-beg)) 

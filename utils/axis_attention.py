@@ -59,7 +59,7 @@ class ColAttention(nn.Module):
         self.key_conv = nn.Conv2d(in_channels=in_dim, out_channels = self.q_k_dim, kernel_size=1)
         self.value_conv = nn.Conv2d(in_channels=in_dim, out_channels = self.in_dim, kernel_size=1)
         self.softmax = Softmax(dim=2)
-        self.gamma = nn.Parameter(torch.zeros(1)).to(self.device)
+        self.gamma = nn.Parameter(torch.ones(1).to(self.device).requires_grad_())
         self.x2d_reduction = nn.Conv2d(in_channels=105, out_channels=64, kernel_size=3,stride=1, padding=1)   # 105是x2d embedding的维度；64是我选择的坐标系的套数
 
 
@@ -115,7 +115,7 @@ class BiasRowAttention(nn.Module):
         self.key_conv = nn.Conv2d(in_channels=in_dim, out_channels = self.q_k_dim, kernel_size=1)
         self.value_conv = nn.Conv2d(in_channels=in_dim, out_channels = self.in_dim, kernel_size=1)
         self.softmax = Softmax(dim=2)
-        self.gamma = nn.Parameter(torch.zeros(1)).to(self.device)
+        self.gamma = nn.Parameter(torch.ones(1).to(self.device).requires_grad_())
         self.x2d_reduction = nn.Conv2d(in_channels=105, out_channels=64, kernel_size=3, padding=1)   # 105是x2d embedding的维度；64是我选择的坐标系的套数
         self.x2d_resnet = nn.Sequential(*resnet_block(64,64,4))
         self.x2d_restore = nn.Conv2d(in_channels=64, out_channels=105, kernel_size=3, padding=1)

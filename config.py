@@ -1,10 +1,11 @@
 import torch
 import os
 from torch import nn
-# os.environ["CUDA_VISIBLE_DEVICES"]= "0"
+os.environ["CUDA_VISIBLE_DEVICES"]= "0"
 # os.environ["CUDA_VISIBLE_DEVICES"]= "1"
 # os.environ["CUDA_VISIBLE_DEVICES"]= "2"
-os.environ["CUDA_VISIBLE_DEVICES"]= "3"
+# os.environ["CUDA_VISIBLE_DEVICES"]= "3"
+# os.environ["CUDA_VISIBLE_DEVICES"]= "4"
 
 BATCH_SIZE = 1
 BATCH_SIZE_1 = 3

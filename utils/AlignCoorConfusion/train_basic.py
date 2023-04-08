@@ -3,6 +3,7 @@
 
 import torch
 import numpy as np
+import os
 from config import device
 import h5py
 from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
@@ -18,28 +19,28 @@ class SeedSampler():
     def __init__(self, data_source, seed):
         self.data_source = data_source
         self.seed = seed
-
     def __iter__(self):
         seed_torch(self.seed)
         seed_random_ls = torch.randperm(len(self.data_source))
         return iter(seed_random_ls)
-
     def __len__(self):
         return len(self.data_source)
 
 
 ### define model
+NAME = "basic"
 coor_confuse = coorConfuse().to(device)
 coor_confuse.apply(weight_init)
 opt = torch.optim.Adam(coor_confuse.parameters(), lr=1e-3)
 
 ### load Data & SummaryWriter
 train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
-train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/train_epoch_record")
-train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/train_record")
+train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
 
 num_epochs = 10
 for epoch in range(num_epochs):
+    train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME +"/train_record/epoch" + str(epoch))
+
     # use seed to set specific order on train_dataloader&train_file(h5py)
     seed = epoch  # 干脆把epoch当成seed好了
     seed_torch(seed)
@@ -57,7 +58,6 @@ for epoch in range(num_epochs):
     for index in seed_random_ls:
         i += 1
         index = int(index)
-        print(index)
         global_step += 1
         pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["aligned_chains"], dtype=np.float32)).to(device)
         pred_x2d = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_x2d"], dtype=np.float32)).to(device)
@@ -125,7 +125,7 @@ for epoch in range(num_epochs):
         train_record.add_scalar("fapeloss", avg_fapeloss,global_step)
         train_record.add_scalar("loss", avg_loss,global_step)
         
-        if global_step%100 == 0:
+        if global_step in range(2000) or global_step%100 == 0:
             print("global_step %d" % global_step)
             print("fapeloss", avg_fapeloss)
             print("loss", avg_loss)
@@ -134,6 +134,15 @@ for epoch in range(num_epochs):
             opt.step()
             opt.zero_grad()
             i = -1
+    
+    
+    if not os.path.exists("utils/AlignCoorConfusion/checkpoints/" +  NAME):
+        os.mkdir("utils/AlignCoorConfusion/checkpoints/" +  NAME)
+        PATH = "utils/AlignCoorConfusion/checkpoints/" +  NAME +"/epoch" + str(epoch) + ".pt"
+        torch.save(coor_confuse.state_dict(), PATH)
+    ### 加载模型参数
+    # the_model = TheModelClass(*args, **kwargs)
+    # the_model.load_state_dict(torch.load(PATH))
 
     train_epoch_record.add_scalar("fapeloss", avg_fapeloss,epoch+1)
     train_epoch_record.add_scalar("loss", avg_loss,epoch+1)
