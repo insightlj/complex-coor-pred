@@ -1,7 +1,7 @@
 import torch
 import os
 from torch import nn
-os.environ["CUDA_VISIBLE_DEVICES"]= "0"
+# os.environ["CUDA_VISIBLE_DEVICES"]= "0"
 # os.environ["CUDA_VISIBLE_DEVICES"]= "1"
 # os.environ["CUDA_VISIBLE_DEVICES"]= "2"
 # os.environ["CUDA_VISIBLE_DEVICES"]= "3"

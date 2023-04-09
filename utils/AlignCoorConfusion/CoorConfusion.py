@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     pred_coor = torch.randn(64,91,3).to(device)
     pred_x2d = torch.randn(105,91,91).to(device)
-    lddt_score = torch.randn(64,91).to(device)
+    lddt_score = torch.randn(1,64,91).to(device)
 
     pred_coor_c_attn = pred_coor.unsqueeze(0)
     pred_coor_r_attn = pred_coor.unsqueeze(0)

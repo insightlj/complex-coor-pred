@@ -41,7 +41,8 @@ class coorConfuse(nn.Module):
         self.relu = nn.LeakyReLU(0.1)
         self.softmax = nn.Softmax(dim=-2)
         self.alpha = nn.Parameter(torch.tensor(10.).to(device).requires_grad_())
-        self.cycle_num = np.random.randint(1,10)
+        self.cycle_num = 1
+        # self.cycle_num = np.random.randint(1,10)
 
 
     def forward(self,pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score):

@@ -6,14 +6,15 @@ import numpy as np
 import os
 from config import device
 import h5py
-from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
+from utils.AlignCoorConfusion.CoorConfusion_gate import coorConfuse
 from utils.fapeloss import getFapeLoss
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
 from utils.init_parameters import weight_init
 from utils.set_seed import seed_torch
-
+import sys
+sys.path.append("/home/rotation3/complex-coor-pred/")
 
 class SeedSampler():
     def __init__(self, data_source, seed):
@@ -28,7 +29,7 @@ class SeedSampler():
 
 
 ### define model
-NAME = "basic"
+NAME = "gated"
 coor_confuse = coorConfuse().to(device)
 coor_confuse.apply(weight_init)
 opt = torch.optim.Adam(coor_confuse.parameters(), lr=1e-3)

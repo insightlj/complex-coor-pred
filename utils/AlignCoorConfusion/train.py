@@ -1,35 +1,49 @@
 # function: 先将预测出的 L3 转化为 LL3, 然后再计算FapeLoss
 # Author: Jun Li
 
+
+############ _______init________ ##############
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--name", type=str)
+parser.add_argument("--device", type=int)
+parser.add_argument("--model", type=str)
+FLAGS = parser.parse_args()
+NAME = FLAGS.name
+model = FLAGS.model
+device_index = FLAGS.device
+
+import os
 import torch
+os.environ["CUDA_VISIBLE_DEVICES"]= str(device_index)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+if model=="basic":
+    from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
+elif model=="gate":
+    from utils.AlignCoorConfusion.CoorConfusion_gate import coorConfuse
+else:
+    raise ValueError("wrong input of model! choose one between basic/gate")
+
+import sys
+sys.path.append("/home/rotation3/complex-coor-pred/")
+
 import numpy as np
 import os
-from config import device
 import h5py
-from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
+from utils.AlignCoorConfusion.assist_class import SeedSampler
 from utils.fapeloss import getFapeLoss
 from torch.utils.data import DataLoader
-from main import train_ds, test_ds
+from main import train_ds
 from torch.utils.tensorboard import SummaryWriter
 from utils.init_parameters import weight_init
 from utils.set_seed import seed_torch
-
-
-class SeedSampler():
-    def __init__(self, data_source, seed):
-        self.data_source = data_source
-        self.seed = seed
-    def __iter__(self):
-        seed_torch(self.seed)
-        seed_random_ls = torch.randperm(len(self.data_source))
-        return iter(seed_random_ls)
-    def __len__(self):
-        return len(self.data_source)
+#########################################
 
 
 ### define model
-NAME = "gated"
 coor_confuse = coorConfuse().to(device)
+# coor_confuse.load_state_dict(torch.load("utils/AlignCoorConfusion/checkpoints/basic/epoch0.pt"))
 coor_confuse.apply(weight_init)
 opt = torch.optim.Adam(coor_confuse.parameters(), lr=1e-3)
 
@@ -38,7 +52,7 @@ train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
 train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
 
 num_epochs = 10
-for epoch in range(num_epochs):
+for epoch in range(0, num_epochs):
     train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME +"/train_record/epoch" + str(epoch))
 
     # use seed to set specific order on train_dataloader&train_file(h5py)
@@ -53,8 +67,9 @@ for epoch in range(num_epochs):
 
     i = -1   # 用于梯度累加，记录梯度回传达到5个的时间点
     global_step = -1
-    total_fapeloss = 0
     total_loss = 0
+    total_fapeloss = 0
+    total_realfape = 0
     for index in seed_random_ls:
         i += 1
         index = int(index)
@@ -76,9 +91,15 @@ for epoch in range(num_epochs):
         pred_coor_c_attn = pred_coor.unsqueeze(0)
         pred_coor_r_attn = pred_coor.unsqueeze(0)
 
-        confused_coor = coor_confuse(pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score)
+
+        if model=="basic":
+            confused_coor = coor_confuse(pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score)
+        elif model=="gate":
+            pred_coor = pred_coor.unsqueeze(0)
+            confused_coor = coor_confuse(pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score)
+        else:
+            raise ValueError("wrong input of model! choose one between basic/gate")
         confused_coor = confused_coor.squeeze().permute(2,1,0)
-        # print("inference time: ", time.time()-beg)
 
         ### compute label & loss
         rotationMatrix = torch.from_numpy(np.array(train_file["protein"+str(index)]["rotation_matrix"],dtype=np.float32)).to(device)
@@ -90,45 +111,52 @@ for epoch in range(num_epochs):
 
         L = confused_coor.shape[-2]
         pred_coor_tmp = torch.tile(confused_coor[:,None,:,:], (1,64,1,1)) - torch.tile(translationVector[None,:,None,:], (1,1,L,1))
-
         pred_coor = torch.einsum("bchw, cwq -> bchq", pred_coor_tmp, rotationMatrix)
 
-
-        ### 还要把预测出来的pred_coor保存下来。。。害，算了算了，做一次label，后面就都可以用了
-        pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_coor"], dtype=np.float32))
-        label_coor = full_label_coor[:,indices,:,:]
         
-        pre_pred_coor = pre_pred_coor[:,indices,:,:]
-        pre_pred_coor.to(device)    
-        pre_diff = pre_pred_coor - label_coor
-        pre_diff = pre_diff.permute(0,3,1,2)
-        pre_fapeloss, pre_realfape = getFapeLoss(pre_diff)
+        # 可以当网络训练即将结束的时候，再调用带有pre_fapeloss的loss
+        # pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_coor"], dtype=np.float32))
+        # pre_pred_coor.to(device)    
+        # pre_diff = pre_pred_coor - label_coor
+        # pre_diff = pre_diff.permute(0,3,1,2)
+        # pre_fapeloss, pre_realfape = getFapeLoss(pre_diff, dclamp=50)
 
+        label_coor = full_label_coor[:,indices,:,:]
         label_coor = label_coor.to(device)
+        label_coor = torch.tile(label_coor,(4,1,1,1))
         diff = pred_coor - label_coor
         diff = diff.permute(0,3,1,2)
-        fapeloss, realfape = getFapeLoss(diff)
+        fapeloss_10A, _ = getFapeLoss(diff, dclamp=10)
+        fapeloss_25A, _ = getFapeLoss(diff, dclamp=25)
+        fapeloss_50A, realfape = getFapeLoss(diff, dclamp=50)
 
-        loss = fapeloss - pre_fapeloss  
-        loss = torch.exp(loss)
-        loss = torch.clamp(loss, max=10)
-        # 也可以尝试sigmoid函数
+        loss = (fapeloss_10A + fapeloss_25A + fapeloss_50A) / 3  + realfape/10
+        # 设计这种loss可以给diff中较小的值更高的权重，减小diff较大的部分对loss的影响
+        loss = torch.clamp(loss, max=25)
+
+        ### 网络即将收敛时的loss
+        # loss = torch.exp(fapeloss_10A - pre_fapeloss)
+        # loss = torch.clamp(loss, 10)
         # 当advance是负值的时候，代表着预测水平的进步；当为正值的时候，代表的fapeloss的提升
 
-        total_fapeloss += fapeloss.item()  # kpi
+        total_fapeloss += fapeloss_10A.item()  # kpi
         total_loss += loss.item()  # loss to optim
+        total_realfape += realfape.item()
         avg_fapeloss = total_fapeloss / (global_step + 1)
+        avg_realfape = total_realfape / (global_step + 1)
         avg_loss = total_loss / (global_step + 1)
 
         optim_loss = loss / 5
         optim_loss.backward()
-        train_record.add_scalar("fapeloss", avg_fapeloss,global_step)
         train_record.add_scalar("loss", avg_loss,global_step)
+        train_record.add_scalar("fapeloss_10A", avg_fapeloss,global_step)
+        train_record.add_scalar("realfape", avg_realfape, global_step)
         
         if global_step in range(2000) or global_step%100 == 0:
             print("global_step %d" % global_step)
-            print("fapeloss", avg_fapeloss)
             print("loss", avg_loss)
+            print("fapeloss_10A", avg_fapeloss)
+            print("realfape", avg_realfape)
 
         if i == 5:
             opt.step()
@@ -144,7 +172,9 @@ for epoch in range(num_epochs):
     # the_model = TheModelClass(*args, **kwargs)
     # the_model.load_state_dict(torch.load(PATH))
 
-    train_epoch_record.add_scalar("fapeloss", avg_fapeloss,epoch+1)
+    train_epoch_record.add_scalar("fapeloss_10A", avg_fapeloss,epoch+1)
+    train_epoch_record.add_scalar("realfape", avg_realfape,epoch+1)
     train_epoch_record.add_scalar("loss", avg_loss,epoch+1)
+
 
 train_file.close()
