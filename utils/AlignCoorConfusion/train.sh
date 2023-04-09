@@ -1,6 +1,6 @@
 NAME="gate_I"
 model="gate"
-device=7
+device=6
 logfile="log_${NAME}_train.txt"
 
 nohup \

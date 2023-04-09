@@ -130,7 +130,7 @@ for epoch in range(0, num_epochs):
         fapeloss_25A, _ = getFapeLoss(diff, dclamp=25)
         fapeloss_50A, realfape = getFapeLoss(diff, dclamp=50)
 
-        loss = (fapeloss_10A + fapeloss_25A + fapeloss_50A) / 3  + realfape/10
+        loss = (fapeloss_10A + fapeloss_25A + fapeloss_50A) / 3
         # 设计这种loss可以给diff中较小的值更高的权重，减小diff较大的部分对loss的影响
         loss = torch.clamp(loss, max=25)
 
