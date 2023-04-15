@@ -32,12 +32,15 @@ class MyData(Dataset):
         pdb_index = part_index[idx % self.quarter_data_sum]
         gap = self.coor[pdb_index]['gap'][:]
         coor = self.coor[pdb_index]["xyz"][np.where(gap > 0)[0]]  # [L, 4, 3], 其中L是序列长度，4代表四个原子，顺序是CA， C， N和CB
-        embed = self.embed_atten[pdb_index]['token_embeds'][0, np.where(gap > 0)[0]]
-        atten = self.embed_atten[pdb_index]['feature_2D'][0, :, np.where(gap > 0)[0]][:, :, np.where(gap > 0)[0]]
+        embed = self.embed_atten['embed2560'][pdb_index][0, np.where(gap > 0)[0]]
+        contact = self.embed_atten['contacts'][pdb_index][:, :, np.where(gap > 0)[0]]
+        atten = self.embed_atten['att40'][pdb_index][:, :, np.where(gap > 0)[0]]
 
         coor = torch.from_numpy(coor)
         embed = torch.from_numpy(embed)
+        contact = torch.from_numpy(contact)
         atten = torch.from_numpy(atten)
+        atten = torch.concat((contact, atten), dim=0)
 
         L = embed.shape[0]
         
@@ -103,15 +106,17 @@ class MyBatchSampler(Sampler):
 
 
 if __name__ == "__main__":
-    data_path = '/export/disk1/hujian/cath_database/esm2_3B_targetEmbed.h5'
-    xyz_path = '/export/disk1/hujian/Model/Model510/GAT-OldData/data/xyz.h5'
-    sorted_train_file = "/home/rotation3/example/sorted_train_list.txt"
-    test_file = "/home/rotation3/example/valid_list.txt"
+    from utils.AlignCoorConfusion.assist_class import SeedSampler
+    train_data_path = '/home/rotation3/complex-coor-pred/data/train22310.3besm2.h5'
+    test_data_path = '/home/rotation3/complex-coor-pred/data/valid2000.3besm2.h5'
+    xyz_path = '/home/rotation3/complex-coor-pred/data/xyz.h5'
+    sorted_train_file = "/home/rotation3/complex-coor-pred/data/sorted_train_list.txt"
+    test_file = "/home/rotation3/complex-coor-pred/data/valid_list.txt"
     trunc_points = np.load("/home/rotation3/complex-coor-pred/data/trunc_points.npy")
     
-    dataset = MyData(data_path, xyz_path, sorted_train_file, train_mode=True)
-    batch_sampler = MyBatchSampler()
-    train_dl = DataLoader(dataset, batch_sampler=batch_sampler)
+    dataset = MyData(train_data_path, xyz_path, sorted_train_file, train_mode=True)
+    mySampler = SeedSampler(dataset, 5)
+    train_dl = DataLoader(dataset, sampler=mySampler)
 
     # for i in (100,1000,2000,5100,10000,15000,16000,20000):
     #     embed, atten, coor_label, length = dataset[i]
@@ -120,3 +125,5 @@ if __name__ == "__main__":
     # for i in train_dl:
     #     embed, atten, coor_label, length = i
     #     print(embed.shape, atten.shape, coor_label.shape, length)
+
+    f = h5py.File(xyz_path, "r")

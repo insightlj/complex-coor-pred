@@ -1,3 +1,8 @@
+"""
+该网络相对于ResNet.py来说，将StructureModule的Block变为了四个，并且在每个Block扩大模型的视野。
+"""
+
+
 import torch
 from torch import nn
 from torch.nn.functional import softmax

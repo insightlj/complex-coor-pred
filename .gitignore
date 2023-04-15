@@ -1,5 +1,7 @@
 .idea/
 .git/
+*.pt
+*.h5
 model/checkpoint/
 events.*
 utils/plddt_checkpoints
@@ -11,7 +13,6 @@ nohup/
 
 # 庞大的h5py
 *.h5py
-*.npy
 
 # 快捷方式
 WinSCP*

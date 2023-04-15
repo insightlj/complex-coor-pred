@@ -1,37 +1,42 @@
-import os
-# os.environ["CUDA_VISIBLE_DEVICES"]= "0,1,2,3"
+# Author: Jun Li
+# Function: 训练并测试模型
 
-from config import BATCH_SIZE, loss_fn as l, run_name, EPOCH_NUM, error_file_name
+
+import os
+from config import name, BATCH_SIZE, EPOCH_NUM
 
 import torch
 import traceback
+from loss import Coor_loss
 
 from data.MyData import MyData, MyBatchSampler
 from torch.utils.data import DataLoader
 from model.CoorNet import CoorNet
 
 
-data_path = '/export/disk1/hujian/cath_database/esm2_3B_targetEmbed.h5'
-xyz_path = '/export/disk1/hujian/Model/Model510/GAT-OldData/data/xyz.h5'
-sorted_train_file = "/home/rotation3/example/sorted_train_list.txt"
-test_file = "/home/rotation3/example/valid_list.txt"
+train_data_path = '/home/rotation3/complex-coor-pred/data/train22310.3besm2.h5'
+test_data_path = '/home/rotation3/complex-coor-pred/data/valid2000.3besm2.h5'
+xyz_path = '/home/rotation3/complex-coor-pred/data/xyz.h5'
+sorted_train_file = "/home/rotation3/complex-coor-pred/data/sorted_train_list.txt"
+test_file = "/home/rotation3/complex-coor-pred/data/valid_list.txt"
 
-train_ds = MyData(data_path, xyz_path, sorted_train_file, train_mode=False)
+train_ds = MyData(train_data_path, xyz_path, sorted_train_file, train_mode=False)
 batch_sampler = MyBatchSampler(sorted_train_file)
 trian_dl = DataLoader(train_ds, batch_sampler=batch_sampler)
-test_ds = MyData(data_path, xyz_path, filename=test_file, train_mode=False)
+test_ds = MyData(test_data_path, xyz_path, filename=test_file, train_mode=False)
 test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=True)
 
 model = CoorNet()
+l = Coor_loss()
 
 if __name__ == "__main__":
     from torch.utils.tensorboard import SummaryWriter
-    from scripts.train import train
-    from scripts.test import test
-    from utils.init_parameters import weight_init
+    from scripts.train_CoorNet import train
+    from scripts.test_CoorNet import test
+    from _tmp.draft.init_parameters import weight_init
 
     # try:
-    logs_folder_name = run_name
+    logs_folder_name = name
     epoch_num = EPOCH_NUM
 
     logs_name_sum_train = "logs/" + logs_folder_name + "/" + "summary/train"
