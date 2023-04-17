@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from config import device, NUM_BLOCKS
 from scripts.cal_lddt_multiseq import cal_lddt
 from torch.utils.tensorboard import SummaryWriter
-from _tmp.draft.init_parameters import weight_init
+from utils import weight_init
 
 class pLDDT(nn.Module):
     # zhang guijun老师的做法是：

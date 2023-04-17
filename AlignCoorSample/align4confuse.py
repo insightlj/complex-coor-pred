@@ -10,7 +10,7 @@ from scripts.sample_from_dataset import sample_only
 print("===nohup_begin===")
 for protein_index in range(0,20000,40):
     # print("=========protein{}================".format(protein_index))
-    train_file = h5py.File("/home/rotation3/complex-coor-pred/utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "r")
+    train_file = h5py.File("/home/rotation3/complex-coor-pred/AlignCoorConfusion/h5py_data/train_dataset.h5py", "r")
     protein = train_file["protein"+str(protein_index)]
 
     _,_,label,_ = sample_only(train_mode=False, index=protein_index)

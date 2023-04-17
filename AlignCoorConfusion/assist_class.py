@@ -1,5 +1,5 @@
 import torch
-from _tmp.draft.set_seed import seed_torch
+from utils import seed_torch
 
 class SeedSampler():
     def __init__(self, data_source, seed):

@@ -32,9 +32,10 @@ class MyData(Dataset):
         pdb_index = part_index[idx % self.quarter_data_sum]
         gap = self.coor[pdb_index]['gap'][:]
         coor = self.coor[pdb_index]["xyz"][np.where(gap > 0)[0]]  # [L, 4, 3], 其中L是序列长度，4代表四个原子，顺序是CA， C， N和CB
-        embed = self.embed_atten['embed2560'][pdb_index][0, np.where(gap > 0)[0]]
-        contact = self.embed_atten['contacts'][pdb_index][:, :, np.where(gap > 0)[0]]
-        atten = self.embed_atten['att40'][pdb_index][:, :, np.where(gap > 0)[0]]
+        # embed = self.embed_atten['embed2560'][pdb_index][0, np.where(gap > 0)[0]]
+        embed = self.embed_atten['embed2560'][pdb_index][np.where(gap > 0)[0],:]
+        contact = self.embed_atten['contacts'][pdb_index][:, :, np.where(gap > 0)[0]][:, np.where(gap > 0)[0], :]
+        atten = self.embed_atten['att40'][pdb_index][:, :, np.where(gap > 0)[0]][:, np.where(gap > 0)[0], :]
 
         coor = torch.from_numpy(coor)
         embed = torch.from_numpy(embed)
@@ -106,7 +107,7 @@ class MyBatchSampler(Sampler):
 
 
 if __name__ == "__main__":
-    from utils.AlignCoorConfusion.assist_class import SeedSampler
+    from AlignCoorConfusion.assist_class import SeedSampler
     train_data_path = '/home/rotation3/complex-coor-pred/data/train22310.3besm2.h5'
     test_data_path = '/home/rotation3/complex-coor-pred/data/valid2000.3besm2.h5'
     xyz_path = '/home/rotation3/complex-coor-pred/data/xyz.h5'
@@ -124,6 +125,4 @@ if __name__ == "__main__":
     #
     # for i in train_dl:
     #     embed, atten, coor_label, length = i
-    #     print(embed.shape, atten.shape, coor_label.shape, length)
-
-    f = h5py.File(xyz_path, "r")
+    #     print(embed.shape, atten.shape, coor_label.shape, length

@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 
 protein_index = 0
 train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
-train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py", "r")
+train_file = h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py", "r")
 pred_coor = torch.from_numpy(np.array(train_file["protein"+str(protein_index)]["pred_coor"], dtype=np.float32)).squeeze().to(device)
 lddt_score = torch.from_numpy(np.array(train_file["protein"+str(protein_index)]["lddt_score"], dtype=np.float32)).squeeze().to(device)
 

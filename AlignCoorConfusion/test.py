@@ -19,7 +19,7 @@ from scripts.cal_lddt_tensor import cal_lddt
 train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
 
-from utils.AlignCoorConfusion.CoorConfusion_gate import coorConfuse
+from AlignCoorConfusion.CoorConfusionGate import coorConfuse
 coor_confuse = coorConfuse().to(device)
 NAME = "gate_II"
 EPOCH = 33
@@ -33,7 +33,7 @@ test_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/test_r
 lddt_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/lddt")
 
 with torch.no_grad():
-    with h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as test_file:
+    with h5py.File("AlignCoorConfusion/h5py_data/test_dataset.h5py", "r") as test_file:
         global_step = -1
         count = 0
         total_fapeloss = 0

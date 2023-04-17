@@ -6,14 +6,15 @@ import numpy as np
 import os
 from config import device
 import h5py
-from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
+from AlignCoorConfusion.CoorConfusionGate import coorConfuse
 from scripts.cal_fapeloss import getFapeLoss
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
-from _tmp.draft.init_parameters import weight_init
-from _tmp.draft.set_seed import seed_torch
-
+from utils import weight_init
+from utils import seed_torch
+import sys
+sys.path.append("/home/rotation3/complex-coor-pred/")
 
 class SeedSampler():
     def __init__(self, data_source, seed):
@@ -28,34 +29,33 @@ class SeedSampler():
 
 
 ### define model
-NAME = "demo-1"
+NAME = "gated"
 coor_confuse = coorConfuse().to(device)
 coor_confuse.apply(weight_init)
 opt = torch.optim.Adam(coor_confuse.parameters(), lr=1e-3)
 
 ### load Data & SummaryWriter
-train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/test_dataset.h5py")
-train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/test_epoch_record")
+train_file = h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py")
+train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
 
 num_epochs = 10
 for epoch in range(num_epochs):
-    train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME +"/test_record/epoch" + str(epoch))
+    train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME +"/train_record/epoch" + str(epoch))
 
     # use seed to set specific order on train_dataloader&train_file(h5py)
     seed = epoch  # 干脆把epoch当成seed好了
     seed_torch(seed)
-    total_num = len(test_ds)
-    print(total_num)
+    total_num = len(train_ds)
     seed_random_ls = torch.randperm(total_num)   # for train_file(h5py)
-    mySampler = SeedSampler(test_ds, seed)  # for train_dataloader
-    train_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False, sampler=mySampler)
-    train_dataloader = iter(train_dataloader) 
- 
- 
-    i = -1   # 用于梯度累加，记录梯度回传达到5个的时间点 
-    global_step = -1 
-    total_fapeloss = 0 
-    total_loss = 0 
+    mySampler = SeedSampler(train_ds, seed)  # for train_dataloader
+    train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False, sampler=mySampler)
+    train_dataloader = iter(train_dataloader)
+
+
+    i = -1   # 用于梯度累加，记录梯度回传达到5个的时间点
+    global_step = -1
+    total_fapeloss = 0
+    total_loss = 0
     for index in seed_random_ls:
         i += 1
         index = int(index)

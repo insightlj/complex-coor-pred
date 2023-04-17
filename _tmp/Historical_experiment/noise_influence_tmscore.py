@@ -1,5 +1,5 @@
 import torch
-from scripts.cal_tm_powell import cal_tm, cal_tm_avg, cal_tm_max
+from scripts.cal_tm_BFGS import cal_tm, cal_tm_avg, cal_tm_max
 from scripts.sample_from_dataset import demo_pred_label
 
 

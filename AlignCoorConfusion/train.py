@@ -2,7 +2,7 @@
 # Author: Jun Li
 
 
-############ _______init________ ##############
+########################## _______init________ #############################
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--name", type=str)
@@ -12,41 +12,29 @@ FLAGS = parser.parse_args()
 NAME = FLAGS.name
 model = FLAGS.model
 device_index = FLAGS.device
-
-import os
-import torch
+if model=="basic":from AlignCoorConfusion.CoorConfusion import coorConfuse
+elif model=="gate":from AlignCoorConfusion.CoorConfusionGate import coorConfuse
+else:raise ValueError("wrong input of model! choose one between basic/gate")
+#############################IMPORT##########################################
+import os, sys, h5py, torch, numpy as np
 os.environ["CUDA_VISIBLE_DEVICES"]= str(device_index)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-if model=="basic":
-    from utils.AlignCoorConfusion.CoorConfusion import coorConfuse
-elif model=="gate":
-    from utils.AlignCoorConfusion.CoorConfusion_gate import coorConfuse
-else:
-    raise ValueError("wrong input of model! choose one between basic/gate")
-
-import sys
 sys.path.append("/home/rotation3/complex-coor-pred/")
-
-import numpy as np
-import os
-import h5py
-from utils.AlignCoorConfusion.assist_class import SeedSampler
-from scripts.cal_fapeloss import getFapeLoss
-from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from _tmp.draft.init_parameters import weight_init
-from _tmp.draft.set_seed import seed_torch
-#########################################
+from torch.utils.data import DataLoader
+from AlignCoorConfusion.assist_class import SeedSampler
+from scripts.cal_fapeloss import getFapeLoss
+from utils import weight_init, seed_torch
+###################################################################################
 
 
 ### define model
 coor_confuse = coorConfuse().to(device)
-# coor_confuse.load_state_dict(torch.load("utils/AlignCoorConfusion/checkpoints/basic/epoch0.pt"))
 coor_confuse.apply(weight_init)
+# coor_confuse.load_state_dict(torch.load("utils/AlignCoorConfusion/checkpoints/basic/epoch0.pt"))
 
 ### load Data & SummaryWriter
-train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
+train_file = h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py")
 train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
 
 from torch.utils.data import Dataset
@@ -113,16 +101,21 @@ for epoch in range(num_epochs):
         confused_coor = confused_coor.squeeze().permute(2,1,0)
 
         ### compute label & loss
-        rotationMatrix = torch.from_numpy(np.array(train_file["protein"+str(index)]["rotation_matrix"],dtype=np.float32)).to(device)
-        rotationMatrix = torch.inverse(rotationMatrix)
-        rotationMatrix = torch.concat((torch.eye(3, device=device)[None,:,:], rotationMatrix), dim=0)
+        R = torch.from_numpy(np.array(train_file["protein"+str(index)]["rotation_matrix"],dtype=np.float32)).to(device)
+        R = torch.inverse(R)
+        R = torch.concat((torch.eye(3, device=device)[None,:,:], R), dim=0)
 
-        translationVector = torch.from_numpy(np.array(train_file["protein"+str(index)]["translation_matrix"],dtype=np.float32)).to(device)
-        translationVector = torch.concat((torch.zeros(1,3, device=device), translationVector), dim=0)
+        t = torch.from_numpy(np.array(train_file["protein"+str(index)]["translation_matrix"],dtype=np.float32)).to(device)
+        t = torch.concat((torch.zeros(1,3, device=device), t), dim=0)
 
         L = confused_coor.shape[-2]
-        pred_coor_tmp = torch.tile(confused_coor[:,None,:,:], (1,64,1,1)) - torch.tile(translationVector[None,:,None,:], (1,1,L,1))
-        pred_coor = torch.einsum("bchw, cwq -> bchq", pred_coor_tmp, rotationMatrix)
+        e_pred_coor_ls = []
+        for chain in confused_coor:
+            chain = torch.tile(chain.unsqueeze(0), (64,1,1))
+            tmp_pred_coor = chain - t
+            e_pred_coor = torch.einsum("nlc,ncq->nlq", tmp_pred_coor, R)
+            e_pred_coor_ls.append(e_pred_coor)
+        pred_coor = torch.stack(e_pred_coor_ls, dim=0)
 
         label_coor = full_label_coor[:,indices,:,:]
         label_coor = label_coor.to(device)

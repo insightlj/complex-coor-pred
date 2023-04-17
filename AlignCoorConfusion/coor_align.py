@@ -1,54 +1,50 @@
 # funtion: 将2-64条序列Align到第一条序列上. 这个过程没有参数, 使用的是scipy.optimize提供的BFGS和Powell
 # Author: Jun Li
+"""
+H5py数据结构与Shape:
+<HDF5 dataset "aligned_chains": shape (64, 64, 3), type "<f4">
+<HDF5 dataset "indices": shape (1, 64), type "<i8">
+<HDF5 dataset "lddt_score": shape (1, 64, 64), type "<f4">
+<HDF5 dataset "pred_coor": shape (1, 64, 64, 3), type "<f4">
+<HDF5 dataset "pred_x2d": shape (1, 105, 64, 64), type "<f4">
+<HDF5 dataset "rotation_matrix": shape (63, 3, 3), type "<f4">
+<HDF5 dataset "translation_matrix": shape (63, 1, 3), type "<f4">   # 与之前唯一的区别
+"""
 
 import sys
 sys.path.append("/home/rotation3/complex-coor-pred/")
 
 import numpy as np
-from scipy import optimize as opt
+import torch
 
 def select_chains(lddt_score, num_chains=64):
     lddt_score_chains = lddt_score.sum(dim=2)
     _, indices = lddt_score_chains.topk(num_chains)
     return indices
 
-def cal_r_matrix(b,c,d):
-    a,b,c,d = np.array([1,b,c,d])/np.sqrt(1+b**2+c**2+d**2)
-    r_matrix = np.array([a**2+b**2-c**2-d**2, 2*b*c-2*a*d, 2*b*d+2*a*c,
-                        2*b*c+2*a*d, a**2-b**2+c**2-d**2, 2*c*d-2*a*b,
-                        2*b*d-2*a*c, 2*c*d+2*a*b, a**2-b**2-c**2+d**2]).reshape(3,3)
-    return r_matrix
-
-def Align(model_chain, other_chain):
-    """
-    model_chain [L,3]  #第一条序列
-    other_chain [N-1,L,3]   #剩下的所有条序列中的一条
+def svd_align(A, B):
+    """ 使用svd的方法进行坐标的Align
     
-    return aligned_chains [N,L,3]
+    :param A: model_chain
+    :param B: other_chain
+    :return: aligned_chain
     """
-    L = model_chain.shape[0]
-    def minize_L2Loss(x):
-        b,c,d = x[0], x[1], x[2]
-        r_matrix = cal_r_matrix(b,c,d)
-        L2Loss = ((model_chain - (other_chain @ r_matrix + (x[3],x[4],x[5]))) ** 2 ).mean()
-        return L2Loss
-
-    res = opt.minimize(minize_L2Loss, (0,0,0,0,0,0), method = 'BFGS')
-    x = res.x
-    
-    if x[0]>5 or x[0]<-5:
-        # print("BFGS失效, 尝试Powell")
-        bounds = np.array([[-1,1],[-1,1],[-1,1],[None,None],[None,None],[None,None]])
-        res = opt.minimize(minize_L2Loss, (0,0,0,0,0,0), method = 'Powell',bounds=bounds)
-        x = res.x
-
-    global rotation_matrix_ls, translation_matrix_ls
-    r_matrix = cal_r_matrix(x[0],x[1],x[2])
-    rotation_matrix_ls.append(r_matrix)
-    translation_matrix_ls.append(np.array([x[3],x[4],x[5]]))
-
-    aligned_chain = other_chain @ r_matrix + (x[3],x[4],x[5])
-    return aligned_chain
+    centroid_A = A.mean(-2)
+    centroid_B = B.mean(-2)
+    AA = A - centroid_A.unsqueeze(-2)
+    BB = B - centroid_B.unsqueeze(-2)
+    H = torch.matmul(BB.transpose(-2, -1), AA)
+    U, S, V = torch.svd(H, some=False)
+    R = torch.matmul(V, U.transpose(-2,-1))
+    t = -torch.matmul(R, centroid_B.unsqueeze(-1)) + centroid_A.unsqueeze(-1)
+    R = R.transpose(-2,-1)
+    t = t.reshape(1, 3)
+    B = torch.matmul(B, R) + t
+    global rotation_matrix_ls
+    global translation_matrix_ls
+    rotation_matrix_ls.append(R)
+    translation_matrix_ls.append(t)
+    return B
 
 def align_chain(NL3):
     # array
@@ -60,9 +56,9 @@ def align_chain(NL3):
     chain_ls.append(model_chain)
     for index in range(1,num_chains):
         other_chain = NL3[index]
-        chain_ls.append(Align(model_chain, other_chain))
-    chain_array = np.array(chain_ls)
-    return chain_array
+        chain_ls.append(svd_align(model_chain, other_chain))
+    aligned_chains = torch.stack(chain_ls, dim=0)
+    return aligned_chains
 
 def lddtGate(lddt_score):
     """
@@ -103,7 +99,7 @@ if __name__ == '__main__':
     
     # load lddt compute model
     from pLDDT.pLDDT import pLDDT
-    get_pLDDT = torch.load("/home/rotation3/complex-coor-pred/utils/plddt_checkpoints/Full_train/epoch7_mark.pt")
+    get_pLDDT = torch.load("/home/rotation3/complex-coor-pred/pLDDT/plddt_checkpoints/Full_train/epoch7_mark.pt")
     
     # load data
     model_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch16.pt"
@@ -111,7 +107,7 @@ if __name__ == '__main__':
     test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)
     net_pt = torch.load(model_pt_name, map_location=device)
 
-    with h5py.File("utils/AlignCoorConfusion/h5py_data/epoch16_train_dataset.h5py", "a") as train_file:
+    with h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py", "a") as train_file:
         with torch.no_grad():
             i = -1
             for data in train_dataloader:
@@ -132,19 +128,18 @@ if __name__ == '__main__':
 
                 # select top 64 highest lddt chains
                 # return new pred_coor & lddt_score
-                indices = select_chains(lddt_score).cpu()
+                indices = select_chains(lddt_score)
                 pred_coor = pred_coor[0,indices,:]
-                lddt_score = lddt_score[0,indices,:].cpu()
+                lddt_score = lddt_score[0,indices,:]
 
                 # !!!!COOR ALIGN!!!! 
                 # 将pred转化为numpy, 从而进行align, 得到align_chains
-                pred = ((pred_coor.squeeze())).cpu().numpy()
+                pred = pred_coor.squeeze()
                 rotation_matrix_ls = []
                 translation_matrix_ls = []
-                chain_array = align_chain(pred)
-                aligned_chains = torch.from_numpy(chain_array)
-                rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
-                translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
+                aligned_chains = align_chain(pred)
+                rotation_matrix = torch.stack(rotation_matrix_ls, dim=0)
+                translation_matrix = torch.stack(translation_matrix_ls, dim=0)
                 
                 # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains
                 # lddt_gate = lddtGate(lddt_score)
@@ -154,11 +149,11 @@ if __name__ == '__main__':
 
                 
                 protein = train_file.create_group("protein" + str(i))
-                protein["aligned_chains"] = aligned_chains
-                protein["rotation_matrix"] = rotation_matrix
-                protein["translation_matrix"] = translation_matrix
-                protein["indices"] = indices
-                protein["lddt_score"] = lddt_score
+                protein["aligned_chains"] = aligned_chains.cpu()
+                protein["rotation_matrix"] = rotation_matrix.cpu()
+                protein["translation_matrix"] = translation_matrix.cpu()
+                protein["indices"] = indices.cpu()
+                protein["lddt_score"] = lddt_score.cpu()
                 protein["pred_x2d"] = pred_x2d.cpu()
                 protein["pred_coor"] = pred_coor.cpu()
                 # if "indices" in train_file["protein" + str(i)].keys():
@@ -186,36 +181,34 @@ if __name__ == '__main__':
 
             # select top 64 highest lddt chains
             # return new pred_coor & lddt_score
-            indices = select_chains(lddt_score).cpu()
+            indices = select_chains(lddt_score)
             pred_coor = pred_coor[0,indices,:]
-            lddt_score = lddt_score[0,indices,:].cpu()
+            lddt_score = lddt_score[0,indices,:]
 
             
             # !!!!COOR ALIGN!!!! 
             # 将pred转化为numpy, 从而进行align, 得到align_chains
-            pred = ((pred_coor.squeeze())).cpu().numpy()
-            print(pred.shape)   # (L,L,3)
+            pred = pred_coor.squeeze()
             rotation_matrix_ls = []
             translation_matrix_ls = []
-            chain_array = align_chain(pred)
-            aligned_chains = torch.from_numpy(chain_array)
-            rotation_matrix = torch.from_numpy(np.array(rotation_matrix_ls))
-            translation_matrix = torch.from_numpy(np.array(translation_matrix_ls))
+            aligned_chains = align_chain(pred)
+            rotation_matrix = torch.stack(rotation_matrix_ls)
+            translation_matrix = torch.stack(translation_matrix_ls)
             
-            # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains
-            # lddt_gate = lddtGate(lddt_score)
-            # lddt_gate = lddt_gate.bool().squeeze().cpu()
-            # lddt_gate = torch.tile(lddt_gate[:,:,None], (1,1,3))
-            # gated_aligned_chains = torch.masked_fill(aligned_chains, ~lddt_gate, value=0)
+            # # 根据lddt_score做mask, 筛选掉lddt比较低的部分, 得到gated_aligned_chains 
+            # lddt_gate = lddtGate(lddt_score) 
+            # lddt_gate = lddt_gate.bool().squeeze().cpu() 
+            # lddt_gate = torch.tile(lddt_gate[:,:,None], (1,1,3)) 
+            # gated_aligned_chains = torch.masked_fill(aligned_chains, ~lddt_gate, value=0) 
             
 
-            with h5py.File("utils/AlignCoorConfusion/h5py_data/epoch16_test_dataset.h5py", "a") as test_file:
+            with h5py.File("AlignCoorConfusion/h5py_data/test_dataset.h5py", "a") as test_file:
                 protein = test_file.create_group("protein" + str(i))
-                protein["aligned_chains"] = aligned_chains     # LL3
-                protein["rotation_matrix"] = rotation_matrix    # L33
-                protein["translation_matrix"] = translation_matrix  # L3
-                protein["indices"] = indices
-                protein["lddt_score"] = lddt_score
+                protein["aligned_chains"] = aligned_chains.cpu()     # NL3
+                protein["rotation_matrix"] = rotation_matrix.cpu()    # N33
+                protein["translation_matrix"] = translation_matrix.cpu()  # N3
+                protein["indices"] = indices.cpu()
+                protein["lddt_score"] = lddt_score.cpu()
                 protein["pred_x2d"] = pred_x2d.cpu()
                 protein["pred_coor"] = pred_coor.cpu()
-            print("protein{} saved! time usage:{}".format(i, time.time()-beg)) 
+            print("protein{} saved! time usage:{}".format(i, time.time()-beg))

@@ -2,7 +2,7 @@ import h5py
 import time
 import random
 
-train_file = h5py.File("utils/AlignCoorConfusion/h5py_data/train_dataset.h5py")
+train_file = h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py")
 
 beg = time.time()
 for i in range(100):

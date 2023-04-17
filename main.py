@@ -33,7 +33,7 @@ if __name__ == "__main__":
     from torch.utils.tensorboard import SummaryWriter
     from scripts.train_CoorNet import train
     from scripts.test_CoorNet import test
-    from _tmp.draft.init_parameters import weight_init
+    from utils import weight_init
 
     # try:
     logs_folder_name = name

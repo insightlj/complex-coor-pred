@@ -1,6 +1,7 @@
 import torch
 from config import NUM_BLOCKS,device
 from data.MyData import MyData
+from torch.utils.data import DataLoader
 
 # 如果只是sample的话很简单. 就算从MyData开始sample也是很简单
 def sample_only(train_mode, index=0):
@@ -48,29 +49,30 @@ def sample_and_predict(net_pt_name, train_mode, index=0, net_pt_loaded=False, in
         path = test_data_path
         file_list = test_file
 
-    ds = MyData(path, xyz_path, file_list, train_mode=False)
+    ds = MyData(path, xyz_path, file_list, train_mode=False)   #此处的train_mode控制蛋白会不会被tunc
     embed, atten, coor_label, L = ds[index]
+    embed = embed.to(device)
+    atten = atten.to(device)
+    coor_label = coor_label.to(device)
+    embed.unsqueeze_(0)
+    atten.unsqueeze_(0)
+    coor_label.unsqueeze_(0)
 
     if not net_pt_loaded:
         net_pt = torch.load(net_pt_name)
 
     with torch.no_grad():
-        for data in ds:
-            embed, atten, coor_label, L = data
-            embed = embed.to(device)
-            atten = atten.to(device)
-            coor_label = coor_label.to(device)
-            L = L.to(device)
-            pred_coor_4_steps, pred_x2d = net_pt(embed, atten)
-            pred_coor = pred_coor_4_steps[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
-            if include_x2d:    # 如果include_x2d=True, pred_coor与pred_x2d将以元组的形式返回
-                pred = (pred_coor, pred_x2d)
-            break
+        pred_coor_4_steps, pred_x2d = net_pt(embed, atten)
+        pred_coor = pred_coor_4_steps[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
+        if include_x2d:    # 如果include_x2d=True, pred_coor与pred_x2d将以元组的形式返回
+            pred = (pred_coor, pred_x2d)
     return (pred, coor_label)
 
 
 # 测试代码
 if __name__ == "__main__":
-    net_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch14.pt"
-    pred, label = sample_and_predict(net_pt_name)
-    print(pred.shape, label.shape)
+    from model.CoorNet import CoorNet
+    model = CoorNet()
+    net_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch16.pt"
+    pred, label = sample_and_predict(net_pt_name, index=1000, train_mode=True ,include_x2d=True)
+    torch.save(pred[1], "pred_x2d.npy")
