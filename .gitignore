@@ -2,6 +2,7 @@
 .git/
 *.pt
 *.h5
+*.pdb
 model/checkpoint/
 events.*
 utils/plddt_checkpoints

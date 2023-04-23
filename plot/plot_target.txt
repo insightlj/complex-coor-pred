@@ -1,0 +1,5 @@
+TRAIN ['1cxzB00', '1grjA01', '1ku9A02', '2ic6A00', '2qm8A03', '2vqeT00', '2vs0A00', '3dxrA00', '3favA00', '3favD00', '3fx7A00', '3q4hD00', '4a5xA00', '4gczA03', '4i0xG00', '4i0xK00', '4i0xL00', '4w4kA00', '4w4lA00', '5d91A02']
+TEST ['1j5wB02', '1r73A00', '2aplA01', '2dq0A01', '2e2aA00', '2ondA00', '2p0tA02', '2wy7Q00', '2zhjA03', '3csxB00', '3j7aU02', '3kawB00', '3ngxA02', '3pm9A04', '3u1kB04', '4dwdA01', '4i0uA03', '4lupA00', '4nqwA01', '4v1gA00']
+CASP ['T1024-D1', 'T1024-D2', 'T1025-D1', 'T1065s2-D1', 'T1070-D4', 'T1073-D1', 'T1083-D1', 'T1084-D1', 'T1087-D1', 'T1101-D1']
+
+IMPROVE ['1fzcB01', '4na1B02', '2m9hA00', '1i16A00', '2miqA00', '3c0dA00', '4cs9A00', '2vsgA02', '1i1jB00', '3cnqP00']

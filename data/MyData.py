@@ -12,6 +12,39 @@ from torch.utils.data.sampler import Sampler
 from config import BATCH_SIZE_1, BATCH_SIZE_2, BATCH_SIZE_3, BATCH_SIZE_4
 
 
+class Data(Dataset):
+    def __init__(self, data_path, xyz_path, filename, train_mode):
+        self.index =  [x.strip().split(",")[0] for x in os.popen('cat '+ filename)]   
+        self.train_mode = train_mode
+        self.coor = h5py.File(xyz_path, "r")
+        self.embed_atten = h5py.File(data_path, "r")
+
+    def __getitem__(self, idx):
+        pdb_index = self.index[idx]
+        gap = self.coor[pdb_index]['gap'][:]
+        coor = self.coor[pdb_index]["xyz"][np.where(gap > 0)[0]]  # [L, 4, 3], 其中L是序列长度，4代表四个原子，顺序是CA， C， N和CB
+        # embed = self.embed_atten['embed2560'][pdb_index][0, np.where(gap > 0)[0]]
+        embed = self.embed_atten['embed2560'][pdb_index][np.where(gap > 0)[0],:]
+        contact = self.embed_atten['contacts'][pdb_index][:, :, np.where(gap > 0)[0]][:, np.where(gap > 0)[0], :]
+        atten = self.embed_atten['att40'][pdb_index][:, :, np.where(gap > 0)[0]][:, np.where(gap > 0)[0], :]
+
+        coor = torch.from_numpy(coor)
+        embed = torch.from_numpy(embed)
+        contact = torch.from_numpy(contact)
+        atten = torch.from_numpy(atten)
+        atten = torch.concat((contact, atten), dim=0)
+
+        L = embed.shape[0]
+        INF = 1e5
+        a, trunc_point = INF, INF
+        coor_label = label_generate(coor, a, trunc_point, self.train_mode)
+
+        return embed, atten, coor_label, L, pdb_index
+        # embed:[L,2560], atten:[41,L,L], coor_label:[L,L,3]
+
+    def __len__(self):
+        return self.data_sum
+
 class MyData(Dataset):
     def __init__(self, data_path, xyz_path, filename, train_mode):
         self.whole_index =  [x.strip().split(",")[0] for x in os.popen('cat '+ filename)]   

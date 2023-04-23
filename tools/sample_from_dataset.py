@@ -1,6 +1,6 @@
 import torch
-from config import NUM_BLOCKS,device
-from data.MyData import MyData
+from config import device
+from data.MyData import Data
 from torch.utils.data import DataLoader
 
 # 如果只是sample的话很简单. 就算从MyData开始sample也是很简单
@@ -23,9 +23,9 @@ def sample_only(train_mode, index=0):
         path = test_data_path
         file_list = test_file
 
-    ds = MyData(path, xyz_path, file_list, train_mode=False)
-    embed, atten, coor_label, L = ds[index]
-    return embed, atten, coor_label, L
+    ds = Data(path, xyz_path, file_list, train_mode=False)
+    embed, atten, coor_label, L, pdb_index = ds[index]
+    return embed, atten, coor_label, L, pdb_index
 
 # 提取pred和label，形成数组或者列表
 def sample_and_predict(net_pt_name, train_mode, index=0, net_pt_loaded=False, include_x2d=False):
@@ -49,7 +49,7 @@ def sample_and_predict(net_pt_name, train_mode, index=0, net_pt_loaded=False, in
         path = test_data_path
         file_list = test_file
 
-    ds = MyData(path, xyz_path, file_list, train_mode=False)   #此处的train_mode控制蛋白会不会被tunc
+    ds = Data(path, xyz_path, file_list, train_mode=False)   #此处的train_mode控制蛋白会不会被tunc
     embed, atten, coor_label, L = ds[index]
     embed = embed.to(device)
     atten = atten.to(device)
@@ -63,7 +63,7 @@ def sample_and_predict(net_pt_name, train_mode, index=0, net_pt_loaded=False, in
 
     with torch.no_grad():
         pred_coor_4_steps, pred_x2d = net_pt(embed, atten)
-        pred_coor = pred_coor_4_steps[NUM_BLOCKS-1]   # 取出最后一个Block预测出的coor
+        pred_coor = pred_coor_4_steps[-1]   # 取出最后一个Block预测出的coor
         if include_x2d:    # 如果include_x2d=True, pred_coor与pred_x2d将以元组的形式返回
             pred = (pred_coor, pred_x2d)
     return (pred, coor_label)
