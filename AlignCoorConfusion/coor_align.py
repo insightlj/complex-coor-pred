@@ -76,7 +76,7 @@ def lddtGate(lddt_score):
     # 由于在做topk的过程中做了排序，所以第一个的lddt值最高
     return lddt_gate
 
-from scripts.cal_lddt_multiseq import cal_lddt
+from tools.cal_lddt_multiseq import cal_lddt
 def get_trueLDDT(pred, label):
     """
     pred: BLL3

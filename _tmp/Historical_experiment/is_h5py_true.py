@@ -2,7 +2,7 @@
 import h5py
 import torch
 
-f = h5py.File("/home/rotation3/complex-coor-pred/AlignCoorConfusion/h5py_data/train_tmp_svd.h5py", "r")
+f = h5py.File("/home/rotation3/complex-coor-pred/AlignCoorConfusion/h5py_data/train_dataset.h5py", "r")
 
 # for index in range(0, 15):
 #     print((torch.from_numpy(f["protein0"]["aligned_chains"][0,:,:])
@@ -10,7 +10,7 @@ f = h5py.File("/home/rotation3/complex-coor-pred/AlignCoorConfusion/h5py_data/tr
 
 # 按道理说，pred_coor经过平移和旋转，应该可以得到aligned_chains
 # 下面尝试复原这一步骤
-a = f["protein0"]
+a = f["protein1000"]
 aligned_chains = torch.from_numpy(a["aligned_chains"][:])
 pred_coor = torch.from_numpy(a["pred_coor"][:])
 r = torch.from_numpy(a["rotation_matrix"][:])

@@ -16,21 +16,21 @@ class Residual(nn.Module):
         self.norm2 = nn.InstanceNorm2d(num_channels, affine=True)
         self.conv2 = nn.Conv2d(num_channels, num_channels, kernel_size, padding=self.padding, stride=strides)
 
-        use_1x1conv = False if input_channels == num_channels else True
+        # use_1x1conv = False if input_channels == num_channels else True
 
-        if use_1x1conv:
-            self.conv3 = nn.Conv2d(input_channels, num_channels, kernel_size, padding=self.padding, stride=strides)
+        # if use_1x1conv:
+        #     self.conv3 = nn.Conv2d(input_channels, num_channels, kernel_size, padding=self.padding, stride=strides)
 
-        else:
-            self.conv3 = None
+        # else:
+        #     self.conv3 = None
 
         self.relu = nn.LeakyReLU(inplace=True)
 
     def forward(self, X):
         Y = self.relu(self.conv1(self.norm1(X)))
         Y = self.conv2(self.norm2(Y))
-        if self.conv3:
-            X = self.conv3(X)
+        # if self.conv3:
+        #     X = self.conv3(X)
         Y += X
         return self.relu(Y)
 

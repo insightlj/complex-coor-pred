@@ -5,7 +5,7 @@ from model.ResNet import resnet_block
 from main import train_ds, test_ds
 from torch.utils.data import DataLoader
 from config import device, NUM_BLOCKS
-from scripts.cal_lddt_multiseq import cal_lddt
+from tools.cal_lddt_multiseq import cal_lddt
 from torch.utils.tensorboard import SummaryWriter
 from utils import weight_init
 

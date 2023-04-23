@@ -28,13 +28,9 @@ def label_generate(pre_coor, a, trunc_point, train_mode=True):
     L = pre_coor.shape[0]
     if train_mode and L > trunc_point:
         pre_coor = pre_coor[a:a+trunc_point, :,:]
-
     key_atoms = pre_coor[:,:4,:]
     transform_xyz = comp_feature(key_atoms)
-    # print(transform_xyz.shape)
     coor = transform_xyz[:,:,1,:].squeeze()
-    # print(coor.shape)
-
     return coor    # [L, L, 3]
 
 if __name__ == "__main__":

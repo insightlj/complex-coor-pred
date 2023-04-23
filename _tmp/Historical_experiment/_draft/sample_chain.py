@@ -7,7 +7,7 @@ import torch
 import numpy as np
 from config import device
 from torch.nn.functional import softmax
-from scripts.cal_lddt_tensor import cal_lddt
+from tools.cal_lddt_tensor import cal_lddt
 from main import train_ds
 from torch.utils.data import DataLoader
 

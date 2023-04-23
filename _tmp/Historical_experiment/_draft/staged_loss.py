@@ -1,5 +1,5 @@
 import torch
-from scripts.sample_from_dataset import demo_pred_label
+from tools.sample_from_dataset import demo_pred_label
 
 DEMO_SIZE = 1
 TRUNC = 28

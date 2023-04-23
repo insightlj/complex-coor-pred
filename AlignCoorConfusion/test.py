@@ -13,8 +13,8 @@ import h5py
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter
-from scripts.cal_fapeloss import getFapeLoss
-from scripts.cal_lddt_tensor import cal_lddt
+from tools.cal_fapeloss import getFapeLoss
+from toolsal_lddt_tensor import cal_lddt
 
 train_dataloader = DataLoader(train_ds, batch_size=1, shuffle=False)
 test_dataloader = DataLoader(test_ds, batch_size=1, shuffle=False)

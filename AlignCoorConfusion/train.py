@@ -6,36 +6,33 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--name", type=str)
-parser.add_argument("--device", type=int)
 parser.add_argument("--model", type=str)
 FLAGS = parser.parse_args()
 NAME = FLAGS.name
 model = FLAGS.model
-device_index = FLAGS.device
+import sys; sys.path.append("/home/rotation3/complex-coor-pred/")
 if model=="basic":from AlignCoorConfusion.CoorConfusion import coorConfuse
 elif model=="gate":from AlignCoorConfusion.CoorConfusionGate import coorConfuse
 else:raise ValueError("wrong input of model! choose one between basic/gate")
 #############################IMPORT##########################################
 import os, sys, h5py, torch, numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"]= str(device_index)
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-sys.path.append("/home/rotation3/complex-coor-pred/")
 from torch.utils.tensorboard import SummaryWriter
+from config import device
 from torch.utils.data import DataLoader
 from AlignCoorConfusion.assist_class import SeedSampler
-from scripts.cal_fapeloss import getFapeLoss
+from tools.cal_fapeloss import getFapeLoss
 from utils import weight_init, seed_torch
 ###################################################################################
 
 
 ### define model
 coor_confuse = coorConfuse().to(device)
-coor_confuse.apply(weight_init)
-# coor_confuse.load_state_dict(torch.load("utils/AlignCoorConfusion/checkpoints/basic/epoch0.pt"))
+# coor_confuse.apply(weight_init)
+coor_confuse.load_state_dict(torch.load("AlignCoorConfusion/checkpoints/gate_I/epoch14.pt"))
 
 ### load Data & SummaryWriter
 train_file = h5py.File("AlignCoorConfusion/h5py_data/train_dataset.h5py")
-train_epoch_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
+train_epoch_record = SummaryWriter("./AlignCoorConfusion/logs/" + NAME + "/train_epoch_record")
 
 from torch.utils.data import Dataset
 from data.MyData import MyData
@@ -44,14 +41,14 @@ xyz_path = '/home/rotation3/complex-coor-pred/data/xyz.h5'
 sorted_train_file = "/home/rotation3/complex-coor-pred/data/sorted_train_list.txt"
 train_ds = MyData(train_data_path, xyz_path, sorted_train_file, train_mode=False)
 
-num_epochs = 20
-for epoch in range(num_epochs):
-    if epoch < 10:
+num_epochs = 50
+for epoch in range(15, num_epochs):
+    if epoch < 25:
         learning_rate = 1e-3
     else:
         learning_rate = 1e-4
     opt = torch.optim.Adam(coor_confuse.parameters(), lr=learning_rate)
-    train_record = SummaryWriter("./utils/AlignCoorConfusion/logs/" + NAME +"/train_record/epoch" + str(epoch))
+    train_record = SummaryWriter("./AlignCoorConfusion/logs/" + NAME +"/train_record/epoch" + str(epoch))
 
     # use seed to set specific order on train_dataloader&train_file(h5py)
     seed = epoch  # 干脆把epoch当成seed好了
@@ -106,7 +103,7 @@ for epoch in range(num_epochs):
         R = torch.concat((torch.eye(3, device=device)[None,:,:], R), dim=0)
 
         t = torch.from_numpy(np.array(train_file["protein"+str(index)]["translation_matrix"],dtype=np.float32)).to(device)
-        t = torch.concat((torch.zeros(1,3, device=device), t), dim=0)
+        t = torch.concat((torch.zeros((1,1,3), device=device), t), dim=0)
 
         L = confused_coor.shape[-2]
         e_pred_coor_ls = []
@@ -132,10 +129,10 @@ for epoch in range(num_epochs):
         optim_loss = loss / 5
 
         ### 网络即将收敛时的loss; 可以当网络训练即将结束的时候，再调用带有pre_fapeloss的loss
-        if epoch >= 15:
+        if epoch >= 35:
             pre_pred_coor = torch.from_numpy(np.array(train_file["protein"+str(index)]["pred_coor"], dtype=np.float32))
-            pre_pred_coor.to(device)
-            label_coor.to(device)
+            pre_pred_coor = pre_pred_coor.to(device)
+            label_coor = label_coor.to(device)
             label_coor = label_coor[0]
             pre_diff = pre_pred_coor - label_coor
             pre_diff = pre_diff.permute(0,3,1,2)
@@ -143,8 +140,8 @@ for epoch in range(num_epochs):
             diff_exp_loss = torch.exp(fapeloss_10A - pre_fapeloss)
             diff_exp_loss = torch.clamp(loss, 20)
             total_diff_exp_loss += diff_exp_loss.item()
-            avg_diff_exp_loss = total_diff_exp_loss / global_step
-            train_record.add_scalar("diff_exp_loss", avg_diff_exp_loss, global_step)
+            avg_diff_exp_loss = total_diff_exp_loss / (global_step+1)
+            train_record.add_scalar("diff_exp_loss", avg_diff_exp_loss, global_step+1)
             print("diff_exp_loss", diff_exp_loss)
             optim_loss = diff_exp_loss / 5
             # 当advance是负值的时候，代表着预测水平的进步；当为正值的时候，代表的fapeloss的提升
@@ -157,9 +154,9 @@ for epoch in range(num_epochs):
         avg_loss = total_loss / (global_step + 1)
 
         optim_loss.backward()
-        train_record.add_scalar("loss", avg_loss,global_step)
-        train_record.add_scalar("fapeloss_10A", avg_fapeloss,global_step)
-        train_record.add_scalar("realfape", avg_realfape, global_step)
+        train_record.add_scalar("loss", avg_loss,global_step+1)
+        train_record.add_scalar("fapeloss_10A", avg_fapeloss,global_step+1)
+        train_record.add_scalar("realfape", avg_realfape, global_step+1)
         
         if global_step in range(2000) or global_step%100 == 0:
             print("global_step %d" % global_step)
@@ -173,10 +170,10 @@ for epoch in range(num_epochs):
             i = -1
     
     
-    if not os.path.exists("utils/AlignCoorConfusion/checkpoints/" +  NAME):
-        os.mkdir("utils/AlignCoorConfusion/checkpoints/" +  NAME)
+    if not os.path.exists("AlignCoorConfusion/checkpoints/" +  NAME):
+        os.mkdir("AlignCoorConfusion/checkpoints/" +  NAME)
     ### 所以现在保存的每一步都是最后一个步骤的模型 艹
-    PATH = "utils/AlignCoorConfusion/checkpoints/" +  NAME +"/epoch" + str(epoch) + ".pt"
+    PATH = "AlignCoorConfusion/checkpoints/" +  NAME +"/epoch" + str(epoch) + ".pt"
     torch.save(coor_confuse.state_dict(), PATH)
     ### 加载模型参数
     # the_model = TheModelClass(*args, **kwargs)

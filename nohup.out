@@ -1,0 +1,4016 @@
+===nohup_begin===
+Traceback (most recent call last):
+  File "/home/rotation3/complex-coor-pred/AlignCoorSample/align4confuse.py", line 70, in <module>
+    lddt = cal_lddt(label, best_chain_tmp)   # 这里先使用真实的lddt，如果实验结果比较好，就再使用pLDDT
+  File "/home/rotation3/complex-coor-pred/tools/cal_lddt_tensor.py", line 22, in cal_lddt
+    model = get_distogram(model)
+  File "/home/rotation3/complex-coor-pred/tools/cal_lddt_tensor.py", line 11, in get_distogram
+    distogram = (torch.sum(dist_matrics ** 2, axis=2) + eps) ** 0.5
+  File "/home/rotation3/anaconda3/envs/torch2/lib/python3.10/site-packages/torch/_tensor.py", line 40, in wrapped
+    return f(*args, **kwargs)
+KeyboardInterrupt
+===nohup_begin===
+===METRIC===
+protein: 0
+initial lddt: tensor(0.6347)
+final lddt: tensor(0.6891)
+ideal lddt tensor(0.7220)
+time useage 12.206275701522827
+===END===
+
+===METRIC===
+protein: 40
+initial lddt: tensor(0.5354)
+final lddt: tensor(0.5354)
+ideal lddt tensor(0.6527)
+time useage 2.4967947006225586
+===END===
+
+===METRIC===
+protein: 80
+initial lddt: tensor(0.4837)
+final lddt: tensor(0.4837)
+ideal lddt tensor(0.5706)
+time useage 2.1425271034240723
+===END===
+
+===METRIC===
+protein: 120
+initial lddt: tensor(0.4755)
+final lddt: tensor(0.4755)
+ideal lddt tensor(0.5748)
+time useage 2.6638333797454834
+===END===
+
+===METRIC===
+protein: 160
+initial lddt: tensor(0.2964)
+final lddt: tensor(0.2964)
+ideal lddt tensor(0.4060)
+time useage 2.1575710773468018
+===END===
+
+===METRIC===
+protein: 200
+initial lddt: tensor(0.6313)
+final lddt: tensor(0.6313)
+ideal lddt tensor(0.7132)
+time useage 2.1287786960601807
+===END===
+
+===METRIC===
+protein: 240
+initial lddt: tensor(0.3593)
+final lddt: tensor(0.3593)
+ideal lddt tensor(0.4372)
+time useage 2.2143943309783936
+===END===
+
+===METRIC===
+protein: 280
+initial lddt: tensor(0.4306)
+final lddt: tensor(0.4306)
+ideal lddt tensor(0.5303)
+time useage 2.91988205909729
+===END===
+
+===METRIC===
+protein: 320
+initial lddt: tensor(0.4958)
+final lddt: tensor(0.4958)
+ideal lddt tensor(0.5974)
+time useage 2.697547674179077
+===END===
+
+===METRIC===
+protein: 360
+initial lddt: tensor(0.7030)
+final lddt: tensor(0.7030)
+ideal lddt tensor(0.7939)
+time useage 2.9443352222442627
+===END===
+
+===METRIC===
+protein: 400
+initial lddt: tensor(0.2755)
+final lddt: tensor(0.2755)
+ideal lddt tensor(0.3676)
+time useage 3.3588969707489014
+===END===
+
+===METRIC===
+protein: 440
+initial lddt: tensor(0.4626)
+final lddt: tensor(0.4626)
+ideal lddt tensor(0.5844)
+time useage 3.2201461791992188
+===END===
+
+===METRIC===
+protein: 480
+initial lddt: tensor(0.4837)
+final lddt: tensor(0.4837)
+ideal lddt tensor(0.5797)
+time useage 2.848766803741455
+===END===
+
+===METRIC===
+protein: 520
+initial lddt: tensor(0.4139)
+final lddt: tensor(0.5537)
+ideal lddt tensor(0.4903)
+time useage 18.59587264060974
+===END===
+
+===METRIC===
+protein: 560
+initial lddt: tensor(0.5291)
+final lddt: tensor(0.6245)
+ideal lddt tensor(0.6315)
+time useage 33.254427433013916
+===END===
+
+===METRIC===
+protein: 600
+initial lddt: tensor(0.4947)
+final lddt: tensor(0.4947)
+ideal lddt tensor(0.6290)
+time useage 2.916454553604126
+===END===
+
+===METRIC===
+protein: 640
+initial lddt: tensor(0.5002)
+final lddt: tensor(0.6585)
+ideal lddt tensor(0.6246)
+time useage 20.233235359191895
+===END===
+
+===METRIC===
+protein: 680
+initial lddt: tensor(0.4306)
+final lddt: tensor(0.4306)
+ideal lddt tensor(0.5506)
+time useage 2.659836769104004
+===END===
+
+===METRIC===
+protein: 720
+initial lddt: tensor(0.4404)
+final lddt: tensor(0.4404)
+ideal lddt tensor(0.5439)
+time useage 2.3982908725738525
+===END===
+
+===METRIC===
+protein: 760
+initial lddt: tensor(0.6054)
+final lddt: tensor(0.6054)
+ideal lddt tensor(0.6886)
+time useage 2.5362558364868164
+===END===
+
+===METRIC===
+protein: 800
+initial lddt: tensor(0.4633)
+final lddt: tensor(0.4633)
+ideal lddt tensor(0.5646)
+time useage 2.547241687774658
+===END===
+
+===METRIC===
+protein: 840
+initial lddt: tensor(0.3847)
+final lddt: tensor(0.5413)
+ideal lddt tensor(0.5080)
+time useage 28.913776397705078
+===END===
+
+===METRIC===
+protein: 880
+initial lddt: tensor(0.4272)
+final lddt: tensor(0.4272)
+ideal lddt tensor(0.5518)
+time useage 2.1661200523376465
+===END===
+
+===METRIC===
+protein: 920
+initial lddt: tensor(0.4590)
+final lddt: tensor(0.4590)
+ideal lddt tensor(0.5809)
+time useage 3.6444904804229736
+===END===
+
+===METRIC===
+protein: 960
+initial lddt: tensor(0.4999)
+final lddt: tensor(0.4999)
+ideal lddt tensor(0.5840)
+time useage 2.630922317504883
+===END===
+
+===METRIC===
+protein: 1000
+initial lddt: tensor(0.2631)
+final lddt: tensor(0.2631)
+ideal lddt tensor(0.3698)
+time useage 2.5013632774353027
+===END===
+
+===METRIC===
+protein: 1040
+initial lddt: tensor(0.4063)
+final lddt: tensor(0.4063)
+ideal lddt tensor(0.5472)
+time useage 3.358916997909546
+===END===
+
+===METRIC===
+protein: 1080
+initial lddt: tensor(0.4560)
+final lddt: tensor(0.5773)
+ideal lddt tensor(0.5709)
+time useage 14.855804443359375
+===END===
+
+===METRIC===
+protein: 1120
+initial lddt: tensor(0.3715)
+final lddt: tensor(0.3715)
+ideal lddt tensor(0.4808)
+time useage 2.864919662475586
+===END===
+
+===METRIC===
+protein: 1160
+initial lddt: tensor(0.4176)
+final lddt: tensor(0.4176)
+ideal lddt tensor(0.5573)
+time useage 2.683457851409912
+===END===
+
+===METRIC===
+protein: 1200
+initial lddt: tensor(0.4583)
+final lddt: tensor(0.4583)
+ideal lddt tensor(0.5536)
+time useage 3.109673261642456
+===END===
+
+===METRIC===
+protein: 1240
+initial lddt: tensor(0.4650)
+final lddt: tensor(0.4650)
+ideal lddt tensor(0.5767)
+time useage 3.054354667663574
+===END===
+
+===METRIC===
+protein: 1280
+initial lddt: tensor(0.4527)
+final lddt: tensor(0.5784)
+ideal lddt tensor(0.5305)
+time useage 18.02115797996521
+===END===
+
+===METRIC===
+protein: 1320
+initial lddt: tensor(0.4766)
+final lddt: tensor(0.4766)
+ideal lddt tensor(0.5900)
+time useage 3.3288097381591797
+===END===
+
+===METRIC===
+protein: 1360
+initial lddt: tensor(0.4324)
+final lddt: tensor(0.4324)
+ideal lddt tensor(0.5476)
+time useage 2.087907314300537
+===END===
+
+===METRIC===
+protein: 1400
+initial lddt: tensor(0.4738)
+final lddt: tensor(0.6191)
+ideal lddt tensor(0.5627)
+time useage 13.436894416809082
+===END===
+
+===METRIC===
+protein: 1440
+initial lddt: tensor(0.2057)
+final lddt: tensor(0.2057)
+ideal lddt tensor(0.3935)
+time useage 3.30859112739563
+===END===
+
+===METRIC===
+protein: 1480
+initial lddt: tensor(0.3961)
+final lddt: tensor(0.3961)
+ideal lddt tensor(0.4809)
+time useage 2.6412296295166016
+===END===
+
+===METRIC===
+protein: 1520
+initial lddt: tensor(0.3636)
+final lddt: tensor(0.3636)
+ideal lddt tensor(0.5172)
+time useage 2.992436647415161
+===END===
+
+===METRIC===
+protein: 1560
+initial lddt: tensor(0.4997)
+final lddt: tensor(0.5642)
+ideal lddt tensor(0.5636)
+time useage 12.04323148727417
+===END===
+
+===METRIC===
+protein: 1600
+initial lddt: tensor(0.4644)
+final lddt: tensor(0.4644)
+ideal lddt tensor(0.5497)
+time useage 3.440251588821411
+===END===
+
+===METRIC===
+protein: 1640
+initial lddt: tensor(0.4310)
+final lddt: tensor(0.4310)
+ideal lddt tensor(0.5534)
+time useage 2.7021172046661377
+===END===
+
+===METRIC===
+protein: 1680
+initial lddt: tensor(0.3977)
+final lddt: tensor(0.3977)
+ideal lddt tensor(0.5021)
+time useage 3.3270058631896973
+===END===
+
+===METRIC===
+protein: 1720
+initial lddt: tensor(0.4902)
+final lddt: tensor(0.4902)
+ideal lddt tensor(0.5811)
+time useage 3.520864725112915
+===END===
+
+===METRIC===
+protein: 1760
+initial lddt: tensor(0.4409)
+final lddt: tensor(0.5847)
+ideal lddt tensor(0.5768)
+time useage 31.435869455337524
+===END===
+
+===METRIC===
+protein: 1800
+initial lddt: tensor(0.4756)
+final lddt: tensor(0.7074)
+ideal lddt tensor(0.5602)
+time useage 12.890032529830933
+===END===
+
+===METRIC===
+protein: 1840
+initial lddt: tensor(0.3295)
+final lddt: tensor(0.3295)
+ideal lddt tensor(0.4413)
+time useage 3.2390973567962646
+===END===
+
+===METRIC===
+protein: 1880
+initial lddt: tensor(0.4650)
+final lddt: tensor(0.5756)
+ideal lddt tensor(0.5787)
+time useage 25.216492414474487
+===END===
+
+===METRIC===
+protein: 1920
+initial lddt: tensor(0.3911)
+final lddt: tensor(0.3911)
+ideal lddt tensor(0.5256)
+time useage 3.4217591285705566
+===END===
+
+===METRIC===
+protein: 1960
+initial lddt: tensor(0.4094)
+final lddt: tensor(0.4094)
+ideal lddt tensor(0.5272)
+time useage 3.4033641815185547
+===END===
+
+===METRIC===
+protein: 2000
+initial lddt: tensor(0.4151)
+final lddt: tensor(0.4151)
+ideal lddt tensor(0.5290)
+time useage 3.232978105545044
+===END===
+
+===METRIC===
+protein: 2040
+initial lddt: tensor(0.2403)
+final lddt: tensor(0.2403)
+ideal lddt tensor(0.3667)
+time useage 3.6716384887695312
+===END===
+
+===METRIC===
+protein: 2080
+initial lddt: tensor(0.4875)
+final lddt: tensor(0.5985)
+ideal lddt tensor(0.6238)
+time useage 56.13826560974121
+===END===
+
+===METRIC===
+protein: 2120
+initial lddt: tensor(0.4750)
+final lddt: tensor(0.5946)
+ideal lddt tensor(0.5799)
+time useage 43.95169520378113
+===END===
+
+===METRIC===
+protein: 2160
+initial lddt: tensor(0.4486)
+final lddt: tensor(0.4486)
+ideal lddt tensor(0.6004)
+time useage 3.328521966934204
+===END===
+
+===METRIC===
+protein: 2200
+initial lddt: tensor(0.3929)
+final lddt: tensor(0.3929)
+ideal lddt tensor(0.5054)
+time useage 3.441532850265503
+===END===
+
+===METRIC===
+protein: 2240
+initial lddt: tensor(0.3813)
+final lddt: tensor(0.3813)
+ideal lddt tensor(0.4748)
+time useage 3.5752599239349365
+===END===
+
+===METRIC===
+protein: 2280
+initial lddt: tensor(0.4638)
+final lddt: tensor(0.4638)
+ideal lddt tensor(0.5361)
+time useage 3.462716817855835
+===END===
+
+===METRIC===
+protein: 2320
+initial lddt: tensor(0.5145)
+final lddt: tensor(0.5145)
+ideal lddt tensor(0.5906)
+time useage 3.6734378337860107
+===END===
+
+===METRIC===
+protein: 2360
+initial lddt: tensor(0.4836)
+final lddt: tensor(0.5980)
+ideal lddt tensor(0.5875)
+time useage 20.505922079086304
+===END===
+
+===METRIC===
+protein: 2400
+initial lddt: tensor(0.5082)
+final lddt: tensor(0.5828)
+ideal lddt tensor(0.6380)
+time useage 19.939522981643677
+===END===
+
+===METRIC===
+protein: 2440
+initial lddt: tensor(0.4158)
+final lddt: tensor(0.4158)
+ideal lddt tensor(0.5652)
+time useage 3.3706607818603516
+===END===
+
+===METRIC===
+protein: 2480
+initial lddt: tensor(0.4774)
+final lddt: tensor(0.4774)
+ideal lddt tensor(0.5560)
+time useage 3.670391321182251
+===END===
+
+===METRIC===
+protein: 2520
+initial lddt: tensor(0.5428)
+final lddt: tensor(0.5428)
+ideal lddt tensor(0.6280)
+time useage 3.5364062786102295
+===END===
+
+===METRIC===
+protein: 2560
+initial lddt: tensor(0.5355)
+final lddt: tensor(0.6032)
+ideal lddt tensor(0.6215)
+time useage 13.80951189994812
+===END===
+
+===METRIC===
+protein: 2600
+initial lddt: tensor(0.5722)
+final lddt: tensor(0.5722)
+ideal lddt tensor(0.6829)
+time useage 4.116213321685791
+===END===
+
+===METRIC===
+protein: 2640
+initial lddt: tensor(0.5149)
+final lddt: tensor(0.5149)
+ideal lddt tensor(0.6293)
+time useage 2.9185643196105957
+===END===
+
+===METRIC===
+protein: 2680
+initial lddt: tensor(0.4905)
+final lddt: tensor(0.5738)
+ideal lddt tensor(0.5737)
+time useage 13.853385925292969
+===END===
+
+===METRIC===
+protein: 2720
+initial lddt: tensor(0.2354)
+final lddt: tensor(0.2354)
+ideal lddt tensor(0.3544)
+time useage 3.452075719833374
+===END===
+
+===METRIC===
+protein: 2760
+initial lddt: tensor(0.4828)
+final lddt: tensor(0.4828)
+ideal lddt tensor(0.6112)
+time useage 3.853106737136841
+===END===
+
+===METRIC===
+protein: 2800
+initial lddt: tensor(0.3987)
+final lddt: tensor(0.3987)
+ideal lddt tensor(0.5235)
+time useage 3.7444615364074707
+===END===
+
+===METRIC===
+protein: 2840
+initial lddt: tensor(0.4947)
+final lddt: tensor(0.4947)
+ideal lddt tensor(0.6294)
+time useage 4.097115993499756
+===END===
+
+===METRIC===
+protein: 2880
+initial lddt: tensor(0.3757)
+final lddt: tensor(0.3757)
+ideal lddt tensor(0.4902)
+time useage 3.426959276199341
+===END===
+
+===METRIC===
+protein: 2920
+initial lddt: tensor(0.3514)
+final lddt: tensor(0.3514)
+ideal lddt tensor(0.4324)
+time useage 3.9940977096557617
+===END===
+
+===METRIC===
+protein: 2960
+initial lddt: tensor(0.5107)
+final lddt: tensor(0.5909)
+ideal lddt tensor(0.6059)
+time useage 37.12079191207886
+===END===
+
+===METRIC===
+protein: 3000
+initial lddt: tensor(0.5328)
+final lddt: tensor(0.5328)
+ideal lddt tensor(0.6156)
+time useage 3.9580821990966797
+===END===
+
+===METRIC===
+protein: 3040
+initial lddt: tensor(0.5340)
+final lddt: tensor(0.6219)
+ideal lddt tensor(0.6152)
+time useage 38.29142665863037
+===END===
+
+===METRIC===
+protein: 3080
+initial lddt: tensor(0.4182)
+final lddt: tensor(0.4182)
+ideal lddt tensor(0.5604)
+time useage 5.276629209518433
+===END===
+
+===METRIC===
+protein: 3120
+initial lddt: tensor(0.4300)
+final lddt: tensor(0.4300)
+ideal lddt tensor(0.5559)
+time useage 4.097954988479614
+===END===
+
+===METRIC===
+protein: 3160
+initial lddt: tensor(0.4352)
+final lddt: tensor(0.4352)
+ideal lddt tensor(0.5571)
+time useage 3.760725498199463
+===END===
+
+===METRIC===
+protein: 3200
+initial lddt: tensor(0.4004)
+final lddt: tensor(0.4004)
+ideal lddt tensor(0.5153)
+time useage 4.301851272583008
+===END===
+
+===METRIC===
+protein: 3240
+initial lddt: tensor(0.5244)
+final lddt: tensor(0.5244)
+ideal lddt tensor(0.6602)
+time useage 3.5594656467437744
+===END===
+
+===METRIC===
+protein: 3280
+initial lddt: tensor(0.4121)
+final lddt: tensor(0.4121)
+ideal lddt tensor(0.5374)
+time useage 4.074889183044434
+===END===
+
+===METRIC===
+protein: 3320
+initial lddt: tensor(0.4802)
+final lddt: tensor(0.6406)
+ideal lddt tensor(0.6156)
+time useage 67.71362233161926
+===END===
+
+===METRIC===
+protein: 3360
+initial lddt: tensor(0.4675)
+final lddt: tensor(0.4675)
+ideal lddt tensor(0.5894)
+time useage 3.7231926918029785
+===END===
+
+===METRIC===
+protein: 3400
+initial lddt: tensor(0.2803)
+final lddt: tensor(0.2803)
+ideal lddt tensor(0.3918)
+time useage 4.067078113555908
+===END===
+
+===METRIC===
+protein: 3440
+initial lddt: tensor(0.4465)
+final lddt: tensor(0.4465)
+ideal lddt tensor(0.5741)
+time useage 3.896960973739624
+===END===
+
+===METRIC===
+protein: 3480
+initial lddt: tensor(0.4587)
+final lddt: tensor(0.5785)
+ideal lddt tensor(0.5600)
+time useage 21.00983190536499
+===END===
+
+===METRIC===
+protein: 3520
+initial lddt: tensor(0.4851)
+final lddt: tensor(0.4851)
+ideal lddt tensor(0.5466)
+time useage 4.474240779876709
+===END===
+
+===METRIC===
+protein: 3560
+initial lddt: tensor(0.2489)
+final lddt: tensor(0.2489)
+ideal lddt tensor(0.3546)
+time useage 5.038113117218018
+===END===
+
+===METRIC===
+protein: 3600
+initial lddt: tensor(0.3890)
+final lddt: tensor(0.3890)
+ideal lddt tensor(0.5091)
+time useage 4.8716881275177
+===END===
+
+===METRIC===
+protein: 3640
+initial lddt: tensor(0.4778)
+final lddt: tensor(0.5850)
+ideal lddt tensor(0.6380)
+time useage 13.705318689346313
+===END===
+
+===METRIC===
+protein: 3680
+initial lddt: tensor(0.4936)
+final lddt: tensor(0.4936)
+ideal lddt tensor(0.6264)
+time useage 4.142434358596802
+===END===
+
+===METRIC===
+protein: 3720
+initial lddt: tensor(0.4356)
+final lddt: tensor(0.4356)
+ideal lddt tensor(0.5526)
+time useage 4.322324991226196
+===END===
+
+===METRIC===
+protein: 3760
+initial lddt: tensor(0.5572)
+final lddt: tensor(0.5572)
+ideal lddt tensor(0.7266)
+time useage 4.619046449661255
+===END===
+
+===METRIC===
+protein: 3800
+initial lddt: tensor(0.4395)
+final lddt: tensor(0.4395)
+ideal lddt tensor(0.5156)
+time useage 4.131023168563843
+===END===
+
+===METRIC===
+protein: 3840
+initial lddt: tensor(0.3056)
+final lddt: tensor(0.4380)
+ideal lddt tensor(0.3612)
+time useage 59.13328409194946
+===END===
+
+===METRIC===
+protein: 3880
+initial lddt: tensor(0.4501)
+final lddt: tensor(0.5919)
+ideal lddt tensor(0.5547)
+time useage 33.430198669433594
+===END===
+
+===METRIC===
+protein: 3920
+initial lddt: tensor(0.4118)
+final lddt: tensor(0.4118)
+ideal lddt tensor(0.5082)
+time useage 4.217312574386597
+===END===
+
+===METRIC===
+protein: 3960
+initial lddt: tensor(0.4460)
+final lddt: tensor(0.4460)
+ideal lddt tensor(0.5735)
+time useage 4.427849292755127
+===END===
+
+===METRIC===
+protein: 4000
+initial lddt: tensor(0.5443)
+final lddt: tensor(0.5443)
+ideal lddt tensor(0.6381)
+time useage 3.5063273906707764
+===END===
+
+===METRIC===
+protein: 4040
+initial lddt: tensor(0.4457)
+final lddt: tensor(0.4457)
+ideal lddt tensor(0.5536)
+time useage 4.345308780670166
+===END===
+
+===METRIC===
+protein: 4080
+initial lddt: tensor(0.4162)
+final lddt: tensor(0.4162)
+ideal lddt tensor(0.5527)
+time useage 4.466514587402344
+===END===
+
+===METRIC===
+protein: 4120
+initial lddt: tensor(0.4436)
+final lddt: tensor(0.5650)
+ideal lddt tensor(0.5432)
+time useage 41.67116045951843
+===END===
+
+===METRIC===
+protein: 4160
+initial lddt: tensor(0.3659)
+final lddt: tensor(0.3659)
+ideal lddt tensor(0.4854)
+time useage 3.7381160259246826
+===END===
+
+===METRIC===
+protein: 4200
+initial lddt: tensor(0.4713)
+final lddt: tensor(0.4713)
+ideal lddt tensor(0.5809)
+time useage 3.3667373657226562
+===END===
+
+===METRIC===
+protein: 4240
+initial lddt: tensor(0.4702)
+final lddt: tensor(0.4702)
+ideal lddt tensor(0.5911)
+time useage 3.2262489795684814
+===END===
+
+===METRIC===
+protein: 4280
+initial lddt: tensor(0.4823)
+final lddt: tensor(0.4823)
+ideal lddt tensor(0.6356)
+time useage 3.7531561851501465
+===END===
+
+===METRIC===
+protein: 4320
+initial lddt: tensor(0.2591)
+final lddt: tensor(0.2591)
+ideal lddt tensor(0.3414)
+time useage 3.619924783706665
+===END===
+
+===METRIC===
+protein: 4360
+initial lddt: tensor(0.4497)
+final lddt: tensor(0.4497)
+ideal lddt tensor(0.5735)
+time useage 4.435849189758301
+===END===
+
+===METRIC===
+protein: 4400
+initial lddt: tensor(0.4724)
+final lddt: tensor(0.5657)
+ideal lddt tensor(0.5710)
+time useage 32.252578020095825
+===END===
+
+===METRIC===
+protein: 4440
+initial lddt: tensor(0.4986)
+final lddt: tensor(0.4986)
+ideal lddt tensor(0.6233)
+time useage 4.319810390472412
+===END===
+
+===METRIC===
+protein: 4480
+initial lddt: tensor(0.5021)
+final lddt: tensor(0.5021)
+ideal lddt tensor(0.5989)
+time useage 4.261509656906128
+===END===
+
+===METRIC===
+protein: 4520
+initial lddt: tensor(0.5223)
+final lddt: tensor(0.5223)
+ideal lddt tensor(0.6989)
+time useage 4.511766195297241
+===END===
+
+===METRIC===
+protein: 4560
+initial lddt: tensor(0.3635)
+final lddt: tensor(0.5567)
+ideal lddt tensor(0.4740)
+time useage 40.9953556060791
+===END===
+
+===METRIC===
+protein: 4600
+initial lddt: tensor(0.3168)
+final lddt: tensor(0.4780)
+ideal lddt tensor(0.4313)
+time useage 44.91116762161255
+===END===
+
+===METRIC===
+protein: 4640
+initial lddt: tensor(0.1893)
+final lddt: tensor(0.1893)
+ideal lddt tensor(0.3416)
+time useage 4.24349570274353
+===END===
+
+===METRIC===
+protein: 4680
+initial lddt: tensor(0.4363)
+final lddt: tensor(0.4363)
+ideal lddt tensor(0.5508)
+time useage 4.481508016586304
+===END===
+
+===METRIC===
+protein: 4720
+initial lddt: tensor(0.2851)
+final lddt: tensor(0.4662)
+ideal lddt tensor(0.3886)
+time useage 26.20320439338684
+===END===
+
+===METRIC===
+protein: 4760
+initial lddt: tensor(0.3605)
+final lddt: tensor(0.3605)
+ideal lddt tensor(0.4792)
+time useage 4.343843460083008
+===END===
+
+===METRIC===
+protein: 4800
+initial lddt: tensor(0.3787)
+final lddt: tensor(0.3787)
+ideal lddt tensor(0.4632)
+time useage 4.962725877761841
+===END===
+
+===METRIC===
+protein: 4840
+initial lddt: tensor(0.5232)
+final lddt: tensor(0.5232)
+ideal lddt tensor(0.6178)
+time useage 4.239294052124023
+===END===
+
+===METRIC===
+protein: 4880
+initial lddt: tensor(0.5061)
+final lddt: tensor(0.5061)
+ideal lddt tensor(0.6033)
+time useage 4.638307571411133
+===END===
+
+===METRIC===
+protein: 4920
+initial lddt: tensor(0.4232)
+final lddt: tensor(0.4232)
+ideal lddt tensor(0.5384)
+time useage 4.339205503463745
+===END===
+
+===METRIC===
+protein: 4960
+initial lddt: tensor(0.2875)
+final lddt: tensor(0.2875)
+ideal lddt tensor(0.4033)
+time useage 4.29656982421875
+===END===
+
+===METRIC===
+protein: 5000
+initial lddt: tensor(0.2950)
+final lddt: tensor(0.2950)
+ideal lddt tensor(0.4224)
+time useage 4.183875322341919
+===END===
+
+===METRIC===
+protein: 5040
+initial lddt: tensor(0.4382)
+final lddt: tensor(0.4382)
+ideal lddt tensor(0.5493)
+time useage 4.772706508636475
+===END===
+
+===METRIC===
+protein: 5080
+initial lddt: tensor(0.4300)
+final lddt: tensor(0.4300)
+ideal lddt tensor(0.5284)
+time useage 5.458752393722534
+===END===
+
+===METRIC===
+protein: 5120
+initial lddt: tensor(0.4396)
+final lddt: tensor(0.5454)
+ideal lddt tensor(0.5613)
+time useage 54.89998984336853
+===END===
+
+===METRIC===
+protein: 5160
+initial lddt: tensor(0.4657)
+final lddt: tensor(0.4657)
+ideal lddt tensor(0.5477)
+time useage 3.152406930923462
+===END===
+
+===METRIC===
+protein: 5200
+initial lddt: tensor(0.6639)
+final lddt: tensor(0.6639)
+ideal lddt tensor(0.7807)
+time useage 4.123426675796509
+===END===
+
+===METRIC===
+protein: 5240
+initial lddt: tensor(0.4842)
+final lddt: tensor(0.4842)
+ideal lddt tensor(0.6178)
+time useage 4.623291969299316
+===END===
+
+===METRIC===
+protein: 5280
+initial lddt: tensor(0.5424)
+final lddt: tensor(0.5424)
+ideal lddt tensor(0.6562)
+time useage 4.99805474281311
+===END===
+
+===METRIC===
+protein: 5320
+initial lddt: tensor(0.3499)
+final lddt: tensor(0.3499)
+ideal lddt tensor(0.4703)
+time useage 5.738266706466675
+===END===
+
+===METRIC===
+protein: 5360
+initial lddt: tensor(0.4644)
+final lddt: tensor(0.4644)
+ideal lddt tensor(0.5672)
+time useage 5.099319696426392
+===END===
+
+===METRIC===
+protein: 5400
+initial lddt: tensor(0.4743)
+final lddt: tensor(0.5612)
+ideal lddt tensor(0.6049)
+time useage 22.79398488998413
+===END===
+
+===METRIC===
+protein: 5440
+initial lddt: tensor(0.4481)
+final lddt: tensor(0.4481)
+ideal lddt tensor(0.5337)
+time useage 5.016372919082642
+===END===
+
+===METRIC===
+protein: 5480
+initial lddt: tensor(0.4917)
+final lddt: tensor(0.4917)
+ideal lddt tensor(0.6139)
+time useage 5.224045038223267
+===END===
+
+===METRIC===
+protein: 5520
+initial lddt: tensor(0.2956)
+final lddt: tensor(0.2956)
+ideal lddt tensor(0.4143)
+time useage 5.093585252761841
+===END===
+
+===METRIC===
+protein: 5560
+initial lddt: tensor(0.4316)
+final lddt: tensor(0.4316)
+ideal lddt tensor(0.5500)
+time useage 5.249811172485352
+===END===
+
+===METRIC===
+protein: 5600
+initial lddt: tensor(0.5793)
+final lddt: tensor(0.5793)
+ideal lddt tensor(0.6737)
+time useage 4.855346918106079
+===END===
+
+===METRIC===
+protein: 5640
+initial lddt: tensor(0.4242)
+final lddt: tensor(0.4242)
+ideal lddt tensor(0.5587)
+time useage 4.88323450088501
+===END===
+
+===METRIC===
+protein: 5680
+initial lddt: tensor(0.6204)
+final lddt: tensor(0.6204)
+ideal lddt tensor(0.6969)
+time useage 5.069284439086914
+===END===
+
+===METRIC===
+protein: 5720
+initial lddt: tensor(0.3185)
+final lddt: tensor(0.3185)
+ideal lddt tensor(0.4274)
+time useage 5.314709663391113
+===END===
+
+===METRIC===
+protein: 5760
+initial lddt: tensor(0.3476)
+final lddt: tensor(0.3476)
+ideal lddt tensor(0.4724)
+time useage 5.104701042175293
+===END===
+
+===METRIC===
+protein: 5800
+initial lddt: tensor(0.3453)
+final lddt: tensor(0.4963)
+ideal lddt tensor(0.4750)
+time useage 57.95288586616516
+===END===
+
+===METRIC===
+protein: 5840
+initial lddt: tensor(0.4526)
+final lddt: tensor(0.4526)
+ideal lddt tensor(0.5536)
+time useage 4.026468515396118
+===END===
+
+===METRIC===
+protein: 5880
+initial lddt: tensor(0.3565)
+final lddt: tensor(0.3565)
+ideal lddt tensor(0.4743)
+time useage 4.6167707443237305
+===END===
+
+===METRIC===
+protein: 5920
+initial lddt: tensor(0.5379)
+final lddt: tensor(0.6514)
+ideal lddt tensor(0.6439)
+time useage 51.11270523071289
+===END===
+
+===METRIC===
+protein: 5960
+initial lddt: tensor(0.4512)
+final lddt: tensor(0.5629)
+ideal lddt tensor(0.5569)
+time useage 34.49159646034241
+===END===
+
+===METRIC===
+protein: 6000
+initial lddt: tensor(0.3889)
+final lddt: tensor(0.3889)
+ideal lddt tensor(0.5260)
+time useage 3.925865888595581
+===END===
+
+===METRIC===
+protein: 6040
+initial lddt: tensor(0.4139)
+final lddt: tensor(0.4139)
+ideal lddt tensor(0.5314)
+time useage 5.454422235488892
+===END===
+
+===METRIC===
+protein: 6080
+initial lddt: tensor(0.4834)
+final lddt: tensor(0.5607)
+ideal lddt tensor(0.5896)
+time useage 66.34156560897827
+===END===
+
+===METRIC===
+protein: 6120
+initial lddt: tensor(0.4903)
+final lddt: tensor(0.4903)
+ideal lddt tensor(0.6124)
+time useage 5.68470573425293
+===END===
+
+===METRIC===
+protein: 6160
+initial lddt: tensor(0.4616)
+final lddt: tensor(0.4616)
+ideal lddt tensor(0.6315)
+time useage 5.44560170173645
+===END===
+
+===METRIC===
+protein: 6200
+initial lddt: tensor(0.4147)
+final lddt: tensor(0.4147)
+ideal lddt tensor(0.5665)
+time useage 4.230020046234131
+===END===
+
+===METRIC===
+protein: 6240
+initial lddt: tensor(0.4603)
+final lddt: tensor(0.5925)
+ideal lddt tensor(0.5856)
+time useage 26.414941549301147
+===END===
+
+===METRIC===
+protein: 6280
+initial lddt: tensor(0.4755)
+final lddt: tensor(0.4755)
+ideal lddt tensor(0.5670)
+time useage 5.490751504898071
+===END===
+
+===METRIC===
+protein: 6320
+initial lddt: tensor(0.4798)
+final lddt: tensor(0.4798)
+ideal lddt tensor(0.5807)
+time useage 5.547819137573242
+===END===
+
+===METRIC===
+protein: 6360
+initial lddt: tensor(0.4258)
+final lddt: tensor(0.4258)
+ideal lddt tensor(0.5602)
+time useage 3.8271896839141846
+===END===
+
+===METRIC===
+protein: 6400
+initial lddt: tensor(0.4269)
+final lddt: tensor(0.4269)
+ideal lddt tensor(0.5712)
+time useage 3.8873260021209717
+===END===
+
+===METRIC===
+protein: 6440
+initial lddt: tensor(0.3354)
+final lddt: tensor(0.3354)
+ideal lddt tensor(0.4133)
+time useage 3.819068431854248
+===END===
+
+===METRIC===
+protein: 6480
+initial lddt: tensor(0.4861)
+final lddt: tensor(0.4861)
+ideal lddt tensor(0.5813)
+time useage 3.6912107467651367
+===END===
+
+===METRIC===
+protein: 6520
+initial lddt: tensor(0.4242)
+final lddt: tensor(0.4242)
+ideal lddt tensor(0.5354)
+time useage 4.5016937255859375
+===END===
+
+===METRIC===
+protein: 6560
+initial lddt: tensor(0.3848)
+final lddt: tensor(0.6032)
+ideal lddt tensor(0.4835)
+time useage 16.40480899810791
+===END===
+
+===METRIC===
+protein: 6600
+initial lddt: tensor(0.4472)
+final lddt: tensor(0.5283)
+ideal lddt tensor(0.5603)
+time useage 30.783401250839233
+===END===
+
+===METRIC===
+protein: 6640
+initial lddt: tensor(0.3464)
+final lddt: tensor(0.3464)
+ideal lddt tensor(0.4850)
+time useage 4.664424180984497
+===END===
+
+===METRIC===
+protein: 6680
+initial lddt: tensor(0.4037)
+final lddt: tensor(0.4037)
+ideal lddt tensor(0.4926)
+time useage 4.142853021621704
+===END===
+
+===METRIC===
+protein: 6720
+initial lddt: tensor(0.4004)
+final lddt: tensor(0.4004)
+ideal lddt tensor(0.5199)
+time useage 3.709141731262207
+===END===
+
+===METRIC===
+protein: 6760
+initial lddt: tensor(0.3585)
+final lddt: tensor(0.3585)
+ideal lddt tensor(0.4665)
+time useage 4.376174211502075
+===END===
+
+===METRIC===
+protein: 6800
+initial lddt: tensor(0.4145)
+final lddt: tensor(0.4145)
+ideal lddt tensor(0.5347)
+time useage 4.559216737747192
+===END===
+
+===METRIC===
+protein: 6840
+initial lddt: tensor(0.4894)
+final lddt: tensor(0.4894)
+ideal lddt tensor(0.5794)
+time useage 4.361082315444946
+===END===
+
+===METRIC===
+protein: 6880
+initial lddt: tensor(0.2715)
+final lddt: tensor(0.2715)
+ideal lddt tensor(0.3753)
+time useage 4.624149560928345
+===END===
+
+===METRIC===
+protein: 6920
+initial lddt: tensor(0.4651)
+final lddt: tensor(0.5804)
+ideal lddt tensor(0.5570)
+time useage 52.557485580444336
+===END===
+
+===METRIC===
+protein: 6960
+initial lddt: tensor(0.4196)
+final lddt: tensor(0.4196)
+ideal lddt tensor(0.5505)
+time useage 4.883763551712036
+===END===
+
+===METRIC===
+protein: 7000
+initial lddt: tensor(0.4343)
+final lddt: tensor(0.4343)
+ideal lddt tensor(0.5809)
+time useage 4.411226272583008
+===END===
+
+===METRIC===
+protein: 7040
+initial lddt: tensor(0.5051)
+final lddt: tensor(0.5051)
+ideal lddt tensor(0.6061)
+time useage 4.306218862533569
+===END===
+
+===METRIC===
+protein: 7080
+initial lddt: tensor(0.3999)
+final lddt: tensor(0.5517)
+ideal lddt tensor(0.5476)
+time useage 48.965150594711304
+===END===
+
+===METRIC===
+protein: 7120
+initial lddt: tensor(0.3620)
+final lddt: tensor(0.3620)
+ideal lddt tensor(0.5019)
+time useage 4.431540250778198
+===END===
+
+===METRIC===
+protein: 7160
+initial lddt: tensor(0.4413)
+final lddt: tensor(0.4413)
+ideal lddt tensor(0.5687)
+time useage 4.2478954792022705
+===END===
+
+===METRIC===
+protein: 7200
+initial lddt: tensor(0.3754)
+final lddt: tensor(0.3754)
+ideal lddt tensor(0.5018)
+time useage 4.577266216278076
+===END===
+
+===METRIC===
+protein: 7240
+initial lddt: tensor(0.4761)
+final lddt: tensor(0.4761)
+ideal lddt tensor(0.5898)
+time useage 4.651583194732666
+===END===
+
+===METRIC===
+protein: 7280
+initial lddt: tensor(0.4965)
+final lddt: tensor(0.4965)
+ideal lddt tensor(0.6173)
+time useage 4.257200241088867
+===END===
+
+===METRIC===
+protein: 7320
+initial lddt: tensor(0.4548)
+final lddt: tensor(0.4548)
+ideal lddt tensor(0.5904)
+time useage 4.091618537902832
+===END===
+
+===METRIC===
+protein: 7360
+initial lddt: tensor(0.3828)
+final lddt: tensor(0.5254)
+ideal lddt tensor(0.5052)
+time useage 26.757018566131592
+===END===
+
+===METRIC===
+protein: 7400
+initial lddt: tensor(0.3945)
+final lddt: tensor(0.3945)
+ideal lddt tensor(0.5351)
+time useage 4.502600908279419
+===END===
+
+===METRIC===
+protein: 7440
+initial lddt: tensor(0.5809)
+final lddt: tensor(0.6225)
+ideal lddt tensor(0.6715)
+time useage 12.826728820800781
+===END===
+
+===METRIC===
+protein: 7480
+initial lddt: tensor(0.4186)
+final lddt: tensor(0.4186)
+ideal lddt tensor(0.5229)
+time useage 4.575544834136963
+===END===
+
+===METRIC===
+protein: 7520
+initial lddt: tensor(0.1819)
+final lddt: tensor(0.1819)
+ideal lddt tensor(0.2924)
+time useage 4.357784032821655
+===END===
+
+===METRIC===
+protein: 7560
+initial lddt: tensor(0.4360)
+final lddt: tensor(0.4360)
+ideal lddt tensor(0.5753)
+time useage 4.117830276489258
+===END===
+
+===METRIC===
+protein: 7600
+initial lddt: tensor(0.4908)
+final lddt: tensor(0.4908)
+ideal lddt tensor(0.5922)
+time useage 4.4635169506073
+===END===
+
+===METRIC===
+protein: 7640
+initial lddt: tensor(0.4168)
+final lddt: tensor(0.4168)
+ideal lddt tensor(0.5463)
+time useage 4.5514819622039795
+===END===
+
+===METRIC===
+protein: 7680
+initial lddt: tensor(0.4491)
+final lddt: tensor(0.4491)
+ideal lddt tensor(0.5708)
+time useage 4.591771125793457
+===END===
+
+===METRIC===
+protein: 7720
+initial lddt: tensor(0.3542)
+final lddt: tensor(0.5150)
+ideal lddt tensor(0.4824)
+time useage 37.1183922290802
+===END===
+
+===METRIC===
+protein: 7760
+initial lddt: tensor(0.4520)
+final lddt: tensor(0.5348)
+ideal lddt tensor(0.5668)
+time useage 46.42893886566162
+===END===
+
+===METRIC===
+protein: 7800
+initial lddt: tensor(0.3915)
+final lddt: tensor(0.3915)
+ideal lddt tensor(0.5044)
+time useage 4.888137340545654
+===END===
+
+===METRIC===
+protein: 7840
+initial lddt: tensor(0.4847)
+final lddt: tensor(0.4847)
+ideal lddt tensor(0.5821)
+time useage 5.4126012325286865
+===END===
+
+===METRIC===
+protein: 7880
+initial lddt: tensor(0.3604)
+final lddt: tensor(0.5066)
+ideal lddt tensor(0.4361)
+time useage 60.752357482910156
+===END===
+
+===METRIC===
+protein: 7920
+initial lddt: tensor(0.5289)
+final lddt: tensor(0.5289)
+ideal lddt tensor(0.6306)
+time useage 4.7651543617248535
+===END===
+
+===METRIC===
+protein: 7960
+initial lddt: tensor(0.4213)
+final lddt: tensor(0.4213)
+ideal lddt tensor(0.5570)
+time useage 4.633920907974243
+===END===
+
+===METRIC===
+protein: 8000
+initial lddt: tensor(0.5232)
+final lddt: tensor(0.5232)
+ideal lddt tensor(0.6165)
+time useage 5.00917911529541
+===END===
+
+===METRIC===
+protein: 8040
+initial lddt: tensor(0.3904)
+final lddt: tensor(0.3904)
+ideal lddt tensor(0.5215)
+time useage 4.827568054199219
+===END===
+
+===METRIC===
+protein: 8080
+initial lddt: tensor(0.2724)
+final lddt: tensor(0.2724)
+ideal lddt tensor(0.3833)
+time useage 4.222294569015503
+===END===
+
+===METRIC===
+protein: 8120
+initial lddt: tensor(0.4883)
+final lddt: tensor(0.4883)
+ideal lddt tensor(0.5871)
+time useage 5.270656585693359
+===END===
+
+===METRIC===
+protein: 8160
+initial lddt: tensor(0.4131)
+final lddt: tensor(0.4131)
+ideal lddt tensor(0.5492)
+time useage 4.334410905838013
+===END===
+
+===METRIC===
+protein: 8200
+initial lddt: tensor(0.5182)
+final lddt: tensor(0.5182)
+ideal lddt tensor(0.6177)
+time useage 5.121633052825928
+===END===
+
+===METRIC===
+protein: 8240
+initial lddt: tensor(0.4835)
+final lddt: tensor(0.4835)
+ideal lddt tensor(0.5628)
+time useage 5.497917175292969
+===END===
+
+===METRIC===
+protein: 8280
+initial lddt: tensor(0.4637)
+final lddt: tensor(0.4637)
+ideal lddt tensor(0.5806)
+time useage 5.243501424789429
+===END===
+
+===METRIC===
+protein: 8320
+initial lddt: tensor(0.4114)
+final lddt: tensor(0.5210)
+ideal lddt tensor(0.5428)
+time useage 33.88965034484863
+===END===
+
+===METRIC===
+protein: 8360
+initial lddt: tensor(0.4503)
+final lddt: tensor(0.4503)
+ideal lddt tensor(0.5332)
+time useage 4.387878894805908
+===END===
+
+===METRIC===
+protein: 8400
+initial lddt: tensor(0.4949)
+final lddt: tensor(0.5574)
+ideal lddt tensor(0.5749)
+time useage 25.112436771392822
+===END===
+
+===METRIC===
+protein: 8440
+initial lddt: tensor(0.4404)
+final lddt: tensor(0.4404)
+ideal lddt tensor(0.5858)
+time useage 4.486581325531006
+===END===
+
+===METRIC===
+protein: 8480
+initial lddt: tensor(0.4447)
+final lddt: tensor(0.4447)
+ideal lddt tensor(0.6182)
+time useage 5.04999566078186
+===END===
+
+===METRIC===
+protein: 8520
+initial lddt: tensor(0.4430)
+final lddt: tensor(0.4430)
+ideal lddt tensor(0.5273)
+time useage 5.354808568954468
+===END===
+
+===METRIC===
+protein: 8560
+initial lddt: tensor(0.3491)
+final lddt: tensor(0.3491)
+ideal lddt tensor(0.4759)
+time useage 5.3955912590026855
+===END===
+
+===METRIC===
+protein: 8600
+initial lddt: tensor(0.4295)
+final lddt: tensor(0.5881)
+ideal lddt tensor(0.5786)
+time useage 56.139708280563354
+===END===
+
+===METRIC===
+protein: 8640
+initial lddt: tensor(0.5422)
+final lddt: tensor(0.6360)
+ideal lddt tensor(0.6433)
+time useage 42.29480576515198
+===END===
+
+===METRIC===
+protein: 8680
+initial lddt: tensor(0.3527)
+final lddt: tensor(0.3527)
+ideal lddt tensor(0.4503)
+time useage 5.401911973953247
+===END===
+
+===METRIC===
+protein: 8720
+initial lddt: tensor(0.5081)
+final lddt: tensor(0.5081)
+ideal lddt tensor(0.6080)
+time useage 5.056756496429443
+===END===
+
+===METRIC===
+protein: 8760
+initial lddt: tensor(0.2952)
+final lddt: tensor(0.2952)
+ideal lddt tensor(0.3852)
+time useage 5.4630866050720215
+===END===
+
+===METRIC===
+protein: 8800
+initial lddt: tensor(0.4948)
+final lddt: tensor(0.4948)
+ideal lddt tensor(0.6068)
+time useage 5.627767562866211
+===END===
+
+===METRIC===
+protein: 8840
+initial lddt: tensor(0.3571)
+final lddt: tensor(0.3571)
+ideal lddt tensor(0.5106)
+time useage 4.921161890029907
+===END===
+
+===METRIC===
+protein: 8880
+initial lddt: tensor(0.4891)
+final lddt: tensor(0.4891)
+ideal lddt tensor(0.6273)
+time useage 5.8948304653167725
+===END===
+
+===METRIC===
+protein: 8920
+initial lddt: tensor(0.4076)
+final lddt: tensor(0.4076)
+ideal lddt tensor(0.5277)
+time useage 5.000970363616943
+===END===
+
+===METRIC===
+protein: 8960
+initial lddt: tensor(0.4016)
+final lddt: tensor(0.4962)
+ideal lddt tensor(0.5303)
+time useage 44.93609833717346
+===END===
+
+===METRIC===
+protein: 9000
+initial lddt: tensor(0.4277)
+final lddt: tensor(0.4277)
+ideal lddt tensor(0.5227)
+time useage 5.453616142272949
+===END===
+
+===METRIC===
+protein: 9040
+initial lddt: tensor(0.5172)
+final lddt: tensor(0.5582)
+ideal lddt tensor(0.6214)
+time useage 25.11929202079773
+===END===
+
+===METRIC===
+protein: 9080
+initial lddt: tensor(0.3242)
+final lddt: tensor(0.3242)
+ideal lddt tensor(0.4507)
+time useage 5.586015462875366
+===END===
+
+===METRIC===
+protein: 9120
+initial lddt: tensor(0.4098)
+final lddt: tensor(0.4098)
+ideal lddt tensor(0.5471)
+time useage 6.124490737915039
+===END===
+
+===METRIC===
+protein: 9160
+initial lddt: tensor(0.4380)
+final lddt: tensor(0.4380)
+ideal lddt tensor(0.5480)
+time useage 5.4375152587890625
+===END===
+
+===METRIC===
+protein: 9200
+initial lddt: tensor(0.3247)
+final lddt: tensor(0.3247)
+ideal lddt tensor(0.4495)
+time useage 5.452240705490112
+===END===
+
+===METRIC===
+protein: 9240
+initial lddt: tensor(0.3042)
+final lddt: tensor(0.4485)
+ideal lddt tensor(0.4130)
+time useage 38.840951442718506
+===END===
+
+===METRIC===
+protein: 9280
+initial lddt: tensor(0.4008)
+final lddt: tensor(0.4008)
+ideal lddt tensor(0.5204)
+time useage 5.476870775222778
+===END===
+
+===METRIC===
+protein: 9320
+initial lddt: tensor(0.3579)
+final lddt: tensor(0.3579)
+ideal lddt tensor(0.4704)
+time useage 5.62333869934082
+===END===
+
+===METRIC===
+protein: 9360
+initial lddt: tensor(0.4222)
+final lddt: tensor(0.4222)
+ideal lddt tensor(0.5392)
+time useage 5.824225664138794
+===END===
+
+===METRIC===
+protein: 9400
+initial lddt: tensor(0.3876)
+final lddt: tensor(0.3876)
+ideal lddt tensor(0.5308)
+time useage 5.2028138637542725
+===END===
+
+===METRIC===
+protein: 9440
+initial lddt: tensor(0.4059)
+final lddt: tensor(0.4059)
+ideal lddt tensor(0.5230)
+time useage 6.226163864135742
+===END===
+
+===METRIC===
+protein: 9480
+initial lddt: tensor(0.3928)
+final lddt: tensor(0.3928)
+ideal lddt tensor(0.5140)
+time useage 6.230717420578003
+===END===
+
+===METRIC===
+protein: 9520
+initial lddt: tensor(0.4571)
+final lddt: tensor(0.4571)
+ideal lddt tensor(0.5751)
+time useage 6.262202978134155
+===END===
+
+===METRIC===
+protein: 9560
+initial lddt: tensor(0.3811)
+final lddt: tensor(0.3811)
+ideal lddt tensor(0.4959)
+time useage 6.927958965301514
+===END===
+
+===METRIC===
+protein: 9600
+initial lddt: tensor(0.5426)
+final lddt: tensor(0.5426)
+ideal lddt tensor(0.6433)
+time useage 4.954189777374268
+===END===
+
+===METRIC===
+protein: 9640
+initial lddt: tensor(0.4022)
+final lddt: tensor(0.4022)
+ideal lddt tensor(0.5358)
+time useage 6.344884872436523
+===END===
+
+===METRIC===
+protein: 9680
+initial lddt: tensor(0.3263)
+final lddt: tensor(0.3263)
+ideal lddt tensor(0.4598)
+time useage 5.9053449630737305
+===END===
+
+===METRIC===
+protein: 9720
+initial lddt: tensor(0.3993)
+final lddt: tensor(0.3993)
+ideal lddt tensor(0.5143)
+time useage 5.812010765075684
+===END===
+
+===METRIC===
+protein: 9760
+initial lddt: tensor(0.5005)
+final lddt: tensor(0.5739)
+ideal lddt tensor(0.6094)
+time useage 38.05140709877014
+===END===
+
+===METRIC===
+protein: 9800
+initial lddt: tensor(0.4515)
+final lddt: tensor(0.4515)
+ideal lddt tensor(0.5616)
+time useage 6.145477056503296
+===END===
+
+===METRIC===
+protein: 9840
+initial lddt: tensor(0.3831)
+final lddt: tensor(0.3831)
+ideal lddt tensor(0.5094)
+time useage 6.176136493682861
+===END===
+
+===METRIC===
+protein: 9880
+initial lddt: tensor(0.5006)
+final lddt: tensor(0.5006)
+ideal lddt tensor(0.5972)
+time useage 6.448033094406128
+===END===
+
+===METRIC===
+protein: 9920
+initial lddt: tensor(0.3782)
+final lddt: tensor(0.4646)
+ideal lddt tensor(0.4742)
+time useage 41.07814288139343
+===END===
+
+===METRIC===
+protein: 9960
+initial lddt: tensor(0.5254)
+final lddt: tensor(0.5254)
+ideal lddt tensor(0.6444)
+time useage 5.6778364181518555
+===END===
+
+===METRIC===
+protein: 10000
+initial lddt: tensor(0.3528)
+final lddt: tensor(0.3528)
+ideal lddt tensor(0.4908)
+time useage 6.225898265838623
+===END===
+
+===METRIC===
+protein: 10040
+initial lddt: tensor(0.4374)
+final lddt: tensor(0.5193)
+ideal lddt tensor(0.5560)
+time useage 38.57148456573486
+===END===
+
+===METRIC===
+protein: 10080
+initial lddt: tensor(0.4136)
+final lddt: tensor(0.4136)
+ideal lddt tensor(0.5575)
+time useage 5.6832051277160645
+===END===
+
+===METRIC===
+protein: 10120
+initial lddt: tensor(0.3288)
+final lddt: tensor(0.5109)
+ideal lddt tensor(0.4646)
+time useage 97.57524514198303
+===END===
+
+===METRIC===
+protein: 10160
+initial lddt: tensor(0.4070)
+final lddt: tensor(0.4070)
+ideal lddt tensor(0.5315)
+time useage 5.857141733169556
+===END===
+
+===METRIC===
+protein: 10200
+initial lddt: tensor(0.5082)
+final lddt: tensor(0.6145)
+ideal lddt tensor(0.6155)
+time useage 34.9961371421814
+===END===
+
+===METRIC===
+protein: 10240
+initial lddt: tensor(0.3999)
+final lddt: tensor(0.3999)
+ideal lddt tensor(0.5373)
+time useage 6.772037744522095
+===END===
+
+===METRIC===
+protein: 10280
+initial lddt: tensor(0.4387)
+final lddt: tensor(0.4387)
+ideal lddt tensor(0.5711)
+time useage 5.920594930648804
+===END===
+
+===METRIC===
+protein: 10320
+initial lddt: tensor(0.3595)
+final lddt: tensor(0.3595)
+ideal lddt tensor(0.4796)
+time useage 5.906123876571655
+===END===
+
+===METRIC===
+protein: 10360
+initial lddt: tensor(0.5059)
+final lddt: tensor(0.5059)
+ideal lddt tensor(0.6047)
+time useage 6.105428457260132
+===END===
+
+===METRIC===
+protein: 10400
+initial lddt: tensor(0.5208)
+final lddt: tensor(0.5208)
+ideal lddt tensor(0.6391)
+time useage 7.172746896743774
+===END===
+
+===METRIC===
+protein: 10440
+initial lddt: tensor(0.4343)
+final lddt: tensor(0.4343)
+ideal lddt tensor(0.5285)
+time useage 6.024986028671265
+===END===
+
+===METRIC===
+protein: 10480
+initial lddt: tensor(0.3398)
+final lddt: tensor(0.3398)
+ideal lddt tensor(0.4429)
+time useage 6.24995231628418
+===END===
+
+===METRIC===
+protein: 10520
+initial lddt: tensor(0.5336)
+final lddt: tensor(0.5336)
+ideal lddt tensor(0.5969)
+time useage 5.3423912525177
+===END===
+
+===METRIC===
+protein: 10560
+initial lddt: tensor(0.2591)
+final lddt: tensor(0.2591)
+ideal lddt tensor(0.3977)
+time useage 6.136895418167114
+===END===
+
+===METRIC===
+protein: 10600
+initial lddt: tensor(0.3654)
+final lddt: tensor(0.4734)
+ideal lddt tensor(0.4650)
+time useage 47.21323561668396
+===END===
+
+===METRIC===
+protein: 10640
+initial lddt: tensor(0.4488)
+final lddt: tensor(0.4488)
+ideal lddt tensor(0.5697)
+time useage 6.984926223754883
+===END===
+
+===METRIC===
+protein: 10680
+initial lddt: tensor(0.4354)
+final lddt: tensor(0.4354)
+ideal lddt tensor(0.5560)
+time useage 6.418089151382446
+===END===
+
+===METRIC===
+protein: 10720
+initial lddt: tensor(0.4513)
+final lddt: tensor(0.4513)
+ideal lddt tensor(0.5827)
+time useage 6.156280755996704
+===END===
+
+===METRIC===
+protein: 10760
+initial lddt: tensor(0.4391)
+final lddt: tensor(0.5071)
+ideal lddt tensor(0.5258)
+time useage 23.96107792854309
+===END===
+
+===METRIC===
+protein: 10800
+initial lddt: tensor(0.4178)
+final lddt: tensor(0.4178)
+ideal lddt tensor(0.5461)
+time useage 6.351800918579102
+===END===
+
+===METRIC===
+protein: 10840
+initial lddt: tensor(0.5344)
+final lddt: tensor(0.5344)
+ideal lddt tensor(0.6509)
+time useage 6.397742748260498
+===END===
+
+===METRIC===
+protein: 10880
+initial lddt: tensor(0.3994)
+final lddt: tensor(0.5155)
+ideal lddt tensor(0.5320)
+time useage 96.14149355888367
+===END===
+
+===METRIC===
+protein: 10920
+initial lddt: tensor(0.3678)
+final lddt: tensor(0.3678)
+ideal lddt tensor(0.4988)
+time useage 6.397467613220215
+===END===
+
+===METRIC===
+protein: 10960
+initial lddt: tensor(0.3955)
+final lddt: tensor(0.3955)
+ideal lddt tensor(0.4920)
+time useage 6.741727590560913
+===END===
+
+===METRIC===
+protein: 11000
+initial lddt: tensor(0.4290)
+final lddt: tensor(0.4290)
+ideal lddt tensor(0.5467)
+time useage 5.943883180618286
+===END===
+
+===METRIC===
+protein: 11040
+initial lddt: tensor(0.3816)
+final lddt: tensor(0.3816)
+ideal lddt tensor(0.5131)
+time useage 6.495849370956421
+===END===
+
+===METRIC===
+protein: 11080
+initial lddt: tensor(0.4941)
+final lddt: tensor(0.4941)
+ideal lddt tensor(0.5720)
+time useage 6.368109941482544
+===END===
+
+===METRIC===
+protein: 11120
+initial lddt: tensor(0.4034)
+final lddt: tensor(0.4034)
+ideal lddt tensor(0.5064)
+time useage 6.736650228500366
+===END===
+
+===METRIC===
+protein: 11160
+initial lddt: tensor(0.4738)
+final lddt: tensor(0.4738)
+ideal lddt tensor(0.5844)
+time useage 5.767960071563721
+===END===
+
+===METRIC===
+protein: 11200
+initial lddt: tensor(0.3994)
+final lddt: tensor(0.3994)
+ideal lddt tensor(0.5384)
+time useage 6.904643297195435
+===END===
+
+===METRIC===
+protein: 11240
+initial lddt: tensor(0.3180)
+final lddt: tensor(0.4413)
+ideal lddt tensor(0.4143)
+time useage 59.60771417617798
+===END===
+
+===METRIC===
+protein: 11280
+initial lddt: tensor(0.4396)
+final lddt: tensor(0.4396)
+ideal lddt tensor(0.5672)
+time useage 6.551734924316406
+===END===
+
+===METRIC===
+protein: 11320
+initial lddt: tensor(0.4447)
+final lddt: tensor(0.4447)
+ideal lddt tensor(0.5669)
+time useage 7.250527381896973
+===END===
+
+===METRIC===
+protein: 11360
+initial lddt: tensor(0.4179)
+final lddt: tensor(0.4179)
+ideal lddt tensor(0.5515)
+time useage 7.024399995803833
+===END===
+
+===METRIC===
+protein: 11400
+initial lddt: tensor(0.3061)
+final lddt: tensor(0.3061)
+ideal lddt tensor(0.4468)
+time useage 7.213956594467163
+===END===
+
+===METRIC===
+protein: 11440
+initial lddt: tensor(0.4799)
+final lddt: tensor(0.4799)
+ideal lddt tensor(0.6130)
+time useage 7.206627607345581
+===END===
+
+===METRIC===
+protein: 11480
+initial lddt: tensor(0.3806)
+final lddt: tensor(0.3806)
+ideal lddt tensor(0.5093)
+time useage 6.8364479541778564
+===END===
+
+===METRIC===
+protein: 11520
+initial lddt: tensor(0.4955)
+final lddt: tensor(0.4955)
+ideal lddt tensor(0.6209)
+time useage 7.374181032180786
+===END===
+
+===METRIC===
+protein: 11560
+initial lddt: tensor(0.3917)
+final lddt: tensor(0.3917)
+ideal lddt tensor(0.5116)
+time useage 7.293202638626099
+===END===
+
+===METRIC===
+protein: 11600
+initial lddt: tensor(0.5377)
+final lddt: tensor(0.5377)
+ideal lddt tensor(0.6369)
+time useage 6.381766080856323
+===END===
+
+===METRIC===
+protein: 11640
+initial lddt: tensor(0.4989)
+final lddt: tensor(0.4989)
+ideal lddt tensor(0.6303)
+time useage 7.08906888961792
+===END===
+
+===METRIC===
+protein: 11680
+initial lddt: tensor(0.4589)
+final lddt: tensor(0.4589)
+ideal lddt tensor(0.5625)
+time useage 7.166128873825073
+===END===
+
+===METRIC===
+protein: 11720
+initial lddt: tensor(0.3897)
+final lddt: tensor(0.3897)
+ideal lddt tensor(0.5182)
+time useage 6.84716796875
+===END===
+
+===METRIC===
+protein: 11760
+initial lddt: tensor(0.3876)
+final lddt: tensor(0.3876)
+ideal lddt tensor(0.5431)
+time useage 6.360222816467285
+===END===
+
+===METRIC===
+protein: 11800
+initial lddt: tensor(0.3935)
+final lddt: tensor(0.3935)
+ideal lddt tensor(0.4855)
+time useage 7.437881708145142
+===END===
+
+===METRIC===
+protein: 11840
+initial lddt: tensor(0.3968)
+final lddt: tensor(0.3968)
+ideal lddt tensor(0.5143)
+time useage 6.933210849761963
+===END===
+
+===METRIC===
+protein: 11880
+initial lddt: tensor(0.4801)
+final lddt: tensor(0.4801)
+ideal lddt tensor(0.5857)
+time useage 6.64611291885376
+===END===
+
+===METRIC===
+protein: 11920
+initial lddt: tensor(0.4617)
+final lddt: tensor(0.4617)
+ideal lddt tensor(0.5894)
+time useage 7.272431373596191
+===END===
+
+===METRIC===
+protein: 11960
+initial lddt: tensor(0.4363)
+final lddt: tensor(0.4363)
+ideal lddt tensor(0.5751)
+time useage 7.678951740264893
+===END===
+
+===METRIC===
+protein: 12000
+initial lddt: tensor(0.3923)
+final lddt: tensor(0.3923)
+ideal lddt tensor(0.4895)
+time useage 6.374703645706177
+===END===
+
+===METRIC===
+protein: 12040
+initial lddt: tensor(0.3817)
+final lddt: tensor(0.4870)
+ideal lddt tensor(0.4900)
+time useage 71.4842963218689
+===END===
+
+===METRIC===
+protein: 12080
+initial lddt: tensor(0.3467)
+final lddt: tensor(0.4575)
+ideal lddt tensor(0.4772)
+time useage 50.72029995918274
+===END===
+
+===METRIC===
+protein: 12120
+initial lddt: tensor(0.5352)
+final lddt: tensor(0.5352)
+ideal lddt tensor(0.6652)
+time useage 6.9786505699157715
+===END===
+
+===METRIC===
+protein: 12160
+initial lddt: tensor(0.3356)
+final lddt: tensor(0.3356)
+ideal lddt tensor(0.4441)
+time useage 7.348385810852051
+===END===
+
+===METRIC===
+protein: 12200
+initial lddt: tensor(0.4089)
+final lddt: tensor(0.4089)
+ideal lddt tensor(0.5094)
+time useage 8.085181713104248
+===END===
+
+===METRIC===
+protein: 12240
+initial lddt: tensor(0.5014)
+final lddt: tensor(0.5014)
+ideal lddt tensor(0.5968)
+time useage 7.597783327102661
+===END===
+
+===METRIC===
+protein: 12280
+initial lddt: tensor(0.3792)
+final lddt: tensor(0.3792)
+ideal lddt tensor(0.4949)
+time useage 8.221603870391846
+===END===
+
+===METRIC===
+protein: 12320
+initial lddt: tensor(0.4459)
+final lddt: tensor(0.5192)
+ideal lddt tensor(0.5476)
+time useage 65.81574153900146
+===END===
+
+===METRIC===
+protein: 12360
+initial lddt: tensor(0.3563)
+final lddt: tensor(0.3563)
+ideal lddt tensor(0.4683)
+time useage 7.961936712265015
+===END===
+
+===METRIC===
+protein: 12400
+initial lddt: tensor(0.4662)
+final lddt: tensor(0.4662)
+ideal lddt tensor(0.5786)
+time useage 7.2665839195251465
+===END===
+
+===METRIC===
+protein: 12440
+initial lddt: tensor(0.4848)
+final lddt: tensor(0.4848)
+ideal lddt tensor(0.6029)
+time useage 8.13669729232788
+===END===
+
+===METRIC===
+protein: 12480
+initial lddt: tensor(0.5096)
+final lddt: tensor(0.5096)
+ideal lddt tensor(0.6408)
+time useage 6.738132953643799
+===END===
+
+===METRIC===
+protein: 12520
+initial lddt: tensor(0.5360)
+final lddt: tensor(0.5360)
+ideal lddt tensor(0.6481)
+time useage 7.348064422607422
+===END===
+
+===METRIC===
+protein: 12560
+initial lddt: tensor(0.4791)
+final lddt: tensor(0.5913)
+ideal lddt tensor(0.6024)
+time useage 82.22701787948608
+===END===
+
+===METRIC===
+protein: 12600
+initial lddt: tensor(0.5023)
+final lddt: tensor(0.5023)
+ideal lddt tensor(0.6117)
+time useage 6.979938745498657
+===END===
+
+===METRIC===
+protein: 12640
+initial lddt: tensor(0.4111)
+final lddt: tensor(0.4111)
+ideal lddt tensor(0.5447)
+time useage 7.895859241485596
+===END===
+
+===METRIC===
+protein: 12680
+initial lddt: tensor(0.3586)
+final lddt: tensor(0.3586)
+ideal lddt tensor(0.4874)
+time useage 6.953133821487427
+===END===
+
+===METRIC===
+protein: 12720
+initial lddt: tensor(0.2797)
+final lddt: tensor(0.2797)
+ideal lddt tensor(0.4199)
+time useage 6.629868268966675
+===END===
+
+===METRIC===
+protein: 12760
+initial lddt: tensor(0.3693)
+final lddt: tensor(0.3693)
+ideal lddt tensor(0.4858)
+time useage 7.201906442642212
+===END===
+
+===METRIC===
+protein: 12800
+initial lddt: tensor(0.4085)
+final lddt: tensor(0.4085)
+ideal lddt tensor(0.5526)
+time useage 8.650993585586548
+===END===
+
+===METRIC===
+protein: 12840
+initial lddt: tensor(0.4079)
+final lddt: tensor(0.4079)
+ideal lddt tensor(0.5297)
+time useage 9.549079895019531
+===END===
+
+===METRIC===
+protein: 12880
+initial lddt: tensor(0.3731)
+final lddt: tensor(0.3731)
+ideal lddt tensor(0.4908)
+time useage 7.403614282608032
+===END===
+
+===METRIC===
+protein: 12920
+initial lddt: tensor(0.4351)
+final lddt: tensor(0.4351)
+ideal lddt tensor(0.5468)
+time useage 7.2700982093811035
+===END===
+
+===METRIC===
+protein: 12960
+initial lddt: tensor(0.4272)
+final lddt: tensor(0.4272)
+ideal lddt tensor(0.5895)
+time useage 7.133487701416016
+===END===
+
+===METRIC===
+protein: 13000
+initial lddt: tensor(0.4357)
+final lddt: tensor(0.4357)
+ideal lddt tensor(0.5704)
+time useage 7.267247438430786
+===END===
+
+===METRIC===
+protein: 13040
+initial lddt: tensor(0.4370)
+final lddt: tensor(0.4370)
+ideal lddt tensor(0.5466)
+time useage 8.080085039138794
+===END===
+
+===METRIC===
+protein: 13080
+initial lddt: tensor(0.3986)
+final lddt: tensor(0.3986)
+ideal lddt tensor(0.5140)
+time useage 7.285449504852295
+===END===
+
+===METRIC===
+protein: 13120
+initial lddt: tensor(0.4486)
+final lddt: tensor(0.4486)
+ideal lddt tensor(0.5937)
+time useage 7.6552441120147705
+===END===
+
+===METRIC===
+protein: 13160
+initial lddt: tensor(0.4373)
+final lddt: tensor(0.4373)
+ideal lddt tensor(0.5530)
+time useage 7.3778321743011475
+===END===
+
+===METRIC===
+protein: 13200
+initial lddt: tensor(0.4528)
+final lddt: tensor(0.5377)
+ideal lddt tensor(0.5998)
+time useage 36.56073355674744
+===END===
+
+===METRIC===
+protein: 13240
+initial lddt: tensor(0.4543)
+final lddt: tensor(0.4543)
+ideal lddt tensor(0.5500)
+time useage 7.208080530166626
+===END===
+
+===METRIC===
+protein: 13280
+initial lddt: tensor(0.3802)
+final lddt: tensor(0.3802)
+ideal lddt tensor(0.5054)
+time useage 8.296074867248535
+===END===
+
+===METRIC===
+protein: 13320
+initial lddt: tensor(0.4435)
+final lddt: tensor(0.5700)
+ideal lddt tensor(0.6054)
+time useage 48.776695013046265
+===END===
+
+===METRIC===
+protein: 13360
+initial lddt: tensor(0.4645)
+final lddt: tensor(0.4645)
+ideal lddt tensor(0.5814)
+time useage 7.1083714962005615
+===END===
+
+===METRIC===
+protein: 13400
+initial lddt: tensor(0.3166)
+final lddt: tensor(0.4700)
+ideal lddt tensor(0.4445)
+time useage 88.15406703948975
+===END===
+
+===METRIC===
+protein: 13440
+initial lddt: tensor(0.4367)
+final lddt: tensor(0.5001)
+ideal lddt tensor(0.5760)
+time useage 42.40176439285278
+===END===
+
+===METRIC===
+protein: 13480
+initial lddt: tensor(0.4355)
+final lddt: tensor(0.4355)
+ideal lddt tensor(0.5277)
+time useage 8.108704805374146
+===END===
+
+===METRIC===
+protein: 13520
+initial lddt: tensor(0.4430)
+final lddt: tensor(0.4430)
+ideal lddt tensor(0.5310)
+time useage 7.585292816162109
+===END===
+
+===METRIC===
+protein: 13560
+initial lddt: tensor(0.2967)
+final lddt: tensor(0.2967)
+ideal lddt tensor(0.4045)
+time useage 7.966462850570679
+===END===
+
+===METRIC===
+protein: 13600
+initial lddt: tensor(0.5290)
+final lddt: tensor(0.5290)
+ideal lddt tensor(0.6521)
+time useage 8.478483200073242
+===END===
+
+===METRIC===
+protein: 13640
+initial lddt: tensor(0.4301)
+final lddt: tensor(0.4301)
+ideal lddt tensor(0.5716)
+time useage 7.671773672103882
+===END===
+
+===METRIC===
+protein: 13680
+initial lddt: tensor(0.4913)
+final lddt: tensor(0.4913)
+ideal lddt tensor(0.6188)
+time useage 8.772545337677002
+===END===
+
+===METRIC===
+protein: 13720
+initial lddt: tensor(0.2838)
+final lddt: tensor(0.2838)
+ideal lddt tensor(0.4093)
+time useage 8.278422355651855
+===END===
+
+===METRIC===
+protein: 13760
+initial lddt: tensor(0.3448)
+final lddt: tensor(0.4544)
+ideal lddt tensor(0.4773)
+time useage 69.56234502792358
+===END===
+
+===METRIC===
+protein: 13800
+initial lddt: tensor(0.3835)
+final lddt: tensor(0.3835)
+ideal lddt tensor(0.5189)
+time useage 9.979094743728638
+===END===
+
+===METRIC===
+protein: 13840
+initial lddt: tensor(0.3725)
+final lddt: tensor(0.3725)
+ideal lddt tensor(0.5042)
+time useage 9.361746788024902
+===END===
+
+===METRIC===
+protein: 13880
+initial lddt: tensor(0.2816)
+final lddt: tensor(0.4393)
+ideal lddt tensor(0.4048)
+time useage 48.58449935913086
+===END===
+
+===METRIC===
+protein: 13920
+initial lddt: tensor(0.3550)
+final lddt: tensor(0.3550)
+ideal lddt tensor(0.5048)
+time useage 8.70923399925232
+===END===
+
+===METRIC===
+protein: 13960
+initial lddt: tensor(0.3713)
+final lddt: tensor(0.3713)
+ideal lddt tensor(0.5020)
+time useage 8.107468843460083
+===END===
+
+===METRIC===
+protein: 14000
+initial lddt: tensor(0.4109)
+final lddt: tensor(0.4109)
+ideal lddt tensor(0.5455)
+time useage 9.095269441604614
+===END===
+
+===METRIC===
+protein: 14040
+initial lddt: tensor(0.4624)
+final lddt: tensor(0.4624)
+ideal lddt tensor(0.5851)
+time useage 9.054703950881958
+===END===
+
+===METRIC===
+protein: 14080
+initial lddt: tensor(0.4498)
+final lddt: tensor(0.4498)
+ideal lddt tensor(0.5719)
+time useage 8.003735303878784
+===END===
+
+===METRIC===
+protein: 14120
+initial lddt: tensor(0.3707)
+final lddt: tensor(0.3707)
+ideal lddt tensor(0.4938)
+time useage 8.884323120117188
+===END===
+
+===METRIC===
+protein: 14160
+initial lddt: tensor(0.4421)
+final lddt: tensor(0.4421)
+ideal lddt tensor(0.5700)
+time useage 9.327343463897705
+===END===
+
+===METRIC===
+protein: 14200
+initial lddt: tensor(0.4408)
+final lddt: tensor(0.4408)
+ideal lddt tensor(0.5631)
+time useage 8.99491548538208
+===END===
+
+===METRIC===
+protein: 14240
+initial lddt: tensor(0.3557)
+final lddt: tensor(0.3557)
+ideal lddt tensor(0.4728)
+time useage 8.437139749526978
+===END===
+
+===METRIC===
+protein: 14280
+initial lddt: tensor(0.3827)
+final lddt: tensor(0.3827)
+ideal lddt tensor(0.4818)
+time useage 8.599266290664673
+===END===
+
+===METRIC===
+protein: 14320
+initial lddt: tensor(0.4656)
+final lddt: tensor(0.4656)
+ideal lddt tensor(0.5805)
+time useage 10.047911882400513
+===END===
+
+===METRIC===
+protein: 14360
+initial lddt: tensor(0.4393)
+final lddt: tensor(0.4393)
+ideal lddt tensor(0.5528)
+time useage 9.004507303237915
+===END===
+
+===METRIC===
+protein: 14400
+initial lddt: tensor(0.3896)
+final lddt: tensor(0.3896)
+ideal lddt tensor(0.5027)
+time useage 9.160837888717651
+===END===
+
+===METRIC===
+protein: 14440
+initial lddt: tensor(0.4657)
+final lddt: tensor(0.4657)
+ideal lddt tensor(0.5663)
+time useage 9.056746006011963
+===END===
+
+===METRIC===
+protein: 14480
+initial lddt: tensor(0.3704)
+final lddt: tensor(0.3704)
+ideal lddt tensor(0.5066)
+time useage 9.031351089477539
+===END===
+
+===METRIC===
+protein: 14520
+initial lddt: tensor(0.4433)
+final lddt: tensor(0.4433)
+ideal lddt tensor(0.5652)
+time useage 9.362168073654175
+===END===
+
+===METRIC===
+protein: 14560
+initial lddt: tensor(0.4346)
+final lddt: tensor(0.4346)
+ideal lddt tensor(0.5441)
+time useage 8.47046446800232
+===END===
+
+===METRIC===
+protein: 14600
+initial lddt: tensor(0.3963)
+final lddt: tensor(0.5367)
+ideal lddt tensor(0.5190)
+time useage 89.93918800354004
+===END===
+
+===METRIC===
+protein: 14640
+initial lddt: tensor(0.4186)
+final lddt: tensor(0.4186)
+ideal lddt tensor(0.5589)
+time useage 9.111862182617188
+===END===
+
+===METRIC===
+protein: 14680
+initial lddt: tensor(0.4564)
+final lddt: tensor(0.5008)
+ideal lddt tensor(0.5681)
+time useage 78.11626648902893
+===END===
+
+===METRIC===
+protein: 14720
+initial lddt: tensor(0.4449)
+final lddt: tensor(0.4449)
+ideal lddt tensor(0.5995)
+time useage 9.84589171409607
+===END===
+
+===METRIC===
+protein: 14760
+initial lddt: tensor(0.3630)
+final lddt: tensor(0.3630)
+ideal lddt tensor(0.4822)
+time useage 9.459971904754639
+===END===
+
+===METRIC===
+protein: 14800
+initial lddt: tensor(0.4675)
+final lddt: tensor(0.4675)
+ideal lddt tensor(0.5985)
+time useage 11.840779304504395
+===END===
+
+===METRIC===
+protein: 14840
+initial lddt: tensor(0.4300)
+final lddt: tensor(0.4300)
+ideal lddt tensor(0.5491)
+time useage 10.44882345199585
+===END===
+
+===METRIC===
+protein: 14880
+initial lddt: tensor(0.3743)
+final lddt: tensor(0.3743)
+ideal lddt tensor(0.4942)
+time useage 10.148930072784424
+===END===
+
+===METRIC===
+protein: 14920
+initial lddt: tensor(0.4500)
+final lddt: tensor(0.4500)
+ideal lddt tensor(0.5654)
+time useage 9.49606728553772
+===END===
+
+===METRIC===
+protein: 14960
+initial lddt: tensor(0.4085)
+final lddt: tensor(0.5064)
+ideal lddt tensor(0.5587)
+time useage 54.191574811935425
+===END===
+
+===METRIC===
+protein: 15000
+initial lddt: tensor(0.4540)
+final lddt: tensor(0.4540)
+ideal lddt tensor(0.5879)
+time useage 8.492196083068848
+===END===
+
+===METRIC===
+protein: 15040
+initial lddt: tensor(0.4517)
+final lddt: tensor(0.5399)
+ideal lddt tensor(0.5715)
+time useage 66.5972888469696
+===END===
+
+===METRIC===
+protein: 15080
+initial lddt: tensor(0.3633)
+final lddt: tensor(0.3633)
+ideal lddt tensor(0.4707)
+time useage 9.916738748550415
+===END===
+
+===METRIC===
+protein: 15120
+initial lddt: tensor(0.4596)
+final lddt: tensor(0.4596)
+ideal lddt tensor(0.5958)
+time useage 10.543834686279297
+===END===
+
+===METRIC===
+protein: 15160
+initial lddt: tensor(0.3681)
+final lddt: tensor(0.4679)
+ideal lddt tensor(0.4802)
+time useage 132.5370442867279
+===END===
+
+===METRIC===
+protein: 15200
+initial lddt: tensor(0.4553)
+final lddt: tensor(0.4553)
+ideal lddt tensor(0.5918)
+time useage 9.421771764755249
+===END===
+
+===METRIC===
+protein: 15240
+initial lddt: tensor(0.3718)
+final lddt: tensor(0.3718)
+ideal lddt tensor(0.5102)
+time useage 10.676005125045776
+===END===
+
+===METRIC===
+protein: 15280
+initial lddt: tensor(0.4394)
+final lddt: tensor(0.4394)
+ideal lddt tensor(0.5580)
+time useage 10.851295948028564
+===END===
+
+===METRIC===
+protein: 15320
+initial lddt: tensor(0.3321)
+final lddt: tensor(0.3321)
+ideal lddt tensor(0.4569)
+time useage 10.179248094558716
+===END===
+
+===METRIC===
+protein: 15360
+initial lddt: tensor(0.3845)
+final lddt: tensor(0.3845)
+ideal lddt tensor(0.4955)
+time useage 10.28517746925354
+===END===
+
+===METRIC===
+protein: 15400
+initial lddt: tensor(0.4353)
+final lddt: tensor(0.4353)
+ideal lddt tensor(0.5488)
+time useage 10.785178661346436
+===END===
+
+===METRIC===
+protein: 15440
+initial lddt: tensor(0.3716)
+final lddt: tensor(0.3716)
+ideal lddt tensor(0.5179)
+time useage 12.361255884170532
+===END===
+
+===METRIC===
+protein: 15480
+initial lddt: tensor(0.3548)
+final lddt: tensor(0.3548)
+ideal lddt tensor(0.4893)
+time useage 10.829813003540039
+===END===
+
+===METRIC===
+protein: 15520
+initial lddt: tensor(0.3649)
+final lddt: tensor(0.3649)
+ideal lddt tensor(0.5007)
+time useage 10.207940578460693
+===END===
+
+===METRIC===
+protein: 15560
+initial lddt: tensor(0.4302)
+final lddt: tensor(0.4302)
+ideal lddt tensor(0.5544)
+time useage 11.217041254043579
+===END===
+
+===METRIC===
+protein: 15600
+initial lddt: tensor(0.4630)
+final lddt: tensor(0.4630)
+ideal lddt tensor(0.6086)
+time useage 11.119440793991089
+===END===
+
+===METRIC===
+protein: 15640
+initial lddt: tensor(0.4350)
+final lddt: tensor(0.4350)
+ideal lddt tensor(0.5816)
+time useage 11.172967910766602
+===END===
+
+===METRIC===
+protein: 15680
+initial lddt: tensor(0.3461)
+final lddt: tensor(0.3461)
+ideal lddt tensor(0.4626)
+time useage 9.385399103164673
+===END===
+
+===METRIC===
+protein: 15720
+initial lddt: tensor(0.4033)
+final lddt: tensor(0.4033)
+ideal lddt tensor(0.5421)
+time useage 9.634695529937744
+===END===
+
+===METRIC===
+protein: 15760
+initial lddt: tensor(0.3803)
+final lddt: tensor(0.3803)
+ideal lddt tensor(0.5051)
+time useage 10.045801401138306
+===END===
+
+===METRIC===
+protein: 15800
+initial lddt: tensor(0.3569)
+final lddt: tensor(0.3569)
+ideal lddt tensor(0.5091)
+time useage 9.619606256484985
+===END===
+
+===METRIC===
+protein: 15840
+initial lddt: tensor(0.4358)
+final lddt: tensor(0.4358)
+ideal lddt tensor(0.5435)
+time useage 9.10260820388794
+===END===
+
+===METRIC===
+protein: 15880
+initial lddt: tensor(0.3946)
+final lddt: tensor(0.3946)
+ideal lddt tensor(0.5323)
+time useage 9.720155239105225
+===END===
+
+===METRIC===
+protein: 15920
+initial lddt: tensor(0.3576)
+final lddt: tensor(0.3576)
+ideal lddt tensor(0.4709)
+time useage 10.300673484802246
+===END===
+
+===METRIC===
+protein: 15960
+initial lddt: tensor(0.4119)
+final lddt: tensor(0.4119)
+ideal lddt tensor(0.5427)
+time useage 9.165578126907349
+===END===
+
+===METRIC===
+protein: 16000
+initial lddt: tensor(0.3630)
+final lddt: tensor(0.3630)
+ideal lddt tensor(0.4877)
+time useage 10.502340316772461
+===END===
+
+===METRIC===
+protein: 16040
+initial lddt: tensor(0.4585)
+final lddt: tensor(0.4585)
+ideal lddt tensor(0.5946)
+time useage 10.218375205993652
+===END===
+
+===METRIC===
+protein: 16080
+initial lddt: tensor(0.3527)
+final lddt: tensor(0.3527)
+ideal lddt tensor(0.4736)
+time useage 10.688993453979492
+===END===
+
+===METRIC===
+protein: 16120
+initial lddt: tensor(0.3822)
+final lddt: tensor(0.3822)
+ideal lddt tensor(0.5121)
+time useage 9.566679000854492
+===END===
+
+===METRIC===
+protein: 16160
+initial lddt: tensor(0.4979)
+final lddt: tensor(0.4979)
+ideal lddt tensor(0.5993)
+time useage 10.01060438156128
+===END===
+
+===METRIC===
+protein: 16200
+initial lddt: tensor(0.4528)
+final lddt: tensor(0.4528)
+ideal lddt tensor(0.5756)
+time useage 10.526718616485596
+===END===
+
+===METRIC===
+protein: 16240
+initial lddt: tensor(0.3657)
+final lddt: tensor(0.3657)
+ideal lddt tensor(0.4895)
+time useage 10.401169776916504
+===END===
+
+===METRIC===
+protein: 16280
+initial lddt: tensor(0.4146)
+final lddt: tensor(0.4146)
+ideal lddt tensor(0.5509)
+time useage 10.666805028915405
+===END===
+
+===METRIC===
+protein: 16320
+initial lddt: tensor(0.3937)
+final lddt: tensor(0.3937)
+ideal lddt tensor(0.5348)
+time useage 10.40336298942566
+===END===
+
+===METRIC===
+protein: 16360
+initial lddt: tensor(0.4150)
+final lddt: tensor(0.4150)
+ideal lddt tensor(0.5425)
+time useage 9.868058919906616
+===END===
+
+===METRIC===
+protein: 16400
+initial lddt: tensor(0.4783)
+final lddt: tensor(0.4783)
+ideal lddt tensor(0.5994)
+time useage 10.414522647857666
+===END===
+
+===METRIC===
+protein: 16440
+initial lddt: tensor(0.4491)
+final lddt: tensor(0.5143)
+ideal lddt tensor(0.5624)
+time useage 37.65135049819946
+===END===
+
+===METRIC===
+protein: 16480
+initial lddt: tensor(0.4369)
+final lddt: tensor(0.4369)
+ideal lddt tensor(0.5707)
+time useage 10.29778242111206
+===END===
+
+===METRIC===
+protein: 16520
+initial lddt: tensor(0.3567)
+final lddt: tensor(0.3567)
+ideal lddt tensor(0.4885)
+time useage 10.23500919342041
+===END===
+
+===METRIC===
+protein: 16560
+initial lddt: tensor(0.4566)
+final lddt: tensor(0.4566)
+ideal lddt tensor(0.5917)
+time useage 9.810320377349854
+===END===
+
+===METRIC===
+protein: 16600
+initial lddt: tensor(0.4162)
+final lddt: tensor(0.4162)
+ideal lddt tensor(0.5139)
+time useage 10.711480140686035
+===END===
+
+===METRIC===
+protein: 16640
+initial lddt: tensor(0.4099)
+final lddt: tensor(0.4099)
+ideal lddt tensor(0.5294)
+time useage 10.864558935165405
+===END===
+
+===METRIC===
+protein: 16680
+initial lddt: tensor(0.2711)
+final lddt: tensor(0.2711)
+ideal lddt tensor(0.3753)
+time useage 10.152892351150513
+===END===
+
+===METRIC===
+protein: 16720
+initial lddt: tensor(0.3323)
+final lddt: tensor(0.4594)
+ideal lddt tensor(0.4378)
+time useage 128.53980779647827
+===END===
+
+===METRIC===
+protein: 16760
+initial lddt: tensor(0.4078)
+final lddt: tensor(0.4806)
+ideal lddt tensor(0.5237)
+time useage 38.851420164108276
+===END===
+
+===METRIC===
+protein: 16800
+initial lddt: tensor(0.4926)
+final lddt: tensor(0.4926)
+ideal lddt tensor(0.6288)
+time useage 10.601890325546265
+===END===
+
+===METRIC===
+protein: 16840
+initial lddt: tensor(0.4218)
+final lddt: tensor(0.4218)
+ideal lddt tensor(0.5411)
+time useage 11.87758183479309
+===END===
+
+===METRIC===
+protein: 16880
+initial lddt: tensor(0.3596)
+final lddt: tensor(0.4726)
+ideal lddt tensor(0.4998)
+time useage 61.959709882736206
+===END===
+
+===METRIC===
+protein: 16920
+initial lddt: tensor(0.3660)
+final lddt: tensor(0.3660)
+ideal lddt tensor(0.5010)
+time useage 11.349755048751831
+===END===
+
+===METRIC===
+protein: 16960
+initial lddt: tensor(0.4460)
+final lddt: tensor(0.4460)
+ideal lddt tensor(0.5596)
+time useage 10.845463991165161
+===END===
+
+===METRIC===
+protein: 17000
+initial lddt: tensor(0.4047)
+final lddt: tensor(0.4047)
+ideal lddt tensor(0.5448)
+time useage 11.359441995620728
+===END===
+
+===METRIC===
+protein: 17040
+initial lddt: tensor(0.3857)
+final lddt: tensor(0.3857)
+ideal lddt tensor(0.5446)
+time useage 11.033358097076416
+===END===
+
+===METRIC===
+protein: 17080
+initial lddt: tensor(0.4821)
+final lddt: tensor(0.4821)
+ideal lddt tensor(0.6189)
+time useage 11.29639482498169
+===END===
+
+===METRIC===
+protein: 17120
+initial lddt: tensor(0.4445)
+final lddt: tensor(0.4445)
+ideal lddt tensor(0.5889)
+time useage 11.364621877670288
+===END===
+
+===METRIC===
+protein: 17160
+initial lddt: tensor(0.3669)
+final lddt: tensor(0.3669)
+ideal lddt tensor(0.5118)
+time useage 12.513575315475464
+===END===
+
+===METRIC===
+protein: 17200
+initial lddt: tensor(0.4519)
+final lddt: tensor(0.5144)
+ideal lddt tensor(0.5713)
+time useage 59.66491436958313
+===END===
+
+===METRIC===
+protein: 17240
+initial lddt: tensor(0.3480)
+final lddt: tensor(0.3480)
+ideal lddt tensor(0.4842)
+time useage 12.145050525665283
+===END===
+
+===METRIC===
+protein: 17280
+initial lddt: tensor(0.4663)
+final lddt: tensor(0.4663)
+ideal lddt tensor(0.5872)
+time useage 11.685278415679932
+===END===
+
+===METRIC===
+protein: 17320
+initial lddt: tensor(0.4722)
+final lddt: tensor(0.4722)
+ideal lddt tensor(0.6021)
+time useage 12.41660475730896
+===END===
+
+===METRIC===
+protein: 17360
+initial lddt: tensor(0.4745)
+final lddt: tensor(0.4745)
+ideal lddt tensor(0.6057)
+time useage 12.426833391189575
+===END===
+
+===METRIC===
+protein: 17400
+initial lddt: tensor(0.3476)
+final lddt: tensor(0.3476)
+ideal lddt tensor(0.4700)
+time useage 12.071627616882324
+===END===
+
+===METRIC===
+protein: 17440
+initial lddt: tensor(0.3971)
+final lddt: tensor(0.3971)
+ideal lddt tensor(0.5312)
+time useage 12.498199224472046
+===END===
+
+===METRIC===
+protein: 17480
+initial lddt: tensor(0.5074)
+final lddt: tensor(0.5074)
+ideal lddt tensor(0.6525)
+time useage 12.929728746414185
+===END===
+
+===METRIC===
+protein: 17520
+initial lddt: tensor(0.4150)
+final lddt: tensor(0.4150)
+ideal lddt tensor(0.5435)
+time useage 11.893375158309937
+===END===
+
+===METRIC===
+protein: 17560
+initial lddt: tensor(0.4664)
+final lddt: tensor(0.4664)
+ideal lddt tensor(0.5954)
+time useage 12.092664003372192
+===END===
+
+===METRIC===
+protein: 17600
+initial lddt: tensor(0.3963)
+final lddt: tensor(0.3963)
+ideal lddt tensor(0.5535)
+time useage 12.28946828842163
+===END===
+
+===METRIC===
+protein: 17640
+initial lddt: tensor(0.4674)
+final lddt: tensor(0.4674)
+ideal lddt tensor(0.5852)
+time useage 11.117412328720093
+===END===
+
+===METRIC===
+protein: 17680
+initial lddt: tensor(0.4830)
+final lddt: tensor(0.5144)
+ideal lddt tensor(0.5980)
+time useage 75.14822602272034
+===END===
+
+===METRIC===
+protein: 17720
+initial lddt: tensor(0.3770)
+final lddt: tensor(0.3770)
+ideal lddt tensor(0.5065)
+time useage 12.535320043563843
+===END===
+
+===METRIC===
+protein: 17760
+initial lddt: tensor(0.3732)
+final lddt: tensor(0.4530)
+ideal lddt tensor(0.5178)
+time useage 64.74656057357788
+===END===
+
+===METRIC===
+protein: 17800
+initial lddt: tensor(0.3791)
+final lddt: tensor(0.3791)
+ideal lddt tensor(0.4925)
+time useage 12.793417692184448
+===END===
+
+===METRIC===
+protein: 17840
+initial lddt: tensor(0.3705)
+final lddt: tensor(0.3705)
+ideal lddt tensor(0.4909)
+time useage 13.281598567962646
+===END===
+
+===METRIC===
+protein: 17880
+initial lddt: tensor(0.3874)
+final lddt: tensor(0.3874)
+ideal lddt tensor(0.5265)
+time useage 12.387990236282349
+===END===
+
+===METRIC===
+protein: 17920
+initial lddt: tensor(0.3420)
+final lddt: tensor(0.3420)
+ideal lddt tensor(0.4504)
+time useage 11.68671464920044
+===END===
+
+===METRIC===
+protein: 17960
+initial lddt: tensor(0.4526)
+final lddt: tensor(0.4526)
+ideal lddt tensor(0.5602)
+time useage 14.028459072113037
+===END===
+
+===METRIC===
+protein: 18000
+initial lddt: tensor(0.4618)
+final lddt: tensor(0.4618)
+ideal lddt tensor(0.5727)
+time useage 12.71417498588562
+===END===
+
+===METRIC===
+protein: 18040
+initial lddt: tensor(0.4586)
+final lddt: tensor(0.4586)
+ideal lddt tensor(0.5670)
+time useage 12.234035730361938
+===END===
+
+===METRIC===
+protein: 18080
+initial lddt: tensor(0.4417)
+final lddt: tensor(0.4944)
+ideal lddt tensor(0.5671)
+time useage 40.195728063583374
+===END===
+
+===METRIC===
+protein: 18120
+initial lddt: tensor(0.4929)
+final lddt: tensor(0.4929)
+ideal lddt tensor(0.6174)
+time useage 13.298677444458008
+===END===
+
+===METRIC===
+protein: 18160
+initial lddt: tensor(0.4498)
+final lddt: tensor(0.4498)
+ideal lddt tensor(0.5539)
+time useage 13.661725759506226
+===END===
+
+===METRIC===
+protein: 18200
+initial lddt: tensor(0.2701)
+final lddt: tensor(0.2701)
+ideal lddt tensor(0.3529)
+time useage 13.613319873809814
+===END===
+
+===METRIC===
+protein: 18240
+initial lddt: tensor(0.4204)
+final lddt: tensor(0.4204)
+ideal lddt tensor(0.5545)
+time useage 13.249687194824219
+===END===
+
+===METRIC===
+protein: 18280
+initial lddt: tensor(0.4016)
+final lddt: tensor(0.4016)
+ideal lddt tensor(0.5221)
+time useage 13.36855149269104
+===END===
+
+===METRIC===
+protein: 18320
+initial lddt: tensor(0.3908)
+final lddt: tensor(0.3908)
+ideal lddt tensor(0.5197)
+time useage 14.07687783241272
+===END===
+
+===METRIC===
+protein: 18360
+initial lddt: tensor(0.3951)
+final lddt: tensor(0.4835)
+ideal lddt tensor(0.5070)
+time useage 137.79464626312256
+===END===
+
+===METRIC===
+protein: 18400
+initial lddt: tensor(0.3885)
+final lddt: tensor(0.3885)
+ideal lddt tensor(0.5298)
+time useage 13.84370231628418
+===END===
+
+===METRIC===
+protein: 18440
+initial lddt: tensor(0.4080)
+final lddt: tensor(0.4080)
+ideal lddt tensor(0.5040)
+time useage 13.938413619995117
+===END===
+
+===METRIC===
+protein: 18480
+initial lddt: tensor(0.3805)
+final lddt: tensor(0.3805)
+ideal lddt tensor(0.5226)
+time useage 13.899622440338135
+===END===
+
+===METRIC===
+protein: 18520
+initial lddt: tensor(0.3897)
+final lddt: tensor(0.3897)
+ideal lddt tensor(0.5142)
+time useage 14.358458280563354
+===END===
+
+===METRIC===
+protein: 18560
+initial lddt: tensor(0.3635)
+final lddt: tensor(0.4379)
+ideal lddt tensor(0.4749)
+time useage 270.38413286209106
+===END===
+
+===METRIC===
+protein: 18600
+initial lddt: tensor(0.4997)
+final lddt: tensor(0.4997)
+ideal lddt tensor(0.5996)
+time useage 14.768908023834229
+===END===
+
+===METRIC===
+protein: 18640
+initial lddt: tensor(0.3423)
+final lddt: tensor(0.3423)
+ideal lddt tensor(0.4835)
+time useage 15.90451455116272
+===END===
+
+===METRIC===
+protein: 18680
+initial lddt: tensor(0.3833)
+final lddt: tensor(0.3833)
+ideal lddt tensor(0.5221)
+time useage 15.448339223861694
+===END===
+
+===METRIC===
+protein: 18720
+initial lddt: tensor(0.4186)
+final lddt: tensor(0.4186)
+ideal lddt tensor(0.5565)
+time useage 13.602132797241211
+===END===
+
+===METRIC===
+protein: 18760
+initial lddt: tensor(0.4161)
+final lddt: tensor(0.4161)
+ideal lddt tensor(0.5559)
+time useage 15.436175107955933
+===END===
+
+===METRIC===
+protein: 18800
+initial lddt: tensor(0.3865)
+final lddt: tensor(0.3865)
+ideal lddt tensor(0.4877)
+time useage 13.92967176437378
+===END===
+
+===METRIC===
+protein: 18840
+initial lddt: tensor(0.4491)
+final lddt: tensor(0.4491)
+ideal lddt tensor(0.5651)
+time useage 14.559020757675171
+===END===
+
+===METRIC===
+protein: 18880
+initial lddt: tensor(0.4017)
+final lddt: tensor(0.4017)
+ideal lddt tensor(0.5182)
+time useage 15.137125253677368
+===END===
+
+===METRIC===
+protein: 18920
+initial lddt: tensor(0.4363)
+final lddt: tensor(0.4363)
+ideal lddt tensor(0.5743)
+time useage 15.34135365486145
+===END===
+
+===METRIC===
+protein: 18960
+initial lddt: tensor(0.4246)
+final lddt: tensor(0.4246)
+ideal lddt tensor(0.5461)
+time useage 15.618419885635376
+===END===
+
+===METRIC===
+protein: 19000
+initial lddt: tensor(0.4261)
+final lddt: tensor(0.4261)
+ideal lddt tensor(0.5542)
+time useage 14.7428457736969
+===END===
+
+===METRIC===
+protein: 19040
+initial lddt: tensor(0.4151)
+final lddt: tensor(0.4151)
+ideal lddt tensor(0.5469)
+time useage 16.20267653465271
+===END===
+
+===METRIC===
+protein: 19080
+initial lddt: tensor(0.4054)
+final lddt: tensor(0.4054)
+ideal lddt tensor(0.5710)
+time useage 15.702169418334961
+===END===
+
+===METRIC===
+protein: 19120
+initial lddt: tensor(0.3520)
+final lddt: tensor(0.3520)
+ideal lddt tensor(0.4874)
+time useage 14.698431968688965
+===END===
+
+===METRIC===
+protein: 19160
+initial lddt: tensor(0.3274)
+final lddt: tensor(0.3274)
+ideal lddt tensor(0.4622)
+time useage 16.27393102645874
+===END===
+
+===METRIC===
+protein: 19200
+initial lddt: tensor(0.4098)
+final lddt: tensor(0.4098)
+ideal lddt tensor(0.5406)
+time useage 16.598541975021362
+===END===
+
+===METRIC===
+protein: 19240
+initial lddt: tensor(0.4539)
+final lddt: tensor(0.4539)
+ideal lddt tensor(0.5840)
+time useage 15.786164283752441
+===END===
+
+===METRIC===
+protein: 19280
+initial lddt: tensor(0.4101)
+final lddt: tensor(0.4101)
+ideal lddt tensor(0.5337)
+time useage 16.43909978866577
+===END===
+
+===METRIC===
+protein: 19320
+initial lddt: tensor(0.4046)
+final lddt: tensor(0.4046)
+ideal lddt tensor(0.5181)
+time useage 15.48507571220398
+===END===
+
+===METRIC===
+protein: 19360
+initial lddt: tensor(0.3307)
+final lddt: tensor(0.3307)
+ideal lddt tensor(0.4584)
+time useage 16.0923330783844
+===END===
+
+===METRIC===
+protein: 19400
+initial lddt: tensor(0.3352)
+final lddt: tensor(0.3352)
+ideal lddt tensor(0.4527)
+time useage 16.34907031059265
+===END===
+
+===METRIC===
+protein: 19440
+initial lddt: tensor(0.2939)
+final lddt: tensor(0.2939)
+ideal lddt tensor(0.3999)
+time useage 16.35078239440918
+===END===
+
+===METRIC===
+protein: 19480
+initial lddt: tensor(0.4404)
+final lddt: tensor(0.4404)
+ideal lddt tensor(0.5636)
+time useage 16.80565643310547
+===END===
+
+===METRIC===
+protein: 19520
+initial lddt: tensor(0.4678)
+final lddt: tensor(0.4678)
+ideal lddt tensor(0.5919)
+time useage 17.457025289535522
+===END===
+
+===METRIC===
+protein: 19560
+initial lddt: tensor(0.4230)
+final lddt: tensor(0.4230)
+ideal lddt tensor(0.5511)
+time useage 15.8480064868927
+===END===
+
+===METRIC===
+protein: 19600
+initial lddt: tensor(0.4790)
+final lddt: tensor(0.5014)
+ideal lddt tensor(0.5927)
+time useage 35.866896629333496
+===END===
+
+===METRIC===
+protein: 19640
+initial lddt: tensor(0.3661)
+final lddt: tensor(0.3661)
+ideal lddt tensor(0.5032)
+time useage 15.562609672546387
+===END===
+
+===METRIC===
+protein: 19680
+initial lddt: tensor(0.4103)
+final lddt: tensor(0.4366)
+ideal lddt tensor(0.5076)
+time useage 59.87972903251648
+===END===
+
+===METRIC===
+protein: 19720
+initial lddt: tensor(0.3785)
+final lddt: tensor(0.3785)
+ideal lddt tensor(0.5221)
+time useage 17.49381160736084
+===END===
+
+===METRIC===
+protein: 19760
+initial lddt: tensor(0.4360)
+final lddt: tensor(0.4360)
+ideal lddt tensor(0.5684)
+time useage 15.374153852462769
+===END===
+
+===METRIC===
+protein: 19800
+initial lddt: tensor(0.4341)
+final lddt: tensor(0.4341)
+ideal lddt tensor(0.5532)
+time useage 15.55606722831726
+===END===
+
+===METRIC===
+protein: 19840
+initial lddt: tensor(0.4190)
+final lddt: tensor(0.4190)
+ideal lddt tensor(0.5542)
+time useage 17.382883548736572
+===END===
+
+===METRIC===
+protein: 19880
+initial lddt: tensor(0.4219)
+final lddt: tensor(0.4219)
+ideal lddt tensor(0.5416)
+time useage 16.57612681388855
+===END===
+
+===METRIC===
+protein: 19920
+initial lddt: tensor(0.4288)
+final lddt: tensor(0.4288)
+ideal lddt tensor(0.5563)
+time useage 17.29324769973755
+===END===
+
+===METRIC===
+protein: 19960
+initial lddt: tensor(0.4007)
+final lddt: tensor(0.4007)
+ideal lddt tensor(0.5308)
+time useage 17.10089635848999
+===END===
+
+Traceback (most recent call last):
+  File "/home/rotation3/complex-coor-pred/AlignCoorSample/align4confuse.py", line 101, in <module>
+    align_result = open("/home/rotation3/complex-coor-pred/AlignCoorSample/result/log.txt","w",encoding="utf-8")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/rotation3/complex-coor-pred/AlignCoorSample/result/log.txt'

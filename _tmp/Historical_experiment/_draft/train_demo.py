@@ -7,7 +7,7 @@ import os
 from config import device
 import h5py
 from AlignCoorConfusion.CoorConfusion import coorConfuse
-from scripts.cal_fapeloss import getFapeLoss
+from tools.cal_fapeloss import getFapeLoss
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from torch.utils.tensorboard import SummaryWriter

@@ -8,11 +8,11 @@ from model.ResNet import resnet_block
 from main import train_ds
 from torch.utils.data import DataLoader
 from config import device, NUM_BLOCKS
-from scripts.cal_lddt_multiseq import cal_lddt
+from tools.cal_lddt_multiseq import cal_lddt
 from torch.utils.tensorboard import SummaryWriter
 from utils import weight_init
 from einops import rearrange
-from utils.AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
+from AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
 
 def attn_block(block_num=5):
     """

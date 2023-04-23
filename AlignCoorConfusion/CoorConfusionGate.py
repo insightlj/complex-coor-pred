@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from config import device
 from einops import rearrange
-from utils.AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
+from AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
 import numpy as np
 
 def row_attn_block(block_num=4):
@@ -48,6 +48,8 @@ class coorConfuse(nn.Module):
     def forward(self,pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score):
         ### lddt_score是不变的，不参与循环
         lddt_score = torch.tile(lddt_score[:,None,:,:], (1,3,1,1))
+        # lddt_score_1 = lddt_score[:,None,:,:]   # 为了给onnx看而写的
+        # lddt_score = torch.concat((lddt_score_1,lddt_score_1,lddt_score_1), dim=1)
         lddt_score = self.softmax(lddt_score)
         
         pred_coor = rearrange(pred_coor, "b h w c -> b c h w")
@@ -99,12 +101,18 @@ if __name__ == "__main__":
     pred_x2d = pred_x2d.unsqueeze(0)
 
     coor_confuse = coorConfuse().to(device)
-    confused_coor = coor_confuse(pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score)
-    confused_coor = confused_coor.squeeze().permute(2,1,0)
-    print(confused_coor.shape)
-    print("inference time: ", time.time()-beg)
+    # confused_coor = coor_confuse(pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score)
+    # confused_coor = confused_coor.squeeze().permute(2,1,0)
+    # print(confused_coor.shape)
+    # print("inference time: ", time.time()-beg)
 
-    def count_parameters(model):
-        return sum(param.numel() for param in model.parameters())
-    count_parameters(coor_confuse)  # 203w
+    # def count_parameters(model):
+    #     return sum(param.numel() for param in model.parameters())
+    # count_parameters(coor_confuse)  # 203w
     
+    from torch import onnx
+    onnx.export(
+    coor_confuse,
+    (pred_coor, pred_coor_r_attn, pred_coor_c_attn, pred_x2d, lddt_score),
+    'model.onnx',
+    export_params=True)

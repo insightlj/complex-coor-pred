@@ -1,4 +1,4 @@
-from scripts.cal_fapeloss import getFapeLoss
+from tools.cal_fapeloss import getFapeLoss
 
 if __name__ == '__main __':
     ### 计算训练集和测试集的平均fapeloss

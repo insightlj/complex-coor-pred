@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
 from scipy import optimize as opt
-from scripts.cal_lddt_numpy import cal_lddt 
+from toolsal_lddt_numpy import cal_lddt 
 
 def cal_r_matrix(b,c,d):
     a,b,c,d = np.array([1,b,c,d])/np.sqrt(1+b**2+c**2+d**2)

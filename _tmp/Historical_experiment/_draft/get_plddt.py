@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader
 from main import train_ds, test_ds
 from config import device, NUM_BLOCKS
-from scripts.cal_lddt_multiseq import cal_lddt
+from tools.cal_lddt_multiseq import cal_lddt
 
 import sys
 sys.path.append("/home/rotation3/complex-coor-pred/")

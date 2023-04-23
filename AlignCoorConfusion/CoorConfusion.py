@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from config import device
 from einops import rearrange
-from utils.AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
+from AlignCoorConfusion.axis_attention import BiasRowAttention, ColAttention
 
 
 def row_attn_block(block_num=4):
