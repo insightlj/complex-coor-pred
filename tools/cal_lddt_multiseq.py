@@ -38,8 +38,8 @@ def cal_lddt(predcadist,truecadist):
 
 
 if __name__ == "__main__":
-    pred = torch.randn(4,64,91,3)
-    label = torch.randn(4,64,91,3)
+    pred = torch.randn(4,91,91,3) * 100
+    label = torch.randn(4,91,91,3) * 100
 
     pred = pred.unsqueeze(-2) - pred.unsqueeze(-3)
     pred = ((pred**2).sum(dim=-1) + eps) ** 0.5

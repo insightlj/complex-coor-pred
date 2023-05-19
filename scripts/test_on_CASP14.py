@@ -25,20 +25,21 @@ embed_attn = h5py.File("/export/disk4/for_Lijun/CASP/CASP14.h5")
 
 label_list = list(label.keys())
 input_list = list(embed_attn.keys())
+L = len(label_list)
 
 lddt_ls = []
 
 plot_file = h5py.File("data/plot_file.h5", "a")
 with torch.no_grad():
-    for i in [68, 89,  0, 67, 60, 69, 53,  2,  1, 59]:
+    for i in range(L):
         target = label_list[i]
     # for target in label_list:
     # for target in ["T1076-D1"]:
         embed = torch.from_numpy(embed_attn[target]["token_embeds"][:]).to(device)
         attn = torch.from_numpy(embed_attn[target]["feature_2D"][:]).to(device)
-        # if target in ["T1076-D1"]:
-        #     embed = embed[:,1:,:]
-        #     attn = attn[:,:,1:,1:]
+        if target in ["T1076-D1"]:
+            embed = embed[:,1:,:]
+            attn = attn[:,:,1:,1:]
 
         plabel = torch.from_numpy(label[target]["xyz"][:,1,:]).to(device)
         print("protein:", target)
@@ -56,12 +57,12 @@ with torch.no_grad():
         print(lddt)
         lddt_ls.append(lddt.item())
 
-        # h5py
-        target_protein = plot_file.create_group(target)
-        target_protein["pred_coor"] = (pred_coor[3][0][torch.argmax(lddt_tensor)]).cpu()
-        target_protein["lddt"] = lddt.cpu()
-        target_protein["target_tokens"] = (embed_attn[target]["target_tokens"][:])
-        target_protein["identity"] = target
+        # # h5py
+        # target_protein = plot_file.create_group(target)
+        # target_protein["pred_coor"] = (pred_coor[3][0][torch.argmax(lddt_tensor)]).cpu()
+        # target_protein["lddt"] = lddt.cpu()
+        # target_protein["target_tokens"] = (embed_attn[target]["target_tokens"][:])
+        # target_protein["identity"] = target
 
 plot_file.close()
 

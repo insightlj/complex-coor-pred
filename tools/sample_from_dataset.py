@@ -50,7 +50,7 @@ def sample_and_predict(net_pt_name, train_mode, index=0, net_pt_loaded=False, in
         file_list = test_file
 
     ds = Data(path, xyz_path, file_list, train_mode=False)   #此处的train_mode控制蛋白会不会被tunc
-    embed, atten, coor_label, L = ds[index]
+    embed, atten, coor_label, L, pdb_index = ds[index]
     embed = embed.to(device)
     atten = atten.to(device)
     coor_label = coor_label.to(device)
@@ -75,4 +75,25 @@ if __name__ == "__main__":
     model = CoorNet()
     net_pt_name = "/home/rotation3/complex-coor-pred/model/checkpoint/CoorNet_VII/epoch16.pt"
     pred, label = sample_and_predict(net_pt_name, index=1000, train_mode=True ,include_x2d=True)
-    torch.save(pred[1], "pred_x2d.npy")
+
+
+# # 计算训练集和测试集的长度分布
+# train_data_path = '/home/rotation3/complex-coor-pred/data/train22310.3besm2.h5'
+# test_data_path = '/home/rotation3/complex-coor-pred/data/valid2000.3besm2.h5'
+# xyz_path = '/home/rotation3/complex-coor-pred/data/xyz.h5'
+# sorted_train_file = "/home/rotation3/complex-coor-pred/data/sorted_train_list.txt"
+# test_file = "/home/rotation3/complex-coor-pred/data/valid_list.txt"
+
+# train_mode = False
+# if train_mode:
+#     path = train_data_path
+#     file_list = sorted_train_file
+# else:
+#     path = test_data_path
+#     file_list = test_file
+# train_ls = []
+# ds = Data(path, xyz_path, file_list, train_mode=False)
+# embed, atten, coor_label, L, pdb_index = ds[100]
+# # L = len(ds)
+# # for i in range(L):
+# #     train_ls.append(ds[i][-2])

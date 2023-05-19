@@ -43,7 +43,7 @@ class Data(Dataset):
         # embed:[L,2560], atten:[41,L,L], coor_label:[L,L,3]
 
     def __len__(self):
-        return self.data_sum
+        return len(self.index)
 
 class MyData(Dataset):
     def __init__(self, data_path, xyz_path, filename, train_mode):
